@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 # RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
@@ -22,5 +25,6 @@ RUN pecl install -o -f redis \
     && docker-php-ext-enable redis
 
 # USER www-data
+
 
 EXPOSE 9000
