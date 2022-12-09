@@ -8,7 +8,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Core\\": "src/Core"
+            "Core\\": "src/Core",
+            "Core\\Shared\\": "src/Core/@Shared"
         }
     },
     "require-dev": {
@@ -17,6 +18,6 @@
     },
     "scripts": {
         "coverage": "vendor/bin/phpunit --coverage-html public/.phpunit/coverage",
-        "tests": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit"
     }
 }
