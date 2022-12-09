@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  app:
+    build:
+      target: base
+      context: .docker/php
+    volumes:
+      - .:/var/www
+    networks:
+        - app-network
+  
+  nginx:
+    build: .docker/nginx
+    volumes:
+      - .:/var/www
+    ports:
+        - "8000:80"
+    networks:
+        - app-network
+
+networks:
+  app-network:
+    driver: bridge

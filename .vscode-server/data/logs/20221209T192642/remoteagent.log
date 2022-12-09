@@ -1,0 +1,34 @@
+2022-12-09 19:26:42.355 [info] Extension host agent started.
+2022-12-09 19:26:42.368 [error] ptyHost was unable to resolve shell environment {}
+2022-12-09 19:26:42.417 [debug] ComputeTargetPlatform: linux-x64
+2022-12-09 19:26:42.428 [info] Started initializing default profile extensions in extensions installation folder. file:///var/www/.vscode-server/extensions
+2022-12-09 19:26:42.441 [debug] ComputeTargetPlatform: linux-x64
+2022-12-09 19:26:42.455 [info] [127.0.0.1][4c5142f4][ManagementConnection] New connection established.
+2022-12-09 19:26:42.459 [info] Completed initializing default profile extensions in extensions installation folder. file:///var/www/.vscode-server/extensions
+2022-12-09 19:26:42.944 [info] [127.0.0.1][3d0c1fa3][ExtensionHostConnection] New connection established.
+2022-12-09 19:26:43.022 [info] [127.0.0.1][3d0c1fa3][ExtensionHostConnection] <258> Launched Extension Host Process.
+2022-12-09 19:26:43.560 [info] Getting Manifest... hbenl.vscode-test-explorer
+2022-12-09 19:26:43.565 [info] Getting Manifest... ms-ceintl.vscode-language-pack-pt-br
+2022-12-09 19:26:43.628 [info] Installing extension: hbenl.vscode-test-explorer
+2022-12-09 19:26:43.660 [info] Installing extension: ms-ceintl.vscode-language-pack-pt-br
+2022-12-09 19:26:43.712 [info] Getting Manifest... recca0120.vscode-phpunit
+2022-12-09 19:26:43.807 [info] Installing extension: recca0120.vscode-phpunit
+2022-12-09 19:26:43.971 [info] Getting Manifest... ms-vscode.test-adapter-converter
+2022-12-09 19:26:44.160 [info] Installing extension: ms-vscode.test-adapter-converter hbenl.vscode-test-explorer
+2022-12-09 19:26:44.240 [info] Extracted extension to /var/www/.vscode-server/extensions/.5031cc44-d7a2-4f9b-912a-9f1b2c6776e9: ms-vscode.test-adapter-converter
+2022-12-09 19:26:44.246 [info] Renamed to /var/www/.vscode-server/extensions/ms-vscode.test-adapter-converter-0.1.6
+2022-12-09 19:26:44.249 [info] Extracting completed. ms-vscode.test-adapter-converter
+2022-12-09 19:26:44.420 [info] Extracted extension to /var/www/.vscode-server/extensions/.65c037f9-f5c6-4fec-bd3d-abd7e11c30ee: hbenl.vscode-test-explorer
+2022-12-09 19:26:44.425 [info] Renamed to /var/www/.vscode-server/extensions/hbenl.vscode-test-explorer-2.21.1
+2022-12-09 19:26:44.427 [info] Extracting completed. hbenl.vscode-test-explorer
+2022-12-09 19:26:44.431 [info] Extension installed successfully: ms-vscode.test-adapter-converter
+2022-12-09 19:26:44.431 [info] Extension installed successfully: hbenl.vscode-test-explorer
+2022-12-09 19:26:44.554 [info] Extracted extension to /var/www/.vscode-server/extensions/.b08b6cff-9c68-4e7b-b3c6-e7985b1446c5: recca0120.vscode-phpunit
+2022-12-09 19:26:44.561 [info] Renamed to /var/www/.vscode-server/extensions/recca0120.vscode-phpunit-3.0.16
+2022-12-09 19:26:44.566 [info] Extracting completed. recca0120.vscode-phpunit
+2022-12-09 19:26:44.572 [info] Extension installed successfully: recca0120.vscode-phpunit
+2022-12-09 19:26:44.651 [info] Extracted extension to /var/www/.vscode-server/extensions/.3b8d390e-fec9-45da-8def-a2a1bf0048b3: ms-ceintl.vscode-language-pack-pt-br
+2022-12-09 19:26:44.655 [info] Renamed to /var/www/.vscode-server/extensions/ms-ceintl.vscode-language-pack-pt-br-1.74.12070929
+2022-12-09 19:26:44.657 [info] Extracting completed. ms-ceintl.vscode-language-pack-pt-br
+2022-12-09 19:26:44.662 [info] Adding language packs from the extension ms-ceintl.vscode-language-pack-pt-br
+2022-12-09 19:26:44.729 [info] Extension installed successfully: ms-ceintl.vscode-language-pack-pt-br

@@ -1,0 +1,12 @@
+2022-12-09 19:26:44.784 [info] Extension host with pid 258 started
+2022-12-09 19:26:44.834 [info] Lock '/var/www/.vscode-server/data/User/workspaceStorage/d26d9073cff906847faa6e14ef55713d/vscode.lock': Lock acquired.
+2022-12-09 19:26:45.169 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+2022-12-09 19:26:45.358 [info] ExtensionService#_doActivateExtension vscode.git, startup: true, activationEvent: '*'
+2022-12-09 19:26:45.359 [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+2022-12-09 19:26:45.952 [info] ExtensionService#_doActivateExtension ms-vscode.test-adapter-converter, startup: false, activationEvent: '*', root cause: hbenl.vscode-test-explorer
+2022-12-09 19:26:46.207 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2022-12-09 19:26:46.207 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onStartupFinished'
+2022-12-09 19:26:46.208 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2022-12-09 19:26:46.208 [info] Eager extensions activated
+2022-12-09 19:26:46.499 [info] ExtensionService#_doActivateExtension hbenl.vscode-test-explorer, startup: false, activationEvent: '*'
+2022-12-09 19:26:46.827 [info] ExtensionService#_doActivateExtension recca0120.vscode-phpunit, startup: false, activationEvent: 'workspaceContains:**/*.php'

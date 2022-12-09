@@ -1,0 +1,9 @@
+2022-12-09 19:28:00.203 [info] Extension host agent started.
+2022-12-09 19:28:00.216 [error] ptyHost was unable to resolve shell environment {}
+2022-12-09 19:28:00.258 [debug] ComputeTargetPlatform: linux-x64
+2022-12-09 19:28:00.281 [info] [127.0.0.1][2c8a5972][ManagementConnection] New connection established.
+2022-12-09 19:28:00.296 [debug] ComputeTargetPlatform: linux-x64
+2022-12-09 19:28:00.629 [info] [127.0.0.1][9f6b02e4][ExtensionHostConnection] New connection established.
+2022-12-09 19:28:00.740 [info] [127.0.0.1][9f6b02e4][ExtensionHostConnection] <230> Launched Extension Host Process.
+2022-12-09 19:28:28.058 [info] [127.0.0.1][2c8a5972][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2022-12-09 19:28:28.157 [info] [127.0.0.1][9f6b02e4][ExtensionHostConnection] <230> Extension Host Process exited with code: 0, signal: null.
