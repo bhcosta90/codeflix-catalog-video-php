@@ -28,7 +28,7 @@ class DomainValidation
         }
     }
 
-    public static function strCanNullAndMaxLength(string $value = '', int $length = 255, string $exceptMessage = null)
+    public static function strCanNullAndMaxLength(string $value = null, int $length = 255, string $exceptMessage = null)
     {
         if (!empty($value) && strlen($value ?: "") > $length) {
             $message = $exceptMessage ?? "The value must not be greater than {$length} characters";

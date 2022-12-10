@@ -146,18 +146,6 @@ class CategoryEntityTest extends TestCase
         try {
             new CategoryEntity(
                 name: 'Test',
-                description: 'D',
-                isActive: true,
-            );
-            $this->assertTrue(false);
-        } catch (Throwable $e) {
-            $this->assertInstanceOf(EntityValidationException::class, $e);
-            $this->assertEquals('Description of category must be at least 2 characters', $e->getMessage());
-        }
-
-        try {
-            new CategoryEntity(
-                name: 'Test',
                 description: str_repeat('D', 256),
                 isActive: true,
             );
@@ -165,22 +153,6 @@ class CategoryEntityTest extends TestCase
         } catch (Throwable $e) {
             $this->assertInstanceOf(EntityValidationException::class, $e);
             $this->assertEquals('Description of category must be less than 255 characters', $e->getMessage());
-        }
-
-        try {
-            $category = new CategoryEntity(
-                name: 'Test',
-                description: 'Desc',
-                isActive: true,
-            );
-            $category->update(
-                name: 'Test',
-                description: 'De',
-            );
-            $this->assertTrue(false);
-        } catch (Throwable $e) {
-            $this->assertInstanceOf(EntityValidationException::class, $e);
-            $this->assertEquals('Description of category must be at least 2 characters', $e->getMessage());
         }
 
         try {

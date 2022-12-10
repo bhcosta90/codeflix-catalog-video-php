@@ -4,6 +4,7 @@ namespace Core\Category\Domain\Entity;
 
 use Core\Shared\Domain\Entity\Exception\EntityValidationException;
 use Core\Shared\Domain\Entity\Trait\MethodsMagicsTrait;
+use Core\Shared\Domain\Validation\DomainValidation;
 
 class CategoryEntity
 {
@@ -39,20 +40,24 @@ class CategoryEntity
 
     private function validate()
     {
-        if (strlen($this->name ?: '') <= 2) {
-            throw new EntityValidationException('Name of category must be at least 2 characters');
-        }
+        // if (strlen($this->name ?: '') <= 2) {
+        //     throw new EntityValidationException('Name of category must be at least 2 characters');
+        // }
 
-        if (strlen($this->name ?: '') > 255) {
-            throw new EntityValidationException('Name of category must be less than 255 characters');
-        }
+        // if (strlen($this->name ?: '') > 255) {
+        //     throw new EntityValidationException('Name of category must be less than 255 characters');
+        // }
 
-        if (!empty($this->description) && strlen($this->description ?: '') <= 2) {
-            throw new EntityValidationException('Description of category must be at least 2 characters');
-        }
+        // if (!empty($this->description) && strlen($this->description ?: '') <= 2) {
+        //     throw new EntityValidationException('Description of category must be at least 2 characters');
+        // }
 
-        if (strlen($this->description ?: '') > 255) {
-            throw new EntityValidationException('Description of category must be less than 255 characters');
-        }
+        // if (strlen($this->description ?: '') > 255) {
+        //     throw new EntityValidationException('Description of category must be less than 255 characters');
+        // }
+        DomainValidation::notNull($this->name);
+        DomainValidation::strMinLength($this->name, 3, 'Name of category must be at least 2 characters');
+        DomainValidation::strMaxLength($this->name, 255, 'Name of category must be less than 255 characters');
+        DomainValidation::strCanNullAndMaxLength($this->description, 255, 'Description of category must be less than 255 characters');
     }
 }
