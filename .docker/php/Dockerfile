@@ -26,5 +26,4 @@ RUN pecl install -o -f redis \
 
 # USER www-data
 
-
 EXPOSE 9000
