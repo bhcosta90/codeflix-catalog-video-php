@@ -8,7 +8,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Core\\": "src/Core"
+            "Core\\": "src/Core",
+            "Core\\Shared\\": "src/Core/@Shared"
         }
     },
     "require-dev": {
@@ -16,7 +17,10 @@
         "mockery/mockery": "^1.5"
     },
     "scripts": {
-        "coverage": "vendor/bin/phpunit --coverage-html public/.phpunit/coverage",
-        "tests": "vendor/bin/phpunit"
+        "cover": "vendor/bin/phpunit --coverage-html public/.phpunit/coverage",
+        "test": "vendor/bin/phpunit"
+    },
+    "require": {
+        "ramsey/uuid": "^4.6"
     }
 }
