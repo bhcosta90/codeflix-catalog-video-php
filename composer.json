@@ -17,7 +17,7 @@
         "mockery/mockery": "^1.5"
     },
     "scripts": {
-        "coverage": "vendor/bin/phpunit --coverage-html public/.phpunit/coverage",
+        "cover": "vendor/bin/phpunit --coverage-html public/.phpunit/coverage",
         "test": "vendor/bin/phpunit"
     }
 }
