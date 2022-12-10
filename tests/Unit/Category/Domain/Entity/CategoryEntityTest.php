@@ -20,6 +20,8 @@ class CategoryEntityTest extends TestCase
         $this->assertEquals('Test', $category->name);
         $this->assertEquals('Desc', $category->description);
         $this->assertTrue($category->isActive);
+        $this->assertNotEmpty($category->id());
+        $this->assertNotEmpty($category->createdAt());
     }
 
     public function testEnabled()
@@ -48,13 +50,14 @@ class CategoryEntityTest extends TestCase
 
     public function testUpdated()
     {
-        $id = 'fake.id';
+        $id = 'b257aaca-75f2-4cdf-a96f-d438e1e891cc';
 
         $category = new CategoryEntity(
             name: 'Test',
             description: 'Desc',
             isActive: true,
             id: $id,
+            createdAt: $date = '2020-01-01 00:00:00'
         );
 
         $category->update(
@@ -64,6 +67,8 @@ class CategoryEntityTest extends TestCase
 
         $this->assertEquals('Test 2', $category->name);
         $this->assertEquals('Desc 2', $category->description);
+        $this->assertEquals($id, $category->id());
+        $this->assertEquals($date, $category->createdAt());
 
         $category->update(
             name: 'Test 3',

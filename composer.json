@@ -19,5 +19,8 @@
     "scripts": {
         "cover": "vendor/bin/phpunit --coverage-html public/.phpunit/coverage",
         "test": "vendor/bin/phpunit"
+    },
+    "require": {
+        "ramsey/uuid": "^4.6"
     }
 }
