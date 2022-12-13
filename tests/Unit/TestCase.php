@@ -16,10 +16,12 @@ abstract class TestCase extends PHPUnitTestCase
     }
 
     /** @return PaginationInterface|Mockery\MockInterface */
-    protected function getPaginationMockery(){
+    protected function getPaginationMockery(
+        array $items = [],
+    ) {
         /** @var PaginationInterface|Mockery\MockInterface */
         $mockPaginate = Mockery::spy(stdClass::class, PaginationInterface::class);
-        $mockPaginate->shouldReceive('items')->andReturn([]);
+        $mockPaginate->shouldReceive('items')->andReturn($items);
         $mockPaginate->shouldReceive('total')->andReturn(0);
         $mockPaginate->shouldReceive('firstPage')->andReturn(1);
         $mockPaginate->shouldReceive('perPage')->andReturn(15);
