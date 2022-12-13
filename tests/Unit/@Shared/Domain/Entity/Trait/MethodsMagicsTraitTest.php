@@ -4,7 +4,7 @@ namespace Tests\Shared\Domain\Entity\Trait;
 
 use Core\Shared\Domain\Entity\Trait\MethodsMagicsTrait;
 use Exception;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 
 class StubMethodsMagicsTrait
 {

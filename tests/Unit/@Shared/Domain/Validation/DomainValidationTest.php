@@ -4,7 +4,7 @@ namespace Tests\Shared\Domain\Validation\DomainValidation;
 
 use Core\Shared\Domain\Entity\Exception\EntityValidationException;
 use Core\Shared\Domain\Validation\DomainValidation;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 use Throwable;
 
 class DomainValidationTest extends TestCase

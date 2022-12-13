@@ -4,7 +4,7 @@ namespace Tests\Shared\ValueObject;
 
 use Core\Shared\ValueObject\Uuid;
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 
 class UuidTest extends TestCase
 {

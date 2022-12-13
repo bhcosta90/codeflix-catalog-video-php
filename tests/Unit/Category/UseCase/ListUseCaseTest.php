@@ -8,7 +8,7 @@ use Core\Category\UseCase\{ListUseCase, DTO\List\Input, DTO\List\Output};
 use Core\Shared\UseCase\Exception\NotFoundException;
 use Core\Shared\ValueObject\Uuid;
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 
 class ListUseCaseTest extends TestCase
 {

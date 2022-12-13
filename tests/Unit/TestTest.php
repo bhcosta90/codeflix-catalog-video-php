@@ -1,7 +1,7 @@
 <?php
 
 use Core\Test;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 
 class TestTest extends TestCase
 {
