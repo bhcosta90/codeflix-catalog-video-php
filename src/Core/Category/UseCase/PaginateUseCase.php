@@ -3,7 +3,7 @@
 namespace Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepository;
-use Shared\UseCase\Exception\UseCaseException;
+use Shared\UseCase\DTO\Paginate\Output;
 
 class PaginateUseCase
 {
@@ -12,11 +12,11 @@ class PaginateUseCase
         //
     }
 
-    public function execute(DTO\Paginate\Input $input): DTO\Paginate\Output
+    public function execute(DTO\Paginate\Input $input): Output
     {
         $category = $this->repository->paginate($input->page);
 
-        return new DTO\Paginate\Output(
+        return new Output(
             items: $category->items(),
             total: $category->total(),
             per_page: $category->perPage(),

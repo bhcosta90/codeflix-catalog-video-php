@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Category\UseCase\DTO\List;
+namespace Shared\UseCase\DTO\Delete;
 
 class Input
 {

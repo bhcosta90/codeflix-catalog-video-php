@@ -4,7 +4,8 @@ namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
 use Core\Category\Domain\Repository\CategoryRepository;
-use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Input, DTO\List\Output};
+use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Output};
+use Shared\UseCase\DTO\List\Input;
 use Shared\UseCase\Exception\NotFoundException;
 use Shared\ValueObject\Uuid;
 use Mockery;

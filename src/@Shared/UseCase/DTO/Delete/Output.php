@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Category\UseCase\DTO\Delete;
+namespace Shared\UseCase\DTO\Delete;
 
 class Output
 {

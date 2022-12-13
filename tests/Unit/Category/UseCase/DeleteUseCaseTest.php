@@ -4,7 +4,8 @@ namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
 use Core\Category\Domain\Repository\CategoryRepository;
-use Core\Category\UseCase\{DeleteUseCase as UseCase, DTO\Delete\Input, DTO\Delete\Output};
+use Core\Category\UseCase\{DeleteUseCase as UseCase};
+use Shared\UseCase\DTO\Delete\{Input, Output};
 use Shared\ValueObject\Uuid;
 use Mockery;
 use Shared\UseCase\Exception\{NotFoundException, UseCaseException};

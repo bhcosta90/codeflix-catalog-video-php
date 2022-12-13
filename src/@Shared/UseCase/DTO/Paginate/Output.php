@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Category\UseCase\DTO\Paginate;
+namespace Shared\UseCase\DTO\Paginate;
 
 class Output
 {

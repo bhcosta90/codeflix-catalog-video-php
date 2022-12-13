@@ -3,6 +3,7 @@
 namespace Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepository;
+use Shared\UseCase\DTO\List\Input;
 use Shared\UseCase\Exception\NotFoundException;
 
 class ListUseCase
@@ -12,7 +13,7 @@ class ListUseCase
         //
     }
 
-    public function execute(DTO\List\Input $input): DTO\List\Output
+    public function execute(Input $input): DTO\List\Output
     {
         if ($category = $this->repository->findById($input->id)) {
             return new DTO\List\Output(
