@@ -11,15 +11,19 @@ class CreateUseCaseTest extends TestCase
     {
         $this->expectException(UseCaseException::class);
         $this->expectExceptionMessage('The class Core\Category\UseCase\CreateUseCase is wrong.');
+        
         /** @var CategoryRepository|Mockery\MockInterface */
         $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
         $mockRepo->shouldReceive('insert')->andReturn(false);
+
+        /** @var Input|Mockery\MockInterface */
+        $mockInput = Mockery::mock(Input::class, ['test', 'test2']);
 
         $useCase = new CreateUseCase(
             repository: $mockRepo,
         );
 
-        $useCase->execute(new Input(name: 'test', description: 'test2'));
+        $useCase->execute($mockInput);
     }
 
     public function testCreateNewCategory()
@@ -28,11 +32,14 @@ class CreateUseCaseTest extends TestCase
         $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
         $mockRepo->shouldReceive('insert')->andReturn(true);
 
+        /** @var Input|Mockery\MockInterface */
+        $mockInput = Mockery::mock(Input::class, ['test', 'test2']);
+
         $useCase = new CreateUseCase(
             repository: $mockRepo,
         );
         
-        $retUseCase = $useCase->execute(new Input(name: 'test', description: 'test2'));
+        $retUseCase = $useCase->execute($mockInput);
         
         $this->assertInstanceOf(Output::class, $retUseCase);
         $this->assertNotEmpty($retUseCase->id);
