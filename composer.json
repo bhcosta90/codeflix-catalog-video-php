@@ -12,6 +12,11 @@
             "Core\\Shared\\": "src/Core/@Shared"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "mockery/mockery": "^1.5"

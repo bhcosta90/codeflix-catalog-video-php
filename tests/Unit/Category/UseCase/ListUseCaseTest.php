@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Unit\Category\UseCase;
+
 use Core\Category\Domain\Entity\CategoryEntity;
 use Core\Category\Domain\Repository\CategoryRepository;
 use Core\Category\UseCase\{ListUseCase, DTO\List\Input, DTO\List\Output};
 use Core\Shared\UseCase\Exception\NotFoundException;
 use Core\Shared\ValueObject\Uuid;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class ListUseCaseTest extends TestCase

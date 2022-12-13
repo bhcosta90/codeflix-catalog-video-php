@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests\Unit\Category\UseCase;
+
 use Core\Category\Domain\Repository\CategoryRepository;
 use Core\Category\UseCase\{CreateUseCase, DTO\Create\Input, DTO\Create\Output};
 use Core\Shared\UseCase\Exception\UseCaseException;
-use PHPUnit\Framework\TestCase;
+use Mockery;
+use Tests\Unit\TestCase;
 
 class CreateUseCaseTest extends TestCase
 {
