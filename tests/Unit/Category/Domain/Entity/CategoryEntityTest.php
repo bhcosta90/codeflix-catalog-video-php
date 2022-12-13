@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Category\Domain\Entity;
 
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 use Core\Category\Domain\Entity\CategoryEntity;
-use Core\Shared\Domain\Entity\Exception\EntityValidationException;
+use Shared\Domain\Entity\Exception\EntityValidationException;
 use Throwable;
 
 class CategoryEntityTest extends TestCase

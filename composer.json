@@ -9,7 +9,12 @@
     "autoload": {
         "psr-4": {
             "Core\\": "src/Core",
-            "Core\\Shared\\": "src/Core/@Shared"
+            "Shared\\": "src/@Shared"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "require-dev": {
