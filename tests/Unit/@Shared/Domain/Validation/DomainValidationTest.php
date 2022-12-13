@@ -2,8 +2,8 @@
 
 namespace Tests\Shared\Domain\Validation\DomainValidation;
 
-use Core\Shared\Domain\Entity\Exception\EntityValidationException;
-use Core\Shared\Domain\Validation\DomainValidation;
+use Shared\Domain\Entity\Exception\EntityValidationException;
+use Shared\Domain\Validation\DomainValidation;
 use Tests\Unit\TestCase;
 use Throwable;
 

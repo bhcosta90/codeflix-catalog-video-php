@@ -3,7 +3,7 @@
 namespace Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepository;
-use Core\Shared\UseCase\Exception\NotFoundException;
+use Shared\UseCase\Exception\NotFoundException;
 
 class ListUseCase
 {

@@ -4,9 +4,9 @@ namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
 use Core\Category\Domain\Repository\CategoryRepository;
-use Core\Category\UseCase\{ListUseCase, DTO\List\Input, DTO\List\Output};
-use Core\Shared\UseCase\Exception\NotFoundException;
-use Core\Shared\ValueObject\Uuid;
+use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Input, DTO\List\Output};
+use Shared\UseCase\Exception\NotFoundException;
+use Shared\ValueObject\Uuid;
 use Mockery;
 use Tests\Unit\TestCase;
 
@@ -24,7 +24,7 @@ class ListUseCaseTest extends TestCase
         /** @var Input|Mockery\MockInterface */
         $mockInput = Mockery::mock(Input::class, ['fake-id']);
 
-        $useCase = new ListUseCase(
+        $useCase = new UseCase(
             repository: $mockRepo,
         );
 
@@ -45,7 +45,7 @@ class ListUseCaseTest extends TestCase
         /** @var Input|Mockery\MockInterface */
         $mockInput = Mockery::mock(Input::class, [$id]);
 
-        $useCase = new ListUseCase(
+        $useCase = new UseCase(
             repository: $mockRepo,
         );
 

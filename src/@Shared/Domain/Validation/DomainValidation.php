@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Shared\Domain\Validation;
+namespace Shared\Domain\Validation;
 
-use Core\Shared\Domain\Entity\Exception\EntityValidationException;
+use Shared\Domain\Entity\Exception\EntityValidationException;
 
 class DomainValidation
 {

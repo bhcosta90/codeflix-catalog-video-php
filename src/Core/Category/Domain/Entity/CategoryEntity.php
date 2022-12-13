@@ -2,9 +2,9 @@
 
 namespace Core\Category\Domain\Entity;
 
-use Core\Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
-use Core\Shared\Domain\Validation\DomainValidation;
-use Core\Shared\ValueObject\Uuid;
+use Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
+use Shared\Domain\Validation\DomainValidation;
+use Shared\ValueObject\Uuid;
 use DateTime;
 
 class CategoryEntity

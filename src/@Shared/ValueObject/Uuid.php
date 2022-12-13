@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Shared\ValueObject;
+namespace Shared\ValueObject;
 
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid as RamseyUuid;

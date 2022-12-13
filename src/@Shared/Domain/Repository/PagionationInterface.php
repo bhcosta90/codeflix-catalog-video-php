@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Shared\Domain\Repository;
+namespace Shared\Domain\Repository;
 
 use stdClass;
 
@@ -11,11 +11,11 @@ interface PaginationInterface
      */
     public function items(): array;
 
+    public function perPage(): int;
+
     public function total(): int;
 
     public function firstPage(): int;
-
-    public function currentPage(): int;
 
     public function lastPage(): int;
 

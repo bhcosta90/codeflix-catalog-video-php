@@ -3,8 +3,8 @@
 namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepository;
-use Core\Category\UseCase\{CreateUseCase, DTO\Create\Input, DTO\Create\Output};
-use Core\Shared\UseCase\Exception\UseCaseException;
+use Core\Category\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
+use Shared\UseCase\Exception\UseCaseException;
 use Mockery;
 use Tests\Unit\TestCase;
 
@@ -22,7 +22,7 @@ class CreateUseCaseTest extends TestCase
         /** @var Input|Mockery\MockInterface */
         $mockInput = Mockery::mock(Input::class, ['test', 'test2']);
 
-        $useCase = new CreateUseCase(
+        $useCase = new UseCase(
             repository: $mockRepo,
         );
 
@@ -38,7 +38,7 @@ class CreateUseCaseTest extends TestCase
         /** @var Input|Mockery\MockInterface */
         $mockInput = Mockery::mock(Input::class, ['test', 'test2']);
 
-        $useCase = new CreateUseCase(
+        $useCase = new UseCase(
             repository: $mockRepo,
         );
 

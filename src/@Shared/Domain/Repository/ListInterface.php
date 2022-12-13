@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Shared\Domain\Repository;
+namespace Shared\Domain\Repository;
 
 use stdClass;
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Shared\Domain\Entity\Trait;
 
-use Core\Shared\Domain\Entity\Trait\MethodsMagicsTrait;
+use Shared\Domain\Entity\Trait\MethodsMagicsTrait;
 use Exception;
 use Tests\Unit\TestCase;
 

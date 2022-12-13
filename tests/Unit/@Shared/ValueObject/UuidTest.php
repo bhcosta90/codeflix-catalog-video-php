@@ -2,7 +2,7 @@
 
 namespace Tests\Shared\ValueObject;
 
-use Core\Shared\ValueObject\Uuid;
+use Shared\ValueObject\Uuid;
 use InvalidArgumentException;
 use Tests\Unit\TestCase;
 
@@ -11,7 +11,7 @@ class UuidTest extends TestCase
     public function testException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('<Core\Shared\ValueObject\Uuid> does not allow the value <test>.');
+        $this->expectExceptionMessage('<Shared\ValueObject\Uuid> does not allow the value <test>.');
         $obj = new Uuid("test");
         $this->assertNotEmpty($obj);
     }
