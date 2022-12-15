@@ -1,7 +1,0 @@
-[user]
-	email = bruno.costa@dafiti.com.br
-	name = Bruno Costa
-[core]
-	editor = vim
-[credential]
-	helper = "!f() { /var/www/.vscode-server/bin/5235c6bb189b60b01b1f49062f4ffa42384f8c91/node /tmp/vscode-remote-containers-6650fa75c7c91f738085d94d2db09d4c4142e45c.js $*; }; f"
