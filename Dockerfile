@@ -1,4 +1,4 @@
-FROM php:8.1.1-fpm
+FROM php:8.1.1-fpm as development
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -18,8 +18,9 @@ WORKDIR /var/www
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN pecl install -o -f redis \
+    && pecl install xdebug \
     &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
+    &&  docker-php-ext-enable redis xdebug
 
 # USER www-data
 

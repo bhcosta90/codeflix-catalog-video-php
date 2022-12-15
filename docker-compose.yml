@@ -2,14 +2,19 @@ version: '3'
 
 services:
 
-    app:
-        build: .
-        container_name: microservice-videos-app
+    container: &default
+        build:
+            target: development
+            context: .
         volumes:
             - .:/var/www
             - ./.docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
         networks:
             - app-network
+
+    app:
+        <<: *default
+        container_name: microservice-videos-app
         depends_on:
             - db
             - redis
