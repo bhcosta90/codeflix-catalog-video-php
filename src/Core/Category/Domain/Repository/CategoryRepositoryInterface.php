@@ -18,12 +18,3 @@ interface CategoryRepositoryInterface
         int $total = 15
     ): PaginationInterface;
 }
-
-class CategoryRepositoryFilter
-{
-    public function __construct(
-        public ?string $name,
-    ) {
-        //
-    }
-}

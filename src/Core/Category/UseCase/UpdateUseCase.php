@@ -21,6 +21,8 @@ class UpdateUseCase
                 description: $input->description,
             );
 
+            $input->is_active ? $category->enabled() : $category->disabled();
+
             if ($this->repository->update($category)) {
                 return new DTO\Update\Output(
                     id: $category->id(),

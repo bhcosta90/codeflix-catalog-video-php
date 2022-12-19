@@ -25,7 +25,7 @@ class UpdateUseCaseTest extends TestCase
         $mockRepo->shouldReceive('update')->andReturn(true);
 
         /** @var Input|Mockery\MockInterface */
-        $mockInput = Mockery::mock(Input::class, [$id, 'test 2', 'test 3']);
+        $mockInput = Mockery::mock(Input::class, [$id, 'test 2', 'test 3', true]);
 
         $useCase = new UseCase(
             repository: $mockRepo,
@@ -50,7 +50,7 @@ class UpdateUseCaseTest extends TestCase
         $mockRepo->shouldReceive('update')->andReturn(false);
 
         /** @var Input|Mockery\MockInterface */
-        $mockInput = Mockery::mock(Input::class, [$id, 'test 2', 'test 3']);
+        $mockInput = Mockery::mock(Input::class, [$id, 'test 2', 'test 3', true]);
 
         $useCase = new UseCase(
             repository: $mockRepo,
@@ -72,7 +72,7 @@ class UpdateUseCaseTest extends TestCase
         $mockRepo->shouldReceive('update')->andReturn(true);
 
         /** @var Input|Mockery\MockInterface */
-        $mockInput = Mockery::mock(Input::class, [$id, 'test 2', 'test 3']);
+        $mockInput = Mockery::mock(Input::class, [$id, 'test 2', 'test 3', true]);
 
         $useCase = new UseCase(
             repository: $mockRepo,

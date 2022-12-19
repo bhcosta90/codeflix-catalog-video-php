@@ -60,13 +60,16 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
     public function findById(string $id): ?CategoryEntity
     {
         if ($obj = $this->model->find($id)) {
-            return new CategoryEntity(
+            $response = new CategoryEntity(
                 name: $obj->name,
                 description: $obj->description,
-                isActive: $obj->is_active,
                 id: $obj->id,
                 createdAt: $obj->created_at,
             );
+
+            ((bool) $obj->is_active) ? $response->enabled() : $response->disabled();
+
+            return $response;
         }
 
         throw new DomainNotFoundException("Category {$id} not found");
@@ -84,7 +87,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
     {
         $result = $this->model;
 
-        if ($filter && ($filterResult = $filter->name)) {
+        if ($filter && ($filterResult = $filter->name) && !empty($filterResult)) {
             $result = $result->where('name', 'like', "%{$filterResult}%");
         }
 

@@ -50,12 +50,12 @@ class PaginatorPresenter implements PaginationInterface
 
     public function to(): int
     {
-        return $this->paginator->firstItem();
+        return $this->paginator->firstItem() ?? 0;
     }
 
     public function from(): int
     {
-        return $this->paginator->lastItem();
+        return $this->paginator->lastItem() ?? 0;
     }
 
     private function resolveItems(array $items)

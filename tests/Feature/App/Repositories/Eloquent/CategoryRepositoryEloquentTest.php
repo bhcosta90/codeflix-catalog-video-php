@@ -107,6 +107,11 @@ class CategoryRepositoryEloquentTest extends TestCase
         $this->assertInstanceOf(PaginationInterface::class, $response);
         $this->assertCount(5, $response->items());
         $this->assertEquals(5, $response->total());
+        $this->assertEquals(15, $response->perPage());
+        $this->assertEquals(1, $response->firstPage());
+        $this->assertEquals(1, $response->lastPage());
+        $this->assertEquals(1, $response->to());
+        $this->assertEquals(5, $response->from());
     }
 
     public function testUpdateNotFound()
@@ -137,10 +142,7 @@ class CategoryRepositoryEloquentTest extends TestCase
     {
         $entity = Model::factory()->create();
         $this->repository->delete($entity->id);
-        $this->assertDatabaseMissing('categories', [
-            'id' => $entity->id,
-            'deleted_at' => null,
-        ]);
+        $this->assertSoftDeleted($entity);
     }
 
     public function testExceptionDelete()

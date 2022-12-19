@@ -17,7 +17,7 @@ class DeleteUseCase
     public function execute(Input $input): Output
     {
         if ($category = $this->repository->findById($input->id)) {
-            if ($this->repository->delete($category)) {
+            if ($this->repository->delete($category->id())) {
                 return new Output(
                     success: true,
                 );

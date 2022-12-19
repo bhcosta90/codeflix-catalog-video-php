@@ -14,7 +14,7 @@ class PaginateUseCase
 
     public function execute(DTO\Paginate\Input $input): Output
     {
-        $result = $this->repository->paginate(null, $input->page);
+        $result = $this->repository->paginate($input->filter, $input->page);
 
         return new Output(
             items: $result->items(),
