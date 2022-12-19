@@ -3,18 +3,24 @@
 namespace App\Repositories\Presenters;
 
 use Shared\Domain\Repository\ListInterface;
+use Illuminate\Database\Eloquent\Collection;
 
-class ListPresenter implements ListInterface{
+class ListPresenter implements ListInterface
+{
+    public function __construct(private Collection $data)
+    {
+        //
+    }
     /**
      * @return stdClass[]
      */
     public function items(): array
     {
-        return [];
+        return (array) $this->data->toArray();
     }
 
     public function total(): int
     {
-        return 1;
+        return count($this->items());
     }
 }

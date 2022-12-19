@@ -38,10 +38,26 @@ class CategoryRepositoryEloquentTest extends TestCase
         $this->repository->findById('fake-id');
     }
 
-    public function testFindById(){
+    public function testFindById()
+    {
         $entity = Model::factory()->create();
         $objModel = $this->repository->findById($entity->id);
         $this->assertInstanceOf(Entity::class, $objModel);
         $this->assertEquals($entity->id, $objModel->id());
+    }
+
+    public function testFindAllEmpty()
+    {
+        $response = $this->repository->findAll();
+        $this->assertCount(0, $response->items());
+        $this->assertEquals(0, $response->total());
+    }
+
+    public function testFindAll()
+    {
+        Model::factory(10)->create();
+        $response = $this->repository->findAll();
+        $this->assertCount(10, $response->items());
+        $this->assertEquals(10, $response->total());
     }
 }

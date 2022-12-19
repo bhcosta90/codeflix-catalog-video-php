@@ -42,7 +42,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
 
     public function findAll(): ListInterface
     {
-        return new ListPresenter();
+        return new ListPresenter($this->model->get());
     }
 
     public function findById(string $id): ?CategoryEntity
