@@ -43,13 +43,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
 
     public function findAll(CategoryRepositoryFilter $filter = null): ListInterface
     {
-        $result = $this->model;
-
-        if ($filter && ($filterResult = $filter->name)) {
-            $result = $result->where('name', 'like', "%{$filterResult}%");
-        }
-
-        return new ListPresenter($result->get());
+        return new ListPresenter($this->filter($filter)->get());
     }
 
     public function findById(string $id): ?CategoryEntity
@@ -70,5 +64,16 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
     public function paginate(CategoryRepositoryFilter $filter = null, int $page = 1, int $total = 15): PaginationInterface
     {
         return new PaginatorPresenter();
+    }
+
+    private function filter(?CategoryRepositoryFilter $filter)
+    {
+        $result = $this->model;
+
+        if ($filter && ($filterResult = $filter->name)) {
+            $result = $result->where('name', 'like', "%{$filterResult}%");
+        }
+
+        return $result->orderBy('name', 'asc');
     }
 }
