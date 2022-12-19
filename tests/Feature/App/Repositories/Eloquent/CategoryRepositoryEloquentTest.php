@@ -5,6 +5,7 @@ namespace Tests\Feature\App\Repositories\Eloquent;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
 use Core\Category\Domain\Entity\CategoryEntity as Entity;
+use Core\Category\Domain\Repository\CategoryRepositoryFilter;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
 use Tests\TestCase;
@@ -59,5 +60,14 @@ class CategoryRepositoryEloquentTest extends TestCase
         $response = $this->repository->findAll();
         $this->assertCount(10, $response->items());
         $this->assertEquals(10, $response->total());
+    }
+
+    public function testFindAllWithFilter()
+    {
+        Model::factory(10)->create();
+        Model::factory(5)->create(['name' => 'test']);
+        $response = $this->repository->findAll(new CategoryRepositoryFilter(name: 'test'));
+        $this->assertCount(5, $response->items());
+        $this->assertEquals(5, $response->total());
     }
 }
