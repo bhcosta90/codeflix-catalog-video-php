@@ -137,9 +137,9 @@ class CategoryTest extends TestCase
 
         $this->assertDatabaseHas('categories', [
             'id' => $response->json('data.id'),
-            'name' => $response->json('data.name'),
-            'description' => $response->json('data.description'),
-            'is_active' => $response->json('data.is_active'),
+            'name' => 'test',
+            'description' => null,
+            'is_active' => true,
         ]);
     }
 
