@@ -21,6 +21,7 @@ class CategoryRepositoryEloquentTest extends TestCase
         parent::setUp();
         $this->repository = new CategoryRepositoryEloquent(new Model);
     }
+
     public function testInsert()
     {
         $entity = new Entity(

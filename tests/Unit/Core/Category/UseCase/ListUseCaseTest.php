@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Category\UseCase;
+namespace Tests\Unit\Core\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;

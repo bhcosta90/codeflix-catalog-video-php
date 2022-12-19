@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Category\Domain\Entity;
+namespace Tests\Unit\Core\Category\Domain\Entity;
 
 use Tests\Unit\TestCase;
 use Core\Category\Domain\Entity\CategoryEntity;

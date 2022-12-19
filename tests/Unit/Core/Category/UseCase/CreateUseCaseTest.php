@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Category\UseCase;
+namespace Tests\Unit\Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
