@@ -2,14 +2,14 @@
 
 namespace Core\Category\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Shared\UseCase\Exception\NotFoundException;
 use Shared\UseCase\Exception\UseCaseException;
 use Shared\UseCase\DTO\Delete\{Input, Output};
 
 class DeleteUseCase
 {
-    public function __construct(protected CategoryRepository $repository)
+    public function __construct(protected CategoryRepositoryInterface $repository)
     {
         //
     }

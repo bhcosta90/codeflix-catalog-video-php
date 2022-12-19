@@ -3,7 +3,7 @@
 namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Output};
 use Shared\UseCase\DTO\List\Input;
 use Shared\UseCase\Exception\NotFoundException;
@@ -17,9 +17,9 @@ class ListUseCaseTest extends TestCase
     {
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('ID fake-id not found.');
-        
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn(null);
 
         /** @var Input|Mockery\MockInterface */
@@ -31,7 +31,7 @@ class ListUseCaseTest extends TestCase
 
         $useCase->execute($mockInput);
     }
-    
+
     public function testCreateNewCategory()
     {
         $id = Uuid::random();
@@ -39,8 +39,8 @@ class ListUseCaseTest extends TestCase
         $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
 
         /** @var Input|Mockery\MockInterface */

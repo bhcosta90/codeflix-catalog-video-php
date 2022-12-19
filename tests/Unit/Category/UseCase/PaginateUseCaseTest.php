@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Category\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{PaginateUseCase as UseCase, DTO\Paginate\Input};
 use Shared\UseCase\DTO\Paginate\Output;
 use Mockery;
@@ -13,8 +13,8 @@ class PaginateUseCaseTest extends TestCase
 {
     public function testPaginate()
     {
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
 
         $item = new stdClass();
         $item->id = '1b5433a3-7f7e-4b8a-b5e7-a55c78389129';

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{UpdateUseCase as UseCase, DTO\Update\Input, DTO\Update\Output};
 use Shared\ValueObject\Uuid;
 use Mockery;
@@ -19,8 +19,8 @@ class UpdateUseCaseTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('ID ' . $id . ' not found.');
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn(null);
         $mockRepo->shouldReceive('update')->andReturn(true);
 
@@ -44,8 +44,8 @@ class UpdateUseCaseTest extends TestCase
         $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
         $mockRepo->shouldReceive('update')->andReturn(false);
 
@@ -66,8 +66,8 @@ class UpdateUseCaseTest extends TestCase
         $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
         $mockRepo->shouldReceive('update')->andReturn(true);
 

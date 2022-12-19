@@ -2,13 +2,13 @@
 
 namespace Core\Category\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Shared\UseCase\DTO\List\Input;
 use Shared\UseCase\Exception\NotFoundException;
 
 class ListUseCase
 {
-    public function __construct(protected CategoryRepository $repository)
+    public function __construct(protected CategoryRepositoryInterface $repository)
     {
         //
     }

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Category\UseCase;
 
 use Core\Category\Domain\Entity\CategoryEntity;
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{DeleteUseCase as UseCase};
 use Shared\UseCase\DTO\Delete\{Input, Output};
 use Shared\ValueObject\Uuid;
@@ -20,8 +20,8 @@ class DeleteUseCaseTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('ID ' . $id . ' not found.');
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn(null);
         $mockRepo->shouldReceive('delete')->andReturn(true);
 
@@ -45,8 +45,8 @@ class DeleteUseCaseTest extends TestCase
         $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
         $mockRepo->shouldReceive('delete')->andReturn(false);
 
@@ -67,8 +67,8 @@ class DeleteUseCaseTest extends TestCase
         $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
         $mockRepo->shouldReceive('delete')->andReturn(true);
 

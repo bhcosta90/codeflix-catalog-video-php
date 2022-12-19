@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Category\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
 use Shared\UseCase\Exception\UseCaseException;
 use Mockery;
@@ -15,8 +15,8 @@ class CreateUseCaseTest extends TestCase
         $this->expectException(UseCaseException::class);
         $this->expectExceptionMessage('The class Core\Category\UseCase\CreateUseCase is wrong.');
 
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('insert')->andReturn(false);
 
         /** @var Input|Mockery\MockInterface */
@@ -31,8 +31,8 @@ class CreateUseCaseTest extends TestCase
 
     public function testCreateNewCategory()
     {
-        /** @var CategoryRepository|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepository::class);
+        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
         $mockRepo->shouldReceive('insert')->andReturn(true);
 
         /** @var Input|Mockery\MockInterface */

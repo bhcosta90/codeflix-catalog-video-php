@@ -2,12 +2,12 @@
 
 namespace Core\Category\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepository;
+use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Shared\UseCase\DTO\Paginate\Output;
 
 class PaginateUseCase
 {
-    public function __construct(protected CategoryRepository $repository)
+    public function __construct(protected CategoryRepositoryInterface $repository)
     {
         //
     }
