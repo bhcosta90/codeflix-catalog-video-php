@@ -135,8 +135,7 @@ class CategoryRepositoryEloquentTest extends TestCase
     public function testDelete()
     {
         $entity = Model::factory()->create();
-        $objModel = $this->repository->findById($entity->id);
-        $this->repository->delete($objModel);
+        $this->repository->delete($entity->id);
         $this->assertDatabaseMissing('categories', [
             'id' => $entity->id,
             'deleted_at' => null,
@@ -145,11 +144,9 @@ class CategoryRepositoryEloquentTest extends TestCase
 
     public function testExceptionDelete()
     {
-        $objModel = new Entity(name: 'test');
-
         $this->expectException(DomainNotFoundException::class);
-        $this->expectExceptionMessage('Category ' . $objModel->id() . ' not found');
+        $this->expectExceptionMessage('Category fake-id not found');
 
-        $this->repository->delete($objModel);
+        $this->repository->delete('fake-id');
     }
 }

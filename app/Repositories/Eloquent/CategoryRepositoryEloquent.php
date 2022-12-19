@@ -43,13 +43,13 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
         throw new DomainNotFoundException("Category {$category->id()} not found");
     }
 
-    public function delete(CategoryEntity $category): bool
+    public function delete(string $id): bool
     {
-        if ($obj = $this->model->find($category->id())) {
+        if ($obj = $this->model->find($id)) {
             return $obj->delete();
         }
 
-        throw new DomainNotFoundException("Category {$category->id()} not found");
+        throw new DomainNotFoundException("Category {$id} not found");
     }
 
     public function findAll(CategoryRepositoryFilter $filter = null): ListInterface
