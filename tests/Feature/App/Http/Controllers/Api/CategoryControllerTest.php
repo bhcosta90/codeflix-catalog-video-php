@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
 use Core\Category\UseCase;
-use Core\Category\UseCase\DTO;
 use Illuminate\Http\Request;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;

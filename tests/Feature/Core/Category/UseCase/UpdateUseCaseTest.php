@@ -34,7 +34,8 @@ class UpdateUseCaseTest extends TestCase
         $this->assertNotEmpty($response->id);
         $this->assertEquals('test', $response->name);
         $this->assertEquals('description', $response->description);
-        $this->assertEquals(false, $response->active);
+        $this->assertEquals(false, $response->is_active);
+        $this->assertNotEmpty($response->created_at);
 
         $response = $this->useCase->execute(new Input(
             id: $model->id,
@@ -45,6 +46,7 @@ class UpdateUseCaseTest extends TestCase
 
         $this->assertEquals('test 2', $response->name);
         $this->assertEquals('description 2', $response->description);
-        $this->assertEquals(true, $response->active);
+        $this->assertEquals(true, $response->is_active);
+        $this->assertNotEmpty($response->created_at);
     }
 }

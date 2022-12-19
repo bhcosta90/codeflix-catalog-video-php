@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Shared\Domain\Entity\Exception\EntityValidationException;
+use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +40,22 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof DomainNotFoundException) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($e instanceof EntityValidationException) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return parent::render($request, $e);
     }
 }

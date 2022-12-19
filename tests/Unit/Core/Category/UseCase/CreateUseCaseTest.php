@@ -46,9 +46,10 @@ class CreateUseCaseTest extends TestCase
 
         $this->assertInstanceOf(Output::class, $retUseCase);
         $this->assertNotEmpty($retUseCase->id);
+        $this->assertNotEmpty($retUseCase->created_at);
         $this->assertEquals('test', $retUseCase->name);
         $this->assertEquals('test2', $retUseCase->description);
-        $this->assertTrue($retUseCase->active);
+        $this->assertTrue($retUseCase->is_active);
         $mockRepo->shouldHaveReceived('insert')->times(1);
     }
 }

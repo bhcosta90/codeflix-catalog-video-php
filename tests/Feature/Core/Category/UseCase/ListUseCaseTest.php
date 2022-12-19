@@ -31,6 +31,7 @@ class ListUseCaseTest extends TestCase
         $this->assertNotEmpty($response->id);
         $this->assertEquals($model->name, $response->name);
         $this->assertEquals($model->description, $response->description);
-        $this->assertEquals($model->is_active, $response->active);
+        $this->assertEquals($model->is_active, $response->is_active);
+        $this->assertEquals($model->created_at, $response->created_at);
     }
 }

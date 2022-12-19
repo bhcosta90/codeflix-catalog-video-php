@@ -5,6 +5,7 @@ namespace Tests\Unit\Core\Category\UseCase;
 use Core\Category\Domain\Entity\CategoryEntity;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Output};
+use DateTime;
 use Shared\UseCase\DTO\List\Input;
 use Shared\UseCase\Exception\NotFoundException;
 use Shared\ValueObject\Uuid;
@@ -37,7 +38,8 @@ class ListUseCaseTest extends TestCase
         $id = Uuid::random();
         /** @var CategoryEntity|Mockery\MockInterface */
         $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
-        $mockEntity->shouldReceive('id')->andReturn($id);
+        $mockEntity->shouldReceive('id')->andReturn($id)
+            ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 
         /** @var CategoryRepositoryInterface|Mockery\MockInterface */
         $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
@@ -54,9 +56,10 @@ class ListUseCaseTest extends TestCase
 
         $this->assertInstanceOf(Output::class, $retUseCase);
         $this->assertNotEmpty($retUseCase->id);
+        $this->assertNotEmpty($retUseCase->created_at);
         $this->assertEquals('test', $retUseCase->name);
         $this->assertEquals('test', $retUseCase->description);
-        $this->assertTrue($retUseCase->active);
+        $this->assertTrue($retUseCase->is_active);
         $mockRepo->shouldHaveReceived('findById')->times(1);
     }
 }
