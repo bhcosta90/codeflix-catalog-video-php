@@ -37,6 +37,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
             return (bool) $obj->update([
                 'name' => $category->name,
                 'description' => $category->description,
+                'is_active' => $category->isActive,
             ]);
         }
 
