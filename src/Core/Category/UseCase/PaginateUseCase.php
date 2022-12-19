@@ -14,16 +14,16 @@ class PaginateUseCase
 
     public function execute(DTO\Paginate\Input $input): Output
     {
-        $category = $this->repository->paginate(null, $input->page);
+        $result = $this->repository->paginate(null, $input->page);
 
         return new Output(
-            items: $category->items(),
-            total: $category->total(),
-            per_page: $category->perPage(),
-            first_page: $category->firstPage(),
-            last_page: $category->lastPage(),
-            to: $category->to(),
-            from: $category->from(),
+            items: $result->items(),
+            total: $result->total(),
+            per_page: $result->perPage(),
+            first_page: $result->firstPage(),
+            last_page: $result->lastPage(),
+            to: $result->to(),
+            from: $result->from(),
         );
     }
 }

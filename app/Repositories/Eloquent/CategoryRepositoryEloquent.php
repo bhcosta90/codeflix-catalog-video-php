@@ -33,12 +33,23 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
 
     public function update(CategoryEntity $category): bool
     {
-        return true;
+        if ($obj = $this->model->find($category->id())) {
+            return (bool) $obj->update([
+                'name' => $category->name,
+                'description' => $category->description,
+            ]);
+        }
+
+        throw new DomainNotFoundException("Category {$category->id()} not found");
     }
 
     public function delete(CategoryEntity $category): bool
     {
-        return true;
+        if ($obj = $this->model->find($category->id())) {
+            return $obj->delete();
+        }
+
+        throw new DomainNotFoundException("Category {$category->id()} not found");
     }
 
     public function findAll(CategoryRepositoryFilter $filter = null): ListInterface
@@ -61,9 +72,12 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
         throw new DomainNotFoundException("Category {$id} not found");
     }
 
-    public function paginate(CategoryRepositoryFilter $filter = null, int $page = 1, int $total = 15): PaginationInterface
-    {
-        return new PaginatorPresenter();
+    public function paginate(
+        CategoryRepositoryFilter $filter = null,
+        int $page = 1,
+        int $total = 15
+    ): PaginationInterface {
+        return new PaginatorPresenter($this->filter($filter)->paginate());
     }
 
     private function filter(?CategoryRepositoryFilter $filter)
