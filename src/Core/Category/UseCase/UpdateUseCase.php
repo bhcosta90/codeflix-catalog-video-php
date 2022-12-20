@@ -34,6 +34,7 @@ class UpdateUseCase
             }
             throw new UseCaseException(self::class);
         }
+
         throw new NotFoundException($input->id);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Core\Category\UseCase;
+namespace Tests\Unit\Core\Genre\UseCase;
 
-use Core\Category\Domain\Entity\CategoryEntity;
-use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Core\Category\UseCase\{DeleteUseCase as UseCase};
+use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Repository\GenreRepositoryInterface;
+use Core\Genre\UseCase\{DeleteUseCase as UseCase};
 use Shared\UseCase\DTO\Delete\{Input, Output};
 use Shared\ValueObject\Uuid;
 use Mockery;
@@ -13,15 +13,15 @@ use Tests\Unit\TestCase;
 
 class DeleteUseCaseTest extends TestCase
 {
-    public function testExceptionNotFoundDeleteCategory()
+    public function testExceptionNotFoundDeleteGenre()
     {
         $id = Uuid::random();
 
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('ID ' . $id . ' not found.');
 
-        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
+        /** @var GenreRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn(null);
         $mockRepo->shouldReceive('delete')->andReturn(true);
 
@@ -35,18 +35,18 @@ class DeleteUseCaseTest extends TestCase
         $useCase->execute($mockInput);
     }
 
-    public function testExceptionUseCaseDeleteCategory()
+    public function testExceptionUseCaseDeleteGenre()
     {
         $this->expectException(UseCaseException::class);
-        $this->expectExceptionMessage('The class Core\Category\UseCase\DeleteUseCase is wrong.');
+        $this->expectExceptionMessage('The class Core\Genre\UseCase\DeleteUseCase is wrong.');
 
         $id = Uuid::random();
-        /** @var CategoryEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
+        /** @var GenreEntity|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
+        /** @var GenreRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
         $mockRepo->shouldReceive('delete')->andReturn(false);
 
@@ -60,15 +60,15 @@ class DeleteUseCaseTest extends TestCase
         $useCase->execute($mockInput);
     }
 
-    public function testDeleteCategory()
+    public function testDeleteGenre()
     {
         $id = Uuid::random();
-        /** @var CategoryEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
+        /** @var GenreEntity|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
-        /** @var CategoryRepositoryInterface|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);
+        /** @var GenreRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
         $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
         $mockRepo->shouldReceive('delete')->andReturn(true);
 
