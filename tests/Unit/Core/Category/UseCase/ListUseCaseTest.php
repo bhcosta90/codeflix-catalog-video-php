@@ -14,7 +14,7 @@ use Tests\Unit\TestCase;
 
 class ListUseCaseTest extends TestCase
 {
-    public function testExceptionCreateNewCategory()
+    public function testExceptionListCategory()
     {
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('ID fake-id not found.');
@@ -33,7 +33,7 @@ class ListUseCaseTest extends TestCase
         $useCase->execute($mockInput);
     }
 
-    public function testCreateNewCategory()
+    public function testListCategory()
     {
         $id = Uuid::random();
         /** @var CategoryEntity|Mockery\MockInterface */
