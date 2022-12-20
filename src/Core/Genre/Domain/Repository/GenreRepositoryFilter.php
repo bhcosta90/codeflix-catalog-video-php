@@ -1,14 +1,16 @@
 <?php
 
-namespace Core\Category\Domain\Repository;
+namespace Core\Genre\Domain\Repository;
 
 /**
  * @codeCoverageIgnore
  */
-class CategoryRepositoryFilter
+
+class GenreRepositoryFilter
 {
     public function __construct(
         public ?string $name,
+        public ?array $categories,
     ) {
         //
     }

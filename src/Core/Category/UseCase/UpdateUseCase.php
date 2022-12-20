@@ -15,25 +15,26 @@ class UpdateUseCase
 
     public function execute(DTO\Update\Input $input): DTO\Update\Output
     {
-        if ($category = $this->repository->findById($input->id)) {
-            $category->update(
+        if ($entity = $this->repository->findById($input->id)) {
+            $entity->update(
                 name: $input->name,
                 description: $input->description,
             );
 
-            $input->is_active ? $category->enabled() : $category->disabled();
+            $input->is_active ? $entity->enabled() : $entity->disabled();
 
-            if ($this->repository->update($category)) {
+            if ($this->repository->update($entity)) {
                 return new DTO\Update\Output(
-                    id: $category->id(),
-                    name: $category->name,
-                    description: $category->description,
-                    is_active: $category->isActive,
-                    created_at: $category->createdAt(),
+                    id: $entity->id(),
+                    name: $entity->name,
+                    description: $entity->description,
+                    is_active: $entity->isActive,
+                    created_at: $entity->createdAt(),
                 );
             }
             throw new UseCaseException(self::class);
         }
+
         throw new NotFoundException($input->id);
     }
 }
