@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('category_genre', function (Blueprint $table) {
-            $table->uuid('category_id');
-            $table->uuid('genre_id');
+            $table->foreignUuid('category_id')->on('categories');
+            $table->foreignUuid('genre_id')->on('categories');
             $table->primary(['category_id', 'genre_id']);
         });
     }
