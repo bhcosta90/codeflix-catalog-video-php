@@ -87,7 +87,7 @@ class CategoryEntityTest extends TestCase
         $this->assertNull($category->description);
     }
 
-    public function testExceptionName()
+    public function testExceptionNameAndDescription()
     {
         try {
             new CategoryEntity(
