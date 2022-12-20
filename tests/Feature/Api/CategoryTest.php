@@ -2,186 +2,159 @@
 
 namespace Tests\Feature\Api;
 
+use App\Http\Resources\CategoryResource as Resource;
 use App\Models\Category as Model;
-use Illuminate\Support\Facades\Lang;
+use Shared\Tests\Traits\{TestResource, TestSave, TestValidation};
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    private string $endpoint = '/api/categories';
+    use TestValidation, TestResource, TestSave;
 
-    public function testListEmptyCategories()
+    private Model $model;
+    private string $endpoint = '/api/categories/';
+
+    private $serializedFields = [
+        'id',
+        'name',
+        'description',
+        'is_active',
+        'created_at',
+    ];
+
+    protected function setUp(): void
     {
-        $response = $this->getJson($this->endpoint);
-        $response->assertStatus(200);
+        parent::setUp();
+        $this->model = Model::factory()->create();
     }
 
-    public function testListAllCategories()
+    protected function model()
     {
-        Model::factory(30)->create();
-        $response = $this->getJson($this->endpoint);
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
+        return Model::class;
+    }
+
+    protected function routeStore()
+    {
+        return $this->endpoint;
+    }
+
+    protected function routeUpdate()
+    {
+        return $this->endpoint . $this->model->id;
+    }
+
+    public function testInvalidationData()
+    {
+        $data = [
+            'name' => ''
+        ];
+        $this->assertInvalidationInStoreAction($data, 'required');
+        $this->assertInvalidationInUpdateAction($data, 'required');
+
+        $data = [
+            'name' => str_repeat('a', 101),
+        ];
+        $this->assertInvalidationInStoreAction($data, 'max.string', ['max' => 100]);
+        $this->assertInvalidationInUpdateAction($data, 'max.string', ['max' => 100]);
+
+        $data = [
+            'is_active' => 'a'
+        ];
+        $this->assertInvalidationInStoreAction($data, 'boolean');
+        $this->assertInvalidationInUpdateAction($data, 'boolean');
+    }
+
+    public function testIndex()
+    {
+        $response = $this->get($this->endpoint);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'meta' => ['per_page' => 15]
+            ])
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => $this->serializedFields
+                ],
+                'meta' => [],
+            ]);
+
+        $resource = Resource::collection(collect([$this->model]));
+        $this->assertResource($response, $resource);
+    }
+
+    public function testIndexPagination()
+    {
+        Model::factory(20)->create();
+        $response = $this->get($this->endpoint . '?page=2');
+        $response->assertJson([
             'meta' => [
-                'total',
-                'last_page',
-                'first_page',
-                'current_page',
-                'per_page',
-                'to',
-                'from',
+                'current_page' => 2,
+                'total' => 21,
             ]
         ]);
     }
 
-    public function testListPaginateCategories()
+    public function testIndexFilter()
     {
-        Model::factory(30)->create();
-        $response = $this->getJson($this->endpoint . '?page=2');
-        $response->assertStatus(200);
-        $this->assertEquals(2, $response->json('meta.current_page'));
-        $this->assertEquals(30, $response->json('meta.total'));
+        Model::factory(5)->create(['name' => 'testing']);
+        $response = $this->get($this->endpoint . '?name=test');
+        $response->assertJson([
+            'meta' => ['total' => 5]
+        ]);
     }
 
-    public function testListFilterCategories()
+    public function testShowNotFund()
     {
-        Model::factory(30)->create();
-        Model::factory(5)->create(['name' => 'test']);
-        $response = $this->getJson($this->endpoint . '?name=test');
-        $response->assertStatus(200);
-        $this->assertEquals(5, $response->json('meta.total'));
-    }
-
-    public function testListCategoryNotFound()
-    {
-        $response = $this->getJson($this->endpoint . '/fake-id');
+        $response = $this->getJson($this->endpoint . 'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Category fake-id not found', $response->json('message'));
     }
 
-    public function testListCategory()
+    public function testShow()
     {
-        $category = Model::factory()->create();
-        $response = $this->getJson($this->endpoint . '/' . $category->id);
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'description',
-                'is_active',
-                'created_at',
-            ]
-        ]);
+        $response = $this->get($this->endpoint . $this->model->id);
 
-        $response->assertJson([
-            'data' => [
-                'id' => $category->id,
-                'name' => $category->name,
-                'description' => $category->description,
-                'is_active' => $category->is_active,
-                'created_at' => $category->created_at,
-            ]
-        ]);
-    }
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => $this->serializedFields
+            ]);
 
-    public function testValidationStore()
-    {
-        $response = $this->postJson($this->endpoint);
-        $response->assertStatus(422);
-        $response->assertJsonStructure([
-            'message',
-            'errors',
-        ]);
-        $response->assertJson([
-            'errors' => [
-                'name' => [Lang::get('validation.required', ['attribute' => 'name'])]
-            ]
-        ]);
-
-        $response = $this->postJson($this->endpoint, [
-            'name' => 'a'
-        ]);
-        $response->assertJson([
-            'errors' => [
-                'name' => [Lang::get('validation.min.string', ['attribute' => 'name', 'min' => 3])]
-            ]
-        ]);
-
-        $response = $this->postJson($this->endpoint, [
-            'name' => str_repeat('a', 101)
-        ]);
-
-        $response->assertJson([
-            'errors' => [
-                'name' => [Lang::get('validation.max.string', ['attribute' => 'name', 'max' => 100])]
-            ]
-        ]);
+        $id = $response->json('data.id');
+        $resource = new Resource(Model::find($id));
+        $this->assertResource($response, $resource);
     }
 
     public function testStore()
     {
-        $response = $this->postJson($this->endpoint, [
+        $data = [
             'name' => 'test'
-        ]);
-        $response->assertStatus(201);
+        ];
+        $response = $this->assertStore(
+            $data,
+            $data + ['description' => null, 'is_active' => true]
+        );
         $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'description',
-                'is_active',
-                'created_at',
-            ]
+            'data' => $this->serializedFields
         ]);
 
-        $this->assertDatabaseHas('categories', [
-            'id' => $response->json('data.id'),
+        $data = [
             'name' => 'test',
-            'description' => null,
-            'is_active' => true,
-        ]);
+            'description' => 'description',
+            'is_active' => false
+        ];
+        $this->assertStore($data, $data + ['description' => 'description', 'is_active' => false]);
+
+        $id = $response->json('data.id');
+        $resource = new Resource(Model::find($id));
+        $this->assertResource($response, $resource);
     }
 
-    public function testValidationUpdate()
+    public function testUpdateNotFound()
     {
-        $category = Model::factory()->create();
-        $response = $this->putJson($this->endpoint . '/' . $category->id);
-        $response->assertStatus(422);
-        $response->assertJsonStructure([
-            'message',
-            'errors',
-        ]);
-        $response->assertJson([
-            'errors' => [
-                'name' => [Lang::get('validation.required', ['attribute' => 'name'])],
-                'is_active' => [Lang::get('validation.required', ['attribute' => 'is active'])],
-            ]
-        ]);
-        $response = $this->putJson($this->endpoint . '/' . $category->id, [
-            'name' => 'a',
-            'is_active' => true,
-        ]);
-        $response->assertJson([
-            'errors' => [
-                'name' => [Lang::get('validation.min.string', ['attribute' => 'name', 'min' => 3])]
-            ]
-        ]);
-
-        $response = $this->putJson($this->endpoint . '/' . $category->id, [
-            'name' => str_repeat('a', 101),
-            'is_active' => true,
-        ]);
-
-        $response->assertJson([
-            'errors' => [
-                'name' => [Lang::get('validation.max.string', ['attribute' => 'name', 'max' => 100])]
-            ]
-        ]);
-    }
-
-    public function testUpdateNotFound(){
-        $response = $this->putJson($this->endpoint . '/fake-id', [
+        $response = $this->putJson($this->endpoint . 'fake-id', [
             'name' => 'test',
             'is_active' => true,
         ]);
@@ -191,33 +164,37 @@ class CategoryTest extends TestCase
 
     public function testUpdate()
     {
-        $category = Model::factory()->create();
-        $response = $this->putJson($this->endpoint . '/' . $category->id, [
+        $data = [
             'name' => 'test',
-            'is_active' => false,
-        ]);
-        $response->assertStatus(200);
+            'description' => 'test',
+            'is_active' => true
+        ];
+        $response = $this->assertUpdate($data, $data);
         $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'description',
-                'is_active',
-                'created_at',
-            ]
+            'data' => $this->serializedFields
         ]);
 
-        $this->assertDatabaseHas('categories', [
-            'id' => $category->id,
+        $id = $response->json('data.id');
+        $resource = new Resource(Model::find($id));
+        $this->assertResource($response, $resource);
+
+        $data = [
             'name' => 'test',
-            'description' => null,
-            'is_active' => false,
-        ]);
+            'description' => '',
+            'is_active' => true,
+        ];
+        $this->assertUpdate($data, array_merge($data, ['description' => null]));
+
+        $data['description'] = 'test';
+        $this->assertUpdate($data, array_merge($data, ['description' => 'test']));
+
+        $data['description'] = null;
+        $this->assertUpdate($data, array_merge($data, ['description' => null]));
     }
 
     public function testDestroyNotFound()
     {
-        $response = $this->deleteJson($this->endpoint . '/fake-id');
+        $response = $this->deleteJson($this->endpoint . 'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Category fake-id not found', $response->json('message'));
     }
@@ -225,9 +202,10 @@ class CategoryTest extends TestCase
     public function testDestroy()
     {
         $category = Model::factory()->create();
-        $response = $this->deleteJson($this->endpoint . '/' . $category->id);
+        $response = $this->deleteJson($this->endpoint . $category->id);
         $response->assertStatus(204);
         $this->assertEmpty($response->content());
         $this->assertSoftDeleted($category);
+        $this->assertNotEmpty(Model::withTrashed()->find($category->id));
     }
 }

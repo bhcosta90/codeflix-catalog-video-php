@@ -20,6 +20,10 @@ class CreateUseCase
             description: $input->description,
         );
 
+        if (!$input->is_active) {
+            $category->disabled();
+        }
+
         if ($this->repository->insert($category)) {
             return new DTO\Create\Output(
                 id: $category->id(),

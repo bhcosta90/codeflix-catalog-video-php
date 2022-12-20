@@ -26,6 +26,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:100',
             'description' => 'nullable',
+            'is_active' => 'nullable|boolean',
         ];
     }
 }

@@ -42,6 +42,7 @@ class CategoryController extends Controller
         $response = $useCase->execute(new DTO\Create\Input(
             name: $request->name,
             description: $request->description,
+            is_active: $request->is_active ?? true
         ));
 
         return (new CategoryResource($response))
