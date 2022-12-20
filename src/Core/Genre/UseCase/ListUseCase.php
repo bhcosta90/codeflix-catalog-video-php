@@ -1,14 +1,14 @@
 <?php
 
-namespace Core\Category\UseCase;
+namespace Core\Genre\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepositoryInterface;
+use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Shared\UseCase\DTO\List\Input;
 use Shared\UseCase\Exception\NotFoundException;
 
 class ListUseCase
 {
-    public function __construct(protected CategoryRepositoryInterface $repository)
+    public function __construct(protected GenreRepositoryInterface $repository)
     {
         //
     }
@@ -19,7 +19,6 @@ class ListUseCase
             return new DTO\List\Output(
                 id: $entity->id(),
                 name: $entity->name,
-                description: $entity->description,
                 is_active: $entity->isActive,
                 created_at: $entity->createdAt(),
             );

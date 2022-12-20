@@ -15,22 +15,22 @@ class CreateUseCase
 
     public function execute(DTO\Create\Input $input): DTO\Create\Output
     {
-        $category = new CategoryEntity(
+        $entity = new CategoryEntity(
             name: $input->name,
             description: $input->description,
         );
 
         if (!$input->is_active) {
-            $category->disabled();
+            $entity->disabled();
         }
 
-        if ($this->repository->insert($category)) {
+        if ($this->repository->insert($entity)) {
             return new DTO\Create\Output(
-                id: $category->id(),
-                name: $category->name,
-                description: $category->description,
-                is_active: $category->isActive,
-                created_at: $category->createdAt(),
+                id: $entity->id(),
+                name: $entity->name,
+                description: $entity->description,
+                is_active: $entity->isActive,
+                created_at: $entity->createdAt(),
             );
         }
 

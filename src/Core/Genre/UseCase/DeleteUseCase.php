@@ -1,15 +1,15 @@
 <?php
 
-namespace Core\Category\UseCase;
+namespace Core\Genre\UseCase;
 
-use Core\Category\Domain\Repository\CategoryRepositoryInterface;
+use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Shared\UseCase\Exception\NotFoundException;
 use Shared\UseCase\Exception\UseCaseException;
 use Shared\UseCase\DTO\Delete\{Input, Output};
 
 class DeleteUseCase
 {
-    public function __construct(protected CategoryRepositoryInterface $repository)
+    public function __construct(protected GenreRepositoryInterface $repository)
     {
         //
     }
