@@ -104,4 +104,32 @@ class GenreEntityTest extends TestCase
             $this->assertEquals('Name of genre must be less than 255 characters', $e->getMessage());
         }
     }
+
+    public function testAddCategoryInGenre()
+    {
+        $category = Uuid::random();
+        $genre = new GenreEntity(
+            name: 'Test',
+        );
+
+        $this->assertCount(0, $genre->categories);
+        $genre->addCategory(category: $category);
+        $genre->addCategory(category: $category);
+        $this->assertCount(2, $genre->categories);
+    }
+
+    public function testRemoveCategoryInGenre()
+    {
+        $category = Uuid::random();
+        $category2 = Uuid::random();
+        $genre = new GenreEntity(
+            name: 'Test',
+            categories: [$category, $category2]
+        );
+
+        $this->assertCount(2, $genre->categories);
+        $genre->subCategory(category: $category);
+        $this->assertCount(1, $genre->categories);
+        $this->assertEquals([$category2], array_values($genre->categories));
+    }
 }

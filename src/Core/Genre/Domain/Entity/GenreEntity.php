@@ -16,6 +16,7 @@ class GenreEntity
         protected bool $isActive = true,
         protected ?Uuid $id = null,
         protected ?DateTime $createdAt = null,
+        protected array $categories = [],
     ) {
         $this->id = $this->id ?? Uuid::random();
         $this->createdAt = $this->createdAt ?? new DateTime();
@@ -37,6 +38,16 @@ class GenreEntity
     ) {
         $this->name = $name;
         $this->validate();
+    }
+
+    public function addCategory(string $category)
+    {
+        array_push($this->categories, $category);
+    }
+
+    public function subCategory(string $category)
+    {
+        unset($this->categories[array_search($category, $this->categories)]);
     }
 
     private function validate()
