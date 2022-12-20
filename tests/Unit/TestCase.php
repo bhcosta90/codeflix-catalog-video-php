@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Shared\Domain\Repository\PaginationInterface;
 use Mockery;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Shared\UseCase\Interfaces\DatabaseTransactionInterface;
 use stdClass;
 
 abstract class TestCase extends PHPUnitTestCase
@@ -13,6 +14,16 @@ abstract class TestCase extends PHPUnitTestCase
     {
         Mockery::close();
         parent::tearDown();
+    }
+
+    /** @return DatabaseTransactionInterface|Mockery\MockInterface */
+    protected function getDatabaseTransactionInterface()
+    {
+        /** @var DatabaseTransactionInterface|Mockery\MockInterface */
+        $mock = Mockery::spy(stdClass::class, DatabaseTransactionInterface::class);
+        $mock->shouldReceive('commit');
+        $mock->shouldReceive('rollback');
+        return $mock;
     }
 
     /** @return PaginationInterface|Mockery\MockInterface */
