@@ -28,7 +28,7 @@ class GenreRepositoryEloquent implements GenreRepositoryInterface
             'created_at' => $entity->createdAt(),
         ]);
 
-        if(count($entity->categories)){
+        if (count($entity->categories)) {
             $genre->categories()->sync($entity->categories);
         }
 
@@ -38,10 +38,16 @@ class GenreRepositoryEloquent implements GenreRepositoryInterface
     public function update(GenreEntity $entity): bool
     {
         if ($obj = $this->model->find($entity->id())) {
-            return (bool) $obj->update([
+            $response = (bool) $obj->update([
                 'name' => $entity->name,
                 'is_active' => $entity->isActive,
             ]);
+
+            if (count($entity->categories)) {
+                $obj->categories()->sync($entity->categories);
+            }
+
+            return $response;
         }
 
         throw new DomainNotFoundException("Genre {$entity->id()} not found");
