@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('genres', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->boolean('is_active')->nullable()->default(true);
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::create('category_genre', function (Blueprint $table) {
+            $table->uuid('category_id');
+            $table->uuid('genre_id');
+            $table->primary(['category_id', 'genre_id']);
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('genres');
+        Schema::dropIfExists('category_genre');
     }
 };
