@@ -6,6 +6,7 @@ use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
 use Core\Genre\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
+use Exception;
 use Shared\UseCase\Exception\UseCaseException;
 use Mockery;
 use stdClass;
@@ -53,6 +54,26 @@ class CreateUseCaseTest extends TestCase
             $this->assertEquals($e->getMessage(), 'Categories not found');
             $this->assertEquals(['123', '456'], $e->categories);
         }
+    }
+
+    public function testDatabaseException(){
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('database error');
+
+        /** @var GenreRepositoryInterface|Mockery\MockInterface */
+        $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
+        $mockRepo->shouldReceive('insert')->andReturn(true);
+
+        /** @var Input|Mockery\MockInterface */
+        $mockInput = Mockery::mock(Input::class, ['test', ['123', '456']]);
+
+        $useCase = new UseCase(
+            repository: $mockRepo,
+            transaction: $this->getDatabaseTransactionInterface(false),
+            categoryFactory: $this->mockCategoryFactoryInterface(),
+        );
+
+        $useCase->execute($mockInput);
     }
 
     public function testCreateNewGenre()

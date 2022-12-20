@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Exception;
 use Shared\Domain\Repository\PaginationInterface;
 use Mockery;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
@@ -17,11 +18,15 @@ abstract class TestCase extends PHPUnitTestCase
     }
 
     /** @return DatabaseTransactionInterface|Mockery\MockInterface */
-    protected function getDatabaseTransactionInterface()
+    protected function getDatabaseTransactionInterface($success = true)
     {
         /** @var DatabaseTransactionInterface|Mockery\MockInterface */
         $mock = Mockery::spy(stdClass::class, DatabaseTransactionInterface::class);
-        $mock->shouldReceive('commit');
+        if ($success) {
+            $mock->shouldReceive('commit');
+        } else {
+            $mock->shouldReceive('commit')->andThrowExceptions([new Exception('database error')]);
+        }
         $mock->shouldReceive('rollback');
         return $mock;
     }
