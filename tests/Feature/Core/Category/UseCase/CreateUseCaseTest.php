@@ -15,9 +15,7 @@ class CreateUseCaseTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $model = new Model();
-        $repository = new Repository($model);
-        $this->useCase = new UseCase($repository);
+        $this->useCase = new UseCase(new Repository(new Model()));
     }
 
     public function testExec()
