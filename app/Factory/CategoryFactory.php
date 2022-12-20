@@ -9,6 +9,7 @@ class CategoryFactory implements CategoryFactoryInterface
     {
         //
     }
+
     public function findByIds(array $id): array
     {
         return $this->model->whereIn($id)
