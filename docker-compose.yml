@@ -12,16 +12,14 @@ services:
         networks:
             - app-network
 
-    dev:
+    app:
         <<: *container
-        container_name: microservice-videos-app-dev
         depends_on:
             - db
             - redis
 
     nginx:
         build: .docker/nginx
-        container_name: microservice-videos-nginx-dev
         restart: always
         tty: true
         ports:
@@ -33,13 +31,12 @@ services:
 
     db:
         image: mysql:5.7
-        container_name: microservice-videos-db
         restart: always
         tty: true
         ports:
             - "33006:3306"
         volumes:
-            - ./.docker/dbdata:/var/lib/mysql
+            - ./vendor/__data/mysql:/var/lib/mysql
             - ./.docker/mysql:/docker-entrypoint-initdb.d
         environment:
             - MYSQL_DATABASE=code_micro_videos
@@ -49,66 +46,8 @@ services:
 
     redis:
         image: redis:alpine
-        container_name: microservice-videos-redis
         networks:
             - app-network
-
-    prod:
-        <<: *container
-        container_name: microservice-videos-app-prod
-        depends_on:
-            - db
-            - redis
-        ports:
-            - "8001:9000"
-        command: "sh -c 'php artisan octane:start --server=roadrunner --host=0.0.0.0 --rpc-port=6001 --port=9000 --max-requests=250'"
-
-    laravel:
-        <<: *container
-        container_name: microservice-videos-app-laravel
-        depends_on:
-            - db
-            - redis
-        ports:
-            - "8002:9000"
-        command: "sh -c 'php artisan serve --host=0.0.0.0 --port=9000'"
-
-    performance_dev:
-        image: grafana/k6
-        environment:
-            - VIRTUALUSERS=100
-            - SECONDSDURATION=30
-            - ENDPOINT=http://nginx:80
-        volumes:
-            - ./.docker/perfomance/:/usr/app
-        entrypoint: "k6 run /usr/app/index.js"
-        networks:
-            - app-network
-
-    performance_prod:
-        image: grafana/k6
-        environment:
-            - VIRTUALUSERS=100
-            - SECONDSDURATION=30
-            - ENDPOINT=http://prod:9000
-        volumes:
-            - ./.docker/perfomance/:/usr/app
-        entrypoint: "k6 run /usr/app/index.js"
-        networks:
-            - app-network
-
-    performance_laravel:
-        image: grafana/k6
-        environment:
-            - VIRTUALUSERS=100
-            - SECONDSDURATION=30
-            - ENDPOINT=http://laravel:9000
-        volumes:
-            - ./.docker/perfomance/:/usr/app
-        entrypoint: "k6 run /usr/app/index.js"
-        networks:
-            - app-network
-
 networks:
     app-network:
         driver: bridge

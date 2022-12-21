@@ -3,7 +3,6 @@ version: '3'
 services:
     prod:
         <<: *container
-        container_name: microservice-videos-app-prod
         depends_on:
             - db
             - redis
@@ -13,7 +12,6 @@ services:
 
     laravel:
         <<: *container
-        container_name: microservice-videos-app-laravel
         depends_on:
             - db
             - redis
