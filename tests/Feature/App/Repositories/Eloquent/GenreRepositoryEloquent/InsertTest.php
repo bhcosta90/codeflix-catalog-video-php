@@ -5,7 +5,7 @@ namespace Tests\Feature\App\Repositories\Eloquent\GenreRepositoryEloquent;
 use App\Models\Category;
 use App\Models\Genre as Model;
 use App\Repositories\Eloquent\GenreRepositoryEloquent;
-use Core\Genre\Domain\Entity\GenreEntity as Entity;
+use Core\Genre\Domain\Entity\Genre as Entity;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Tests\TestCase;
 

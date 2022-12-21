@@ -7,7 +7,7 @@ use Shared\Domain\Validation\DomainValidation;
 use Shared\ValueObject\Uuid;
 use DateTime;
 
-class GenreEntity
+class Genre
 {
     use MethodsMagicsTrait, EntityTrait;
 

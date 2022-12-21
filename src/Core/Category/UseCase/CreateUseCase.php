@@ -2,7 +2,7 @@
 
 namespace Core\Category\UseCase;
 
-use Core\Category\Domain\Entity\CategoryEntity;
+use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Shared\UseCase\Exception\UseCaseException;
 
@@ -15,7 +15,7 @@ class CreateUseCase
 
     public function execute(DTO\Create\Input $input): DTO\Create\Output
     {
-        $entity = new CategoryEntity(
+        $entity = new Category(
             name: $input->name,
             description: $input->description,
         );

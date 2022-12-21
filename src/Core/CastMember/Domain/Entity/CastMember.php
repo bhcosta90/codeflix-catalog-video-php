@@ -8,7 +8,7 @@ use Shared\Domain\Validation\DomainValidation;
 use Shared\ValueObject\Uuid;
 use DateTime;
 
-class CastMemberEntity
+class CastMember
 {
     use MethodsMagicsTrait, EntityTrait;
 

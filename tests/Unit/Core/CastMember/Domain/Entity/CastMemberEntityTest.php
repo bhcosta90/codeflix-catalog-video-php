@@ -3,18 +3,18 @@
 namespace Tests\Unit\Core\CastMember\Domain\Entity;
 
 use Tests\Unit\TestCase;
-use Core\CastMember\Domain\Entity\CastMemberEntity;
+use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use DateTime;
 use Shared\Domain\Entity\Exception\EntityValidationException;
 use Shared\ValueObject\Uuid;
 use Throwable;
 
-class CastMemberEntityTest extends TestCase
+class CastMemberTest extends TestCase
 {
     public function testAttributes()
     {
-        $entity = new CastMemberEntity(
+        $entity = new CastMember(
             name: 'Test',
             isActive: true,
             type: Type::ACTOR,
@@ -29,7 +29,7 @@ class CastMemberEntityTest extends TestCase
 
     public function testEnabled()
     {
-        $category = new CastMemberEntity(
+        $category = new CastMember(
             name: 'Test',
             type: Type::ACTOR,
             isActive: false,
@@ -42,7 +42,7 @@ class CastMemberEntityTest extends TestCase
 
     public function testDisabled()
     {
-        $entity = new CastMemberEntity(
+        $entity = new CastMember(
             name: 'Test',
             type: Type::ACTOR,
         );
@@ -56,7 +56,7 @@ class CastMemberEntityTest extends TestCase
     {
         $id = new Uuid('b257aaca-75f2-4cdf-a96f-d438e1e891cc');
 
-        $entity = new CastMemberEntity(
+        $entity = new CastMember(
             name: 'Test',
             type: Type::ACTOR,
             isActive: true,
@@ -78,7 +78,7 @@ class CastMemberEntityTest extends TestCase
     public function testExceptionName()
     {
         try {
-            new CastMemberEntity(
+            new CastMember(
                 name: 'Te',
                 type: Type::ACTOR,
                 isActive: true,
@@ -90,7 +90,7 @@ class CastMemberEntityTest extends TestCase
         }
 
         try {
-            new CastMemberEntity(
+            new CastMember(
                 name: str_repeat('Te', 256),
                 type: Type::ACTOR,
                 isActive: true,

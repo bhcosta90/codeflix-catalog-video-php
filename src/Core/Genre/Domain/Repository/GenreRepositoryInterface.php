@@ -2,15 +2,15 @@
 
 namespace Core\Genre\Domain\Repository;
 
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use Shared\Domain\Repository\{ListInterface, PaginationInterface};
 
 interface GenreRepositoryInterface
 {
-    public function insert(GenreEntity $genre): bool;
-    public function update(GenreEntity $genre): bool;
+    public function insert(Genre $genre): bool;
+    public function update(Genre $genre): bool;
     public function delete(string $id): bool;
-    public function findById(string $id): ?GenreEntity;
+    public function findById(string $id): ?Genre;
     public function findAll(GenreRepositoryFilter $filter = null): ListInterface;
     public function paginate(
         GenreRepositoryFilter $filter = null,

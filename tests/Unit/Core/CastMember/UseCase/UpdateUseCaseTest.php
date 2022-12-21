@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\CastMember\UseCase;
 
-use Core\CastMember\Domain\Entity\CastMemberEntity;
+use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use Core\CastMember\UseCase\{UpdateUseCase as UseCase, DTO\Update\Input, DTO\Update\Output};
@@ -42,8 +42,8 @@ class UpdateUseCaseTest extends TestCase
         $this->expectExceptionMessage('The class Core\CastMember\UseCase\UpdateUseCase is wrong.');
 
         $id = Uuid::random();
-        /** @var CastMemberEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CastMemberEntity::class, ['test', Type::ACTOR, true, $id]);
+        /** @var CastMember|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(CastMember::class, ['test', Type::ACTOR, true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
         /** @var CastMemberRepositoryInterface|Mockery\MockInterface */
@@ -64,8 +64,8 @@ class UpdateUseCaseTest extends TestCase
     public function testUpdateCastMember()
     {
         $id = Uuid::random();
-        /** @var CastMemberEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CastMemberEntity::class, ['test', Type::ACTOR, true, $id]);
+        /** @var CastMember|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(CastMember::class, ['test', Type::ACTOR, true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id)
             ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Genre\UseCase;
 
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\UseCase\{DeleteUseCase as UseCase};
 use Shared\UseCase\DTO\Delete\{Input, Output};
@@ -41,8 +41,8 @@ class DeleteUseCaseTest extends TestCase
         $this->expectExceptionMessage('The class Core\Genre\UseCase\DeleteUseCase is wrong.');
 
         $id = Uuid::random();
-        /** @var GenreEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id]);
+        /** @var Genre|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
         /** @var GenreRepositoryInterface|Mockery\MockInterface */
@@ -63,8 +63,8 @@ class DeleteUseCaseTest extends TestCase
     public function testDeleteGenre()
     {
         $id = Uuid::random();
-        /** @var GenreEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id]);
+        /** @var Genre|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
         /** @var GenreRepositoryInterface|Mockery\MockInterface */

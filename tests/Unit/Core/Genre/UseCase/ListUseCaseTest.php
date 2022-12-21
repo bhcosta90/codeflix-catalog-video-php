@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Genre\UseCase;
 
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\UseCase\{ListUseCase as UseCase, DTO\List\Output};
 use DateTime;
@@ -36,8 +36,8 @@ class ListUseCaseTest extends TestCase
     public function testListGenre()
     {
         $id = Uuid::random();
-        /** @var GenreEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id]);
+        /** @var Genre|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id)
             ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 

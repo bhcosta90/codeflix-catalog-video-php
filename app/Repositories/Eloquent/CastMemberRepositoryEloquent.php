@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\CastMember;
+use App\Models\CastMember as CastMemberModel;
 use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
-use Core\CastMember\Domain\Entity\CastMemberEntity;
+use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryFilter;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
@@ -16,12 +16,12 @@ use Shared\ValueObject\Uuid;
 
 class CastMemberRepositoryEloquent implements CastMemberRepositoryInterface
 {
-    public function __construct(private CastMember $model)
+    public function __construct(private CastMemberModel $model)
     {
         //
     }
 
-    public function insert(CastMemberEntity $entity): bool
+    public function insert(CastMember $entity): bool
     {
         $this->model->create([
             'id' => $entity->id(),
@@ -34,7 +34,7 @@ class CastMemberRepositoryEloquent implements CastMemberRepositoryInterface
         return true;
     }
 
-    public function update(CastMemberEntity $entity): bool
+    public function update(CastMember $entity): bool
     {
         if ($obj = $this->model->find($entity->id())) {
             return (bool) $obj->update([
@@ -61,10 +61,10 @@ class CastMemberRepositoryEloquent implements CastMemberRepositoryInterface
         return new ListPresenter($this->filter($filter)->get());
     }
 
-    public function findById(string $id): ?CastMemberEntity
+    public function findById(string $id): ?CastMember
     {
         if ($obj = $this->model->find($id)) {
-            $response = new CastMemberEntity(
+            $response = new CastMember(
                 name: $obj->name,
                 type: Type::from($obj->type),
                 id: new Uuid($obj->id),

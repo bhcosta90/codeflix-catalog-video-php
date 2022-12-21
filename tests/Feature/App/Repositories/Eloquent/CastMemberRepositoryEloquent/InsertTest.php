@@ -5,7 +5,7 @@ namespace Tests\Feature\App\Repositories\Eloquent\CastMemberRepositoryEloquent;
 use App\Models\CastMember;
 use App\Models\CastMember as Model;
 use App\Repositories\Eloquent\CastMemberRepositoryEloquent;
-use Core\CastMember\Domain\Entity\CastMemberEntity as Entity;
+use Core\CastMember\Domain\Entity\CastMember as Entity;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use Tests\TestCase;
