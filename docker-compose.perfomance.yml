@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+    performance_dev:
+        image: grafana/k6
+        environment:
+            - VIRTUALUSERS=100
+            - SECONDSDURATION=30
+            - ENDPOINT=http://nginx:80
+        volumes:
+            - ./.docker/perfomance/:/usr/app
+        entrypoint: "k6 run /usr/app/index.js"
+        networks:
+            - app-network
+
+    performance_prod:
+        image: grafana/k6
+        environment:
+            - VIRTUALUSERS=100
+            - SECONDSDURATION=30
+            - ENDPOINT=http://prod:9000
+        volumes:
+            - ./.docker/perfomance/:/usr/app
+        entrypoint: "k6 run /usr/app/index.js"
+        networks:
+            - app-network
+
+    performance_laravel:
+        image: grafana/k6
+        environment:
+            - VIRTUALUSERS=100
+            - SECONDSDURATION=30
+            - ENDPOINT=http://laravel:9000
+        volumes:
+            - ./.docker/perfomance/:/usr/app
+        entrypoint: "k6 run /usr/app/index.js"
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
