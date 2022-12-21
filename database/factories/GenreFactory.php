@@ -17,6 +17,7 @@ class GenreFactory extends Factory
     public function definition()
     {
         return [
+            'id' => str()->uuid(),
             'name' => $this->faker->name(),
             'is_active' => true,
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Shared\Domain\Entity\Exception\EntityValidationException;
@@ -54,6 +55,13 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'message' => $e->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($e instanceof CategoryNotFound) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'categories' => $e->categories
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return parent::render($request, $e);
