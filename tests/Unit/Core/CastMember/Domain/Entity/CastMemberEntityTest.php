@@ -74,4 +74,31 @@ class CastMemberEntityTest extends TestCase
         $this->assertEquals($id, $entity->id());
         $this->assertEquals($date, $entity->createdAt());
     }
+
+    public function testExceptionName()
+    {
+        try {
+            new CastMemberEntity(
+                name: 'Te',
+                type: Type::ACTOR,
+                isActive: true,
+            );
+            $this->assertTrue(false);
+        } catch (Throwable $e) {
+            $this->assertInstanceOf(EntityValidationException::class, $e);
+            $this->assertEquals('Name of cast member must be at least 2 characters', $e->getMessage());
+        }
+
+        try {
+            new CastMemberEntity(
+                name: str_repeat('Te', 256),
+                type: Type::ACTOR,
+                isActive: true,
+            );
+            $this->assertTrue(false);
+        } catch (Throwable $e) {
+            $this->assertInstanceOf(EntityValidationException::class, $e);
+            $this->assertEquals('Name of cast member must be less than 255 characters', $e->getMessage());
+        }
+    }
 }

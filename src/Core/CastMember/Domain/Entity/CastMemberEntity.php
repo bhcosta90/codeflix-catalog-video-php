@@ -47,7 +47,7 @@ class CastMemberEntity
     private function validate()
     {
         DomainValidation::notNull($this->name);
-        DomainValidation::strMinLength($this->name, 3, 'Name of genre must be at least 2 characters');
-        DomainValidation::strMaxLength($this->name, 255, 'Name of genre must be less than 255 characters');
+        DomainValidation::strMinLength($this->name, 3, 'Name of cast member must be at least 2 characters');
+        DomainValidation::strMaxLength($this->name, 255, 'Name of cast member must be less than 255 characters');
     }
 }
