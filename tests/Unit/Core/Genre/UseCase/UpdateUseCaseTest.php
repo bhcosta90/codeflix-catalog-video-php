@@ -63,7 +63,7 @@ class UpdateUseCaseTest extends TestCase
             $useCase = new UseCase(
                 repository: $mockRepo,
                 transaction: $this->getDatabaseTransactionInterface(),
-                categoryFactory: $this->mockCategoryFactoryInterface(),
+                categoryFactory: $this->mockCategoryFactoryInterface([]),
             );
 
             $useCase->execute($mockInput);
@@ -75,6 +75,7 @@ class UpdateUseCaseTest extends TestCase
             /** @var GenreRepositoryInterface|Mockery\MockInterface */
             $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
             $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
+            $mockRepo->shouldReceive('update')->andReturn(true);
 
             /** @var Input|Mockery\MockInterface */
             $mockInput = Mockery::mock(Input::class, [$id, 'test', []]);
@@ -137,7 +138,7 @@ class UpdateUseCaseTest extends TestCase
         $useCase = new UseCase(
             repository: $mockRepo,
             transaction: $this->getDatabaseTransactionInterface(),
-            categoryFactory: $this->mockCategoryFactoryInterface(),
+            categoryFactory: $this->mockCategoryFactoryInterface(['789', '987']),
         );
 
         $retUseCase = $useCase->execute($mockInput);
