@@ -267,6 +267,19 @@ class VideoTest extends TestCase
     {
         try {
             new Video(
+                title: '',
+                description: 'de',
+                yearLaunched: 2019,
+                duration: 20,
+                opened: false,
+                rating: Rating::L,
+            );
+        } catch (NotificationException $e) {
+            $this->assertEquals('video: Title is required, The title must be at least 3 characters', $e->getMessage());
+        }
+
+        try {
+            new Video(
                 title: 'te',
                 description: 'de',
                 yearLaunched: 2019,

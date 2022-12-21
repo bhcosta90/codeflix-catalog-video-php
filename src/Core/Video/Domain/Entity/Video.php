@@ -93,7 +93,6 @@ class Video
                 context: 'video',
                 message: 'Title is required'
             ));
-            dd($this->getNotificationTrait());
         }
 
         if (strlen(trim($this->title)) < 3) {
