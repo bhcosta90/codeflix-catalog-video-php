@@ -70,7 +70,7 @@ class CreateUseCaseTest extends TestCase
         $useCase = new UseCase(
             repository: $mockRepo,
             transaction: $this->getDatabaseTransactionInterface(false),
-            categoryFactory: $this->mockCategoryFactoryInterface(),
+            categoryFactory: $this->mockCategoryFactoryInterface(['123', '456']),
         );
 
         $useCase->execute($mockInput);
@@ -88,7 +88,7 @@ class CreateUseCaseTest extends TestCase
         $useCase = new UseCase(
             repository: $mockRepo,
             transaction: $this->getDatabaseTransactionInterface(),
-            categoryFactory: $this->mockCategoryFactoryInterface(),
+            categoryFactory: $this->mockCategoryFactoryInterface(['123', '456']),
         );
 
         $retUseCase = $useCase->execute($mockInput);
