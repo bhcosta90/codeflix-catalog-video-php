@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+    prod:
+        <<: *container
+        depends_on:
+            - db
+            - redis
+        ports:
+            - "8001:9000"
+        command: "sh -c 'php artisan octane:start --server=roadrunner --host=0.0.0.0 --rpc-port=6001 --port=9000 --max-requests=250'"
+
+    laravel:
+        <<: *container
+        depends_on:
+            - db
+            - redis
+        ports:
+            - "8002:9000"
+        command: "sh -c 'php artisan serve --host=0.0.0.0 --port=9000'"
+
+networks:
+    app-network:
+        driver: bridge
