@@ -120,16 +120,16 @@ class GenreTest extends TestCase
 
     public function testRemoveCategoryInGenre()
     {
-        $category = Uuid::random();
-        $category2 = Uuid::random();
         $genre = new Genre(
             name: 'Test',
-            categories: [$category, $category2]
+            categories: ['123', '456']
         );
 
         $this->assertCount(2, $genre->categories);
-        $genre->subCategory(category: $category);
+        $genre->subCategory('999');
+        $this->assertCount(2, $genre->categories);
+        $genre->subCategory('456');
         $this->assertCount(1, $genre->categories);
-        $this->assertEquals([$category2], array_values($genre->categories));
+        $this->assertEquals("123", $genre->categories[0]);
     }
 }
