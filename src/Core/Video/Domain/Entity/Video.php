@@ -3,14 +3,17 @@
 namespace Core\Video\Domain\Entity;
 
 use Core\Video\Domain\Enum\Rating;
-use Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
-use Shared\Domain\Validation\DomainValidation;
+use Core\Video\Domain\ValueObject\Image;
+use Core\Video\Domain\ValueObject\Media;
+use Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait, NotificationTrait};
 use Shared\ValueObject\Uuid;
 use DateTime;
+use Shared\Domain\Notification\{DTO\Input};
+use Shared\Domain\Notification\Exception\NotificationException;
 
 class Video
 {
-    use MethodsMagicsTrait, EntityTrait;
+    use MethodsMagicsTrait, EntityTrait, NotificationTrait;
 
     public function __construct(
         protected string $title,
@@ -21,6 +24,11 @@ class Video
         protected Rating $rating,
         protected array $categories = [],
         protected array $genres = [],
+        protected ?Image $thumbFile = null,
+        protected ?Image $thumbHalf = null,
+        protected ?Image $bannerFile = null,
+        protected ?Media $trailerFile = null,
+        protected ?Media $videoFile = null,
         protected bool $publish = false,
         protected bool $isActive = true,
         protected ?Uuid $id = null,
@@ -80,6 +88,33 @@ class Video
 
     private function validate()
     {
-        //
+        if (empty(trim($this->title))) {
+            $this->getNotificationTrait()->addErrors(new Input(
+                context: 'video',
+                message: 'Title is required'
+            ));
+            dd($this->getNotificationTrait());
+        }
+
+        if (strlen(trim($this->title)) < 3) {
+            $this->getNotificationTrait()->addErrors(new Input(
+                context: 'video',
+                message: 'The title must be at least 3 characters'
+            ));
+        }
+
+        if (strlen(trim($this->title)) > 255) {
+            $this->getNotificationTrait()->addErrors(new Input(
+                context: 'video',
+                message: 'The value must not be greater than 255 characters'
+            ));
+        }
+
+        if ($this->getNotificationTrait()->hasErrors()) {
+            throw new NotificationException(
+                $this->getNotificationTrait()->message('video'),
+                $this->getNotificationTrait()->getErrors()
+            );
+        }
     }
 }

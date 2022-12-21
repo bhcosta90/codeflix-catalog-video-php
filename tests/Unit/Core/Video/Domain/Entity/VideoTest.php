@@ -5,7 +5,9 @@ namespace Tests\Unit\Core\Video\Domain\Entity;
 use Core\Video\Domain\Enum\Rating;
 use Tests\Unit\TestCase;
 use Core\Video\Domain\Entity\Video;
+use Core\Video\Domain\ValueObject\{Image, Media, Enum\Status};
 use DateTime;
+use Shared\Domain\Notification\Exception\NotificationException;
 use Shared\ValueObject\Uuid;
 
 class VideoTest extends TestCase
@@ -29,6 +31,11 @@ class VideoTest extends TestCase
         $this->assertFalse($entity->publish);
         $this->assertNotEmpty($entity->id());
         $this->assertNotEmpty($entity->createdAt());
+        $this->assertNull($entity->thumbFile?->path);
+        $this->assertNull($entity->thumbHalf?->path);
+        $this->assertNull($entity->bannerFile?->path);
+        $this->assertNull($entity->trailerFile?->path);
+        $this->assertNull($entity->videoFile?->path);
     }
 
     public function testAddCategories()
@@ -167,5 +174,134 @@ class VideoTest extends TestCase
         $this->assertTrue($entity->opened);
         $this->assertEquals('14', $entity->rating->value);
         $this->assertEquals($date, $entity->createdAt());
+    }
+
+    public function testValueObjectThumbFile()
+    {
+        $entity = new Video(
+            title: 'Test',
+            description: 'Description',
+            yearLaunched: 2019,
+            duration: 20,
+            opened: false,
+            rating: Rating::L,
+            thumbFile: new Image('test/123.jpg')
+        );
+
+        $this->assertEquals('test/123.jpg', $entity->thumbFile->path);
+    }
+
+    public function testValueObjectThumbHalf()
+    {
+        $entity = new Video(
+            title: 'Test',
+            description: 'Description',
+            yearLaunched: 2019,
+            duration: 20,
+            opened: false,
+            rating: Rating::L,
+            thumbHalf: new Image('test/123.jpg')
+        );
+
+        $this->assertEquals('test/123.jpg', $entity->thumbHalf->path);
+    }
+
+    public function testValueObjectBannerFile()
+    {
+        $entity = new Video(
+            title: 'Test',
+            description: 'Description',
+            yearLaunched: 2019,
+            duration: 20,
+            opened: false,
+            rating: Rating::L,
+            bannerFile: new Image('test/123.jpg')
+        );
+
+        $this->assertEquals('test/123.jpg', $entity->bannerFile->path);
+    }
+
+    public function testValueObjectTrailerFile()
+    {
+        $media = new Media(
+            path: 'path/123.mp4',
+        );
+
+        $entity = new Video(
+            title: 'Test',
+            description: 'Description',
+            yearLaunched: 2019,
+            duration: 20,
+            opened: false,
+            rating: Rating::L,
+            trailerFile: $media
+        );
+
+        $this->assertEquals('path/123.mp4', $entity->trailerFile->path);
+        $this->assertEquals(2, $entity->trailerFile->status->value);
+        $this->assertNull($entity->trailerFile->encoded);
+    }
+
+    public function testValueObjectVideoFile()
+    {
+        $media = new Media(
+            path: 'path/123.mp4',
+        );
+
+        $entity = new Video(
+            title: 'Test',
+            description: 'Description',
+            yearLaunched: 2019,
+            duration: 20,
+            opened: false,
+            rating: Rating::L,
+            videoFile: $media
+        );
+
+        $this->assertEquals('path/123.mp4', $entity->videoFile->path);
+        $this->assertEquals(2, $entity->videoFile->status->value);
+        $this->assertNull($entity->videoFile->encoded);
+    }
+
+    public function testValidation()
+    {
+        try {
+            new Video(
+                title: 'te',
+                description: 'de',
+                yearLaunched: 2019,
+                duration: 20,
+                opened: false,
+                rating: Rating::L,
+            );
+        } catch (NotificationException $e) {
+            $this->assertEquals('video: The title must be at least 3 characters', $e->getMessage());
+        }
+
+        try {
+            new Video(
+                title: str_repeat('a', 256),
+                description: 'd',
+                yearLaunched: 2019,
+                duration: 20,
+                opened: false,
+                rating: Rating::L,
+            );
+        } catch (NotificationException $e) {
+            $this->assertEquals('video: The value must not be greater than 255 characters', $e->getMessage());
+        }
+
+        try {
+            new Video(
+                title: 'test',
+                description: str_repeat('a', 256),
+                yearLaunched: 2019,
+                duration: 20,
+                opened: false,
+                rating: Rating::L,
+            );
+        } catch (NotificationException $e) {
+            $this->assertEquals('Description of video must be less than 255 characters', $e->getMessage());
+        }
     }
 }
