@@ -47,7 +47,7 @@ class Genre
 
     public function subCategory(string $category)
     {
-        unset($this->categories[array_search($category, $this->categories)]);
+        $this->categories = array_diff($this->categories, [$category]);
     }
 
     private function validate()

@@ -65,7 +65,7 @@ class Video
 
     public function subCategory(string $category)
     {
-        unset($this->categories[array_search($category, $this->categories)]);
+        $this->categories = array_diff($this->categories, [$category]);
     }
 
     public function addGenre(string $genre)
@@ -75,7 +75,7 @@ class Video
 
     public function subGenre(string $genre)
     {
-        unset($this->genres[array_search($genre, $this->genres)]);
+        $this->genres = array_diff($this->genres, [$genre]);
     }
 
     private function validate()

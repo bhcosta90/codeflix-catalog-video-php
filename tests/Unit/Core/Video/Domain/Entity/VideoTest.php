@@ -60,6 +60,8 @@ class VideoTest extends TestCase
 
 
         $this->assertCount(2, $entity->categories);
+        $entity->subCategory('999');
+        $this->assertCount(2, $entity->categories);
         $entity->subCategory('456');
         $this->assertCount(1, $entity->categories);
         $this->assertEquals("132", $entity->categories[0]);
@@ -94,6 +96,8 @@ class VideoTest extends TestCase
         );
 
 
+        $this->assertCount(2, $entity->genres);
+        $entity->subGenre('999');
         $this->assertCount(2, $entity->genres);
         $entity->subGenre('456');
         $this->assertCount(1, $entity->genres);
