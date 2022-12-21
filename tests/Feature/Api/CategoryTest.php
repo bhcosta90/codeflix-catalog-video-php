@@ -11,10 +11,10 @@ class CategoryTest extends TestCase
 {
     use TestValidation, TestResource, TestSave;
 
-    private Model $model;
-    private string $endpoint = '/api/categories/';
+    protected Model $model;
+    protected string $endpoint = '/api/categories/';
 
-    private $serializedFields = [
+    protected $serializedFields = [
         'id',
         'name',
         'description',
@@ -25,7 +25,7 @@ class CategoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->model = Model::factory()->create();
+        $this->model = Model::factory()->create(['name' => 'test']);
     }
 
     protected function model()
@@ -66,7 +66,7 @@ class CategoryTest extends TestCase
 
     public function testIndex()
     {
-        $response = $this->get($this->endpoint);
+        $response = $this->getJson($this->endpoint);
 
         $response
             ->assertStatus(200)
@@ -101,7 +101,7 @@ class CategoryTest extends TestCase
         Model::factory(5)->create(['name' => 'testing']);
         $response = $this->get($this->endpoint . '?name=test');
         $response->assertJson([
-            'meta' => ['total' => 5]
+            'meta' => ['total' => 6]
         ]);
     }
 
