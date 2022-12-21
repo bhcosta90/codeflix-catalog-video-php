@@ -65,7 +65,7 @@ class DeleteUseCaseTest extends TestCase
     {
         $id = Uuid::random();
         /** @var CastMemberEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CastMemberEntity::class, ['test', 'test', true, $id]);
+        $mockEntity = Mockery::spy(CastMemberEntity::class, ['test', Type::ACTOR, true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
         /** @var CastMemberRepositoryInterface|Mockery\MockInterface */
