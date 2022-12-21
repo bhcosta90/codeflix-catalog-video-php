@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Core\Category\UseCase;
+namespace Tests\Feature\Core\Genre\UseCase;
 
-use App\Models\Category as Model;
-use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
-use Core\Category\UseCase\ListUseCase as UseCase;
+use App\Models\Genre as Model;
+use App\Repositories\Eloquent\GenreRepositoryEloquent as Repository;
+use Core\Genre\UseCase\ListUseCase as UseCase;
 use Shared\UseCase\DTO\List\Input;
 use Tests\TestCase;
 
@@ -28,7 +28,6 @@ class ListUseCaseTest extends TestCase
 
         $this->assertNotEmpty($response->id);
         $this->assertEquals($model->name, $response->name);
-        $this->assertEquals($model->description, $response->description);
         $this->assertEquals($model->is_active, $response->is_active);
         $this->assertEquals($model->created_at, $response->created_at);
     }

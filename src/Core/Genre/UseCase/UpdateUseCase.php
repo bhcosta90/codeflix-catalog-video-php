@@ -58,7 +58,7 @@ class UpdateUseCase
     private function verifyCategories(DTO\Update\Input $input)
     {
         $categoriesDb = $this->categoryFactory->findByIds($input->categories);
-        $categoriesDiff = array_diff($categoriesDb, $input->categories);
+        $categoriesDiff = array_diff($input->categories, $categoriesDb);
 
         if ($categoriesDiff) {
             throw new Exceptions\CategoryNotFound('Categories not found', $categoriesDiff);

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Factory;
+
 use App\Models\Category;
 use Core\Genre\Factory\CategoryFactoryInterface;
 
@@ -12,7 +14,7 @@ class CategoryFactory implements CategoryFactoryInterface
 
     public function findByIds(array $id): array
     {
-        return $this->model->whereIn($id)
+        return $this->model->whereIn('id', $id)
             ->pluck('id')
             ->toArray();
     }

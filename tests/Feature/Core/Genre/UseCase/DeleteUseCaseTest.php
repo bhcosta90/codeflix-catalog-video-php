@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Core\Category\UseCase;
+namespace Tests\Feature\Core\Genre\UseCase;
 
-use App\Models\Category as Model;
-use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
-use Core\Category\UseCase\DeleteUseCase as UseCase;
+use App\Models\Genre as Model;
+use App\Repositories\Eloquent\GenreRepositoryEloquent as Repository;
+use Core\Genre\UseCase\DeleteUseCase as UseCase;
 use Shared\UseCase\DTO\Delete\{Input};
 use Tests\TestCase;
 
