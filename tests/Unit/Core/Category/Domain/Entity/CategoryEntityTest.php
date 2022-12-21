@@ -11,48 +11,48 @@ class CategoryEntityTest extends TestCase
 {
     public function testAttributes()
     {
-        $category = new CategoryEntity(
+        $entity = new CategoryEntity(
             name: 'Test',
             description: 'Desc',
             isActive: true,
         );
 
-        $this->assertEquals('Test', $category->name);
-        $this->assertEquals('Desc', $category->description);
-        $this->assertTrue($category->isActive);
-        $this->assertNotEmpty($category->id());
-        $this->assertNotEmpty($category->createdAt());
+        $this->assertEquals('Test', $entity->name);
+        $this->assertEquals('Desc', $entity->description);
+        $this->assertTrue($entity->isActive);
+        $this->assertNotEmpty($entity->id());
+        $this->assertNotEmpty($entity->createdAt());
     }
 
     public function testEnabled()
     {
-        $category = new CategoryEntity(
+        $entity = new CategoryEntity(
             name: 'Test',
             isActive: false,
         );
 
-        $this->assertFalse($category->isActive);
-        $category->enabled();
-        $this->assertTrue($category->isActive);
+        $this->assertFalse($entity->isActive);
+        $entity->enabled();
+        $this->assertTrue($entity->isActive);
     }
 
     public function testDisabled()
     {
-        $category = new CategoryEntity(
+        $entity = new CategoryEntity(
             name: 'Test',
             isActive: true,
         );
 
-        $this->assertTrue($category->isActive);
-        $category->disabled();
-        $this->assertFalse($category->isActive);
+        $this->assertTrue($entity->isActive);
+        $entity->disabled();
+        $this->assertFalse($entity->isActive);
     }
 
     public function testUpdated()
     {
         $id = 'b257aaca-75f2-4cdf-a96f-d438e1e891cc';
 
-        $category = new CategoryEntity(
+        $entity = new CategoryEntity(
             name: 'Test',
             description: 'Desc',
             isActive: true,
@@ -60,31 +60,31 @@ class CategoryEntityTest extends TestCase
             createdAt: $date = '2020-01-01 00:00:00'
         );
 
-        $category->update(
+        $entity->update(
             name: 'Test 2',
             description: 'Desc 2',
         );
 
-        $this->assertEquals('Test 2', $category->name);
-        $this->assertEquals('Desc 2', $category->description);
-        $this->assertEquals($id, $category->id());
-        $this->assertEquals($date, $category->createdAt());
+        $this->assertEquals('Test 2', $entity->name);
+        $this->assertEquals('Desc 2', $entity->description);
+        $this->assertEquals($id, $entity->id());
+        $this->assertEquals($date, $entity->createdAt());
 
-        $category->update(
+        $entity->update(
             name: 'Test 3',
             description: 'Desc 2',
         );
 
-        $this->assertEquals('Test 3', $category->name);
-        $this->assertEquals('Desc 2', $category->description);
+        $this->assertEquals('Test 3', $entity->name);
+        $this->assertEquals('Desc 2', $entity->description);
 
-        $category->update(
+        $entity->update(
             name: 'Test 3',
             description: null,
         );
 
-        $this->assertEquals('Test 3', $category->name);
-        $this->assertNull($category->description);
+        $this->assertEquals('Test 3', $entity->name);
+        $this->assertNull($entity->description);
     }
 
     public function testExceptionNameAndDescription()
@@ -114,12 +114,12 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            $category = new CategoryEntity(
+            $entity = new CategoryEntity(
                 name: 'Test',
                 description: 'Desc',
                 isActive: true,
             );
-            $category->update(
+            $entity->update(
                 name: 'Te',
                 description: 'Desc',
             );
@@ -130,12 +130,12 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            $category = new CategoryEntity(
+            $entity = new CategoryEntity(
                 name: 'Test',
                 description: 'Desc',
                 isActive: true,
             );
-            $category->update(
+            $entity->update(
                 name: str_repeat('Te', 256),
                 description: 'Desc',
             );
@@ -161,12 +161,12 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            $category = new CategoryEntity(
+            $entity = new CategoryEntity(
                 name: 'Test',
                 description: 'Desc',
                 isActive: true,
             );
-            $category->update(
+            $entity->update(
                 name: 'Test',
                 description: str_repeat('De', 256),
             );
