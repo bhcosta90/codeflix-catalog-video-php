@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\CastMember;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:100',
-            'type' => 'required|numeric',
+            'type' => 'required|numeric|in:1,2',
             'is_active' => ['required', 'boolean'],
         ];
     }
