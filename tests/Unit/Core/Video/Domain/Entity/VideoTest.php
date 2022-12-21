@@ -5,6 +5,7 @@ namespace Tests\Unit\Core\Video\Domain\Entity;
 use Core\Video\Domain\Enum\Rating;
 use Tests\Unit\TestCase;
 use Core\Video\Domain\Entity\Video;
+use DateTime;
 use Shared\ValueObject\Uuid;
 
 class VideoTest extends TestCase
@@ -147,6 +148,7 @@ class VideoTest extends TestCase
             duration: 20,
             opened: false,
             rating: Rating::L,
+            createdAt: new DateTime($date = '2020-01-01 00:00:00')
         );
 
         $entity->update(
@@ -164,5 +166,6 @@ class VideoTest extends TestCase
         $this->assertEquals(50, $entity->duration);
         $this->assertTrue($entity->opened);
         $this->assertEquals('14', $entity->rating->value);
+        $this->assertEquals($date, $entity->createdAt());
     }
 }
