@@ -1,3 +1,4 @@
+FROM ghcr.io/roadrunner-server/roadrunner:2.12.1 AS roadrunner
 FROM php:8.1.1-fpm as development
 
 RUN apt-get update && apt-get install -y \
@@ -19,8 +20,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN pecl install -o -f redis \
     && pecl install xdebug \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis xdebug
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis xdebug
+
+COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 # USER www-data
 

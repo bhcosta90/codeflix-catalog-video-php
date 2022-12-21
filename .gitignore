@@ -16,3 +16,5 @@ yarn-error.log
 .bash_history
 .docker/dbdata/
 public/.phpunit
+rr
+.rr.yaml
