@@ -1,0 +1,234 @@
+<?php
+
+namespace Tests\Unit\Core\Video\UseCase;
+
+use Core\Video\UseCase\Exceptions\{CategoryGenreNotFound, CategoryNotFound, GenreNotFound};
+use Core\Video\Domain\Enum\Rating;
+use Core\Video\Domain\Repository\VideoRepositoryInterface;
+use Core\Video\Factory\CastMemberFactoryInterface;
+use Core\Video\Factory\CategoryFactoryInterface;
+use Core\Video\Factory\GenreFactoryInterface;
+use Tests\Unit\TestCase;
+use Core\Video\UseCase\CreateUseCase;
+use Core\Video\UseCase\DTO\Create as DTO;
+use Exception;
+use Mockery;
+use Shared\UseCase\Exception\UseCaseException;
+use Shared\UseCase\Interfaces\FileStorageInterface;
+use stdClass;
+use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
+use Throwable;
+
+class CreateUseCaseTest extends TestCase
+{
+    public function test_constructor()
+    {
+        new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $this->assertTrue(true);
+    }
+
+    public function testExecInputExceptionUseCase()
+    {
+        $this->expectException(UseCaseException::class);
+        $this->expectExceptionMessage('The class Core\Video\UseCase\CreateUseCase is wrong.');
+
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(false),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $useCase->execute($this->createMockInput());
+    }
+
+    public function testExecInputExceptionTransaction()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('database error');
+
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(false),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $useCase->execute($this->createMockInput());
+    }
+
+    public function testExecInput()
+    {
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(['123', '456']),
+            genreFactory: $this->createMockGenreFactory(['789', '987'], ['123', '456']),
+            castMemberFactory: $this->createMockCastMemberFactory(['654', '321']),
+        );
+        $useCase->execute($this->createMockInput(
+            categories: ['123'],
+            genres: ['789', '987'],
+            castMembers: ['654', '321'],
+        ));
+        $this->assertTrue(true);
+    }
+
+    public function testExecOutput()
+    {
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $response = $useCase->execute($this->createMockInput());
+        $this->assertInstanceOf(DTO\Output::class, $response);
+    }
+
+    public function testExecExceptionCategoryWithoutGenre()
+    {
+        try {
+            $useCase = new CreateUseCase(
+                repository: $this->createMockRepository(),
+                transaction: $this->getDatabaseTransactionInterface(),
+                storage: $this->createMockFileStorage(),
+                eventManager: $this->createMockEventManager(),
+                categoryFactory: $this->createMockCategoryFactory(['789', '987', '444']),
+                genreFactory: $this->createMockGenreFactory(['123', '456'], ['789', '987']),
+                castMemberFactory: $this->createMockCastMemberFactory(),
+            );
+            $useCase->execute($this->createMockInput(
+                categories: ['789', '987', '444'],
+                genres: ['123', '456']
+            ));
+        } catch(CategoryGenreNotFound $e) {
+            $this->assertEquals(['444'], array_values($e->categories));
+        }
+    }
+
+    public function testExecExceptionCategories()
+    {
+        $this->expectException(CategoryNotFound::class);
+        $this->expectExceptionMessage('Categories not found');
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $useCase->execute($this->createMockInput(
+            categories: ['123', '456']
+        ));
+    }
+
+    public function testExecExceptionGenres()
+    {
+        $this->expectException(GenreNotFound::class);
+        $this->expectExceptionMessage('Genres not found');
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $useCase->execute($this->createMockInput(
+            genres: ['123', '456']
+        ));
+    }
+
+    public function testExecExceptionCastMembers()
+    {
+        $this->expectException(GenreNotFound::class);
+        $this->expectExceptionMessage('Cast Members not found');
+        $useCase = new CreateUseCase(
+            repository: $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(),
+            storage: $this->createMockFileStorage(),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $useCase->execute($this->createMockInput(
+            castMembers: ['123', '456']
+        ));
+    }
+
+    protected function createMockRepository($success = true)
+    {
+        $mock = Mockery::spy(stdClass::class, VideoRepositoryInterface::class);
+        $mock->shouldReceive('insert')->andReturn($success);
+        return $mock;
+    }
+
+    protected function createMockFileStorage()
+    {
+        return Mockery::spy(stdClass::class, FileStorageInterface::class);
+    }
+
+    protected function createMockEventManager()
+    {
+        return Mockery::spy(stdClass::class, VideoEventManagerInterface::class);
+    }
+
+    protected function createMockCategoryFactory(array $data = [])
+    {
+        $mock = Mockery::spy(stdClass::class, CategoryFactoryInterface::class);
+        $mock->shouldReceive('findByIds')->andReturn($data);
+        return $mock;
+    }
+
+    protected function createMockGenreFactory(array $data = [], array $categories = [])
+    {
+        $mock = Mockery::spy(stdClass::class, GenreFactoryInterface::class);
+        $mock->shouldReceive('findByIds')->andReturn($data);
+        $mock->shouldReceive('findByIdsWithCategories')->andReturn($categories);
+        return $mock;
+    }
+
+    protected function createMockCastMemberFactory(array $data = [])
+    {
+        $mock = Mockery::spy(stdClass::class, CastMemberFactoryInterface::class);
+        $mock->shouldReceive('findByIds')->andReturn($data);
+        return $mock;
+    }
+
+    protected function createMockInput(array $categories = [], array $genres = [], array $castMembers = [])
+    {
+        return Mockery::spy(DTO\Input::class, [
+            'test',
+            'test',
+            2020,
+            50,
+            true,
+            Rating::ER,
+            $categories,
+            $genres,
+            $castMembers,
+        ]);
+    }
+}

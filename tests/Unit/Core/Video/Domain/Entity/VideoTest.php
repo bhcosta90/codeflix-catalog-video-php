@@ -112,7 +112,7 @@ class VideoTest extends TestCase
         $this->assertEquals("132", $entity->genres[0]);
     }
 
-    public function testEnabled()
+    public function testAddCastMembers()
     {
         $entity = new Video(
             title: 'Test',
@@ -121,15 +121,14 @@ class VideoTest extends TestCase
             duration: 20,
             opened: false,
             rating: Rating::L,
-            isActive: false
         );
 
-        $this->assertFalse($entity->isActive);
-        $entity->enabled();
-        $this->assertTrue($entity->isActive);
+        $entity->addCastMember('123');
+        $entity->addCastMember('456');
+        $this->assertCount(2, $entity->castMembers);
     }
 
-    public function testDisabled()
+    public function testRemoveCastMembers()
     {
         $entity = new Video(
             title: 'Test',
@@ -138,11 +137,16 @@ class VideoTest extends TestCase
             duration: 20,
             opened: false,
             rating: Rating::L,
+            castMembers: ['132', '456']
         );
 
-        $this->assertTrue($entity->isActive);
-        $entity->disabled();
-        $this->assertFalse($entity->isActive);
+
+        $this->assertCount(2, $entity->castMembers);
+        $entity->subCastMember('999');
+        $this->assertCount(2, $entity->castMembers);
+        $entity->subCastMember('456');
+        $this->assertCount(1, $entity->castMembers);
+        $this->assertEquals("132", $entity->castMembers[0]);
     }
 
     public function testUpdate()
