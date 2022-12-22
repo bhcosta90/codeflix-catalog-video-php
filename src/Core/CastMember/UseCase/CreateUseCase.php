@@ -2,7 +2,7 @@
 
 namespace Core\CastMember\UseCase;
 
-use Core\CastMember\Domain\Entity\CastMemberEntity;
+use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use Shared\UseCase\Exception\UseCaseException;
@@ -16,7 +16,7 @@ class CreateUseCase
 
     public function execute(DTO\Create\Input $input): DTO\Create\Output
     {
-        $entity = new CastMemberEntity(
+        $entity = new CastMember(
             name: $input->name,
             type: Type::from($input->type),
         );

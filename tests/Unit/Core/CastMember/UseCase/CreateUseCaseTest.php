@@ -51,5 +51,15 @@ class CreateUseCaseTest extends TestCase
         $this->assertEquals(1, $retUseCase->type);
         $this->assertTrue($retUseCase->is_active);
         $mockRepo->shouldHaveReceived('insert')->times(1);
+
+        /** @var Input|Mockery\MockInterface */
+        $mockInput = Mockery::mock(Input::class, ['test', 1, false]);
+
+        $useCase = new UseCase(
+            repository: $mockRepo,
+        );
+
+        $retUseCase = $useCase->execute($mockInput);
+        $this->assertFalse($retUseCase->is_active);
     }
 }

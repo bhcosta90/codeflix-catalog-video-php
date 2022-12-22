@@ -3,17 +3,17 @@
 namespace Tests\Unit\Core\Genre\Domain\Entity;
 
 use Tests\Unit\TestCase;
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use DateTime;
 use Shared\Domain\Entity\Exception\EntityValidationException;
 use Shared\ValueObject\Uuid;
 use Throwable;
 
-class GenreEntityTest extends TestCase
+class GenreTest extends TestCase
 {
     public function testAttributes()
     {
-        $genre = new GenreEntity(
+        $genre = new Genre(
             name: 'Test',
             isActive: true,
         );
@@ -26,7 +26,7 @@ class GenreEntityTest extends TestCase
 
     public function testEnabled()
     {
-        $genre = new GenreEntity(
+        $genre = new Genre(
             name: 'Test',
             isActive: false,
         );
@@ -38,7 +38,7 @@ class GenreEntityTest extends TestCase
 
     public function testDisabled()
     {
-        $genre = new GenreEntity(
+        $genre = new Genre(
             name: 'Test',
             isActive: true,
         );
@@ -52,7 +52,7 @@ class GenreEntityTest extends TestCase
     {
         $id = Uuid::random();
 
-        $genre = new GenreEntity(
+        $genre = new Genre(
             name: 'Test',
             isActive: true,
             id: $id,
@@ -83,7 +83,7 @@ class GenreEntityTest extends TestCase
     public function testExceptionName()
     {
         try {
-            new GenreEntity(
+            new Genre(
                 name: 'Te',
                 isActive: true,
             );
@@ -94,7 +94,7 @@ class GenreEntityTest extends TestCase
         }
 
         try {
-            new GenreEntity(
+            new Genre(
                 name: str_repeat('Te', 256),
                 isActive: true,
             );
@@ -108,7 +108,7 @@ class GenreEntityTest extends TestCase
     public function testAddCategoryInGenre()
     {
         $category = Uuid::random();
-        $genre = new GenreEntity(
+        $genre = new Genre(
             name: 'Test',
         );
 
@@ -120,16 +120,16 @@ class GenreEntityTest extends TestCase
 
     public function testRemoveCategoryInGenre()
     {
-        $category = Uuid::random();
-        $category2 = Uuid::random();
-        $genre = new GenreEntity(
+        $genre = new Genre(
             name: 'Test',
-            categories: [$category, $category2]
+            categories: ['123', '456']
         );
 
         $this->assertCount(2, $genre->categories);
-        $genre->subCategory(category: $category);
+        $genre->subCategory('999');
+        $this->assertCount(2, $genre->categories);
+        $genre->subCategory('456');
         $this->assertCount(1, $genre->categories);
-        $this->assertEquals([$category2], array_values($genre->categories));
+        $this->assertEquals("123", $genre->categories[0]);
     }
 }

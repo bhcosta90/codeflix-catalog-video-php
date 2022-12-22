@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\Category;
+use App\Models\Category as CategoryModel;
 use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
-use Core\Category\Domain\Entity\CategoryEntity;
+use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryFilter;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
@@ -13,12 +13,12 @@ use Shared\Domain\Repository\PaginationInterface;
 
 class CategoryRepositoryEloquent implements CategoryRepositoryInterface
 {
-    public function __construct(private Category $model)
+    public function __construct(private CategoryModel $model)
     {
         //
     }
 
-    public function insert(CategoryEntity $entity): bool
+    public function insert(Category $entity): bool
     {
         $this->model->create([
             'id' => $entity->id(),
@@ -31,7 +31,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
         return true;
     }
 
-    public function update(CategoryEntity $entity): bool
+    public function update(Category $entity): bool
     {
         if ($obj = $this->model->find($entity->id())) {
             return (bool) $obj->update([
@@ -58,10 +58,10 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
         return new ListPresenter($this->filter($filter)->get());
     }
 
-    public function findById(string $id): ?CategoryEntity
+    public function findById(string $id): ?Category
     {
         if ($obj = $this->model->find($id)) {
-            $response = new CategoryEntity(
+            $response = new Category(
                 name: $obj->name,
                 description: $obj->description,
                 id: $obj->id,

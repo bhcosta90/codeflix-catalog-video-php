@@ -2,7 +2,7 @@
 
 namespace Core\Genre\UseCase;
 
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
 use Shared\UseCase\Exception\UseCaseException;
@@ -21,7 +21,7 @@ class CreateUseCase
 
     public function execute(DTO\Create\Input $input): DTO\Create\Output
     {
-        $entity = new GenreEntity(
+        $entity = new Genre(
             name: $input->name,
             categories: $input->categories,
         );

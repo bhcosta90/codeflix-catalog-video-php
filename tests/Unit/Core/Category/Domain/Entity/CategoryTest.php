@@ -3,15 +3,15 @@
 namespace Tests\Unit\Core\Category\Domain\Entity;
 
 use Tests\Unit\TestCase;
-use Core\Category\Domain\Entity\CategoryEntity;
+use Core\Category\Domain\Entity\Category;
 use Shared\Domain\Entity\Exception\EntityValidationException;
 use Throwable;
 
-class CategoryEntityTest extends TestCase
+class CategoryTest extends TestCase
 {
     public function testAttributes()
     {
-        $entity = new CategoryEntity(
+        $entity = new Category(
             name: 'Test',
             description: 'Desc',
             isActive: true,
@@ -26,7 +26,7 @@ class CategoryEntityTest extends TestCase
 
     public function testEnabled()
     {
-        $entity = new CategoryEntity(
+        $entity = new Category(
             name: 'Test',
             isActive: false,
         );
@@ -38,7 +38,7 @@ class CategoryEntityTest extends TestCase
 
     public function testDisabled()
     {
-        $entity = new CategoryEntity(
+        $entity = new Category(
             name: 'Test',
             isActive: true,
         );
@@ -52,7 +52,7 @@ class CategoryEntityTest extends TestCase
     {
         $id = 'b257aaca-75f2-4cdf-a96f-d438e1e891cc';
 
-        $entity = new CategoryEntity(
+        $entity = new Category(
             name: 'Test',
             description: 'Desc',
             isActive: true,
@@ -90,7 +90,7 @@ class CategoryEntityTest extends TestCase
     public function testExceptionNameAndDescription()
     {
         try {
-            new CategoryEntity(
+            new Category(
                 name: 'Te',
                 description: 'Desc',
                 isActive: true,
@@ -102,7 +102,7 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            new CategoryEntity(
+            new Category(
                 name: str_repeat('Te', 256),
                 description: 'Desc',
                 isActive: true,
@@ -114,7 +114,7 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            $entity = new CategoryEntity(
+            $entity = new Category(
                 name: 'Test',
                 description: 'Desc',
                 isActive: true,
@@ -130,7 +130,7 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            $entity = new CategoryEntity(
+            $entity = new Category(
                 name: 'Test',
                 description: 'Desc',
                 isActive: true,
@@ -149,7 +149,7 @@ class CategoryEntityTest extends TestCase
     public function testExceptionDescription()
     {
         try {
-            new CategoryEntity(
+            new Category(
                 name: 'Test',
                 description: str_repeat('D', 256),
                 isActive: true,
@@ -161,7 +161,7 @@ class CategoryEntityTest extends TestCase
         }
 
         try {
-            $entity = new CategoryEntity(
+            $entity = new Category(
                 name: 'Test',
                 description: 'Desc',
                 isActive: true,

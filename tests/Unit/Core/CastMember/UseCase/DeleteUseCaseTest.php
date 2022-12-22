@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\CastMember\UseCase;
 
-use Core\CastMember\Domain\Entity\CastMemberEntity;
+use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use Core\CastMember\UseCase\{DeleteUseCase as UseCase};
@@ -42,8 +42,8 @@ class DeleteUseCaseTest extends TestCase
         $this->expectExceptionMessage('The class Core\CastMember\UseCase\DeleteUseCase is wrong.');
 
         $id = Uuid::random();
-        /** @var CastMemberEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CastMemberEntity::class, ['test', Type::ACTOR, true, $id]);
+        /** @var CastMember|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(CastMember::class, ['test', Type::ACTOR, true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
         /** @var CastMemberRepositoryInterface|Mockery\MockInterface */
@@ -64,8 +64,8 @@ class DeleteUseCaseTest extends TestCase
     public function testDeleteCastMember()
     {
         $id = Uuid::random();
-        /** @var CastMemberEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CastMemberEntity::class, ['test', Type::ACTOR, true, $id]);
+        /** @var CastMember|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(CastMember::class, ['test', Type::ACTOR, true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id);
 
         /** @var CastMemberRepositoryInterface|Mockery\MockInterface */

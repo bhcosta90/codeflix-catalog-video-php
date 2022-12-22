@@ -2,15 +2,15 @@
 
 namespace Core\CastMember\Domain\Repository;
 
-use Core\CastMember\Domain\Entity\CastMemberEntity;
+use Core\CastMember\Domain\Entity\CastMember;
 use Shared\Domain\Repository\{ListInterface, PaginationInterface};
 
 interface CastMemberRepositoryInterface
 {
-    public function insert(CastMemberEntity $genre): bool;
-    public function update(CastMemberEntity $genre): bool;
+    public function insert(CastMember $genre): bool;
+    public function update(CastMember $genre): bool;
     public function delete(string $id): bool;
-    public function findById(string $id): ?CastMemberEntity;
+    public function findById(string $id): ?CastMember;
     public function findAll(CastMemberRepositoryFilter $filter = null): ListInterface;
     public function paginate(
         CastMemberRepositoryFilter $filter = null,

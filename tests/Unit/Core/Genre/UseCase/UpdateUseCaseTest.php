@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Genre\UseCase;
 
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
 use Core\Genre\Factory\GenreFactoryInterface;
@@ -48,7 +48,7 @@ class UpdateUseCaseTest extends TestCase
     {
         $id = Uuid::random();
 
-        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id, new DateTime(), []]);
+        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id, new DateTime(), []]);
         $mockEntity->shouldReceive('id')->andReturn($id)
             ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 
@@ -99,7 +99,7 @@ class UpdateUseCaseTest extends TestCase
         $this->expectExceptionMessage('database error');
 
         $id = Uuid::random();
-        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id, new DateTime(), []]);
+        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id, new DateTime(), []]);
         $mockEntity->shouldReceive('id')->andReturn($id)
             ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 
@@ -123,7 +123,7 @@ class UpdateUseCaseTest extends TestCase
     public function testUpdateCategory()
     {
         $id = Uuid::random();
-        $mockEntity = Mockery::spy(GenreEntity::class, ['test', true, $id, new DateTime(), []]);
+        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id, new DateTime(), []]);
         $mockEntity->shouldReceive('id')->andReturn($id)
             ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 

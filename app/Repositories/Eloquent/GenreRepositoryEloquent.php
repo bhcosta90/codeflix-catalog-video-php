@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\Genre;
+use App\Models\Genre as GenreModel;
 use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
-use Core\Genre\Domain\Entity\GenreEntity;
+use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryFilter;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
@@ -14,12 +14,12 @@ use Shared\ValueObject\Uuid;
 
 class GenreRepositoryEloquent implements GenreRepositoryInterface
 {
-    public function __construct(private Genre $model)
+    public function __construct(private GenreModel $model)
     {
         //
     }
 
-    public function insert(GenreEntity $entity): bool
+    public function insert(Genre $entity): bool
     {
         $genre = $this->model->create([
             'id' => $entity->id(),
@@ -35,7 +35,7 @@ class GenreRepositoryEloquent implements GenreRepositoryInterface
         return true;
     }
 
-    public function update(GenreEntity $entity): bool
+    public function update(Genre $entity): bool
     {
         if ($obj = $this->model->find($entity->id())) {
             $response = (bool) $obj->update([
@@ -67,10 +67,10 @@ class GenreRepositoryEloquent implements GenreRepositoryInterface
         return new ListPresenter($this->filter($filter)->get());
     }
 
-    public function findById(string $id): ?GenreEntity
+    public function findById(string $id): ?Genre
     {
         if ($obj = $this->model->find($id)) {
-            $response = new GenreEntity(
+            $response = new Genre(
                 name: $obj->name,
                 id: new Uuid($obj->id),
                 createdAt: $obj->created_at,

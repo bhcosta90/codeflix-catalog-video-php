@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Category\UseCase;
 
-use Core\Category\Domain\Entity\CategoryEntity;
+use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Output};
 use DateTime;
@@ -36,8 +36,8 @@ class ListUseCaseTest extends TestCase
     public function testListCategory()
     {
         $id = Uuid::random();
-        /** @var CategoryEntity|Mockery\MockInterface */
-        $mockEntity = Mockery::spy(CategoryEntity::class, ['test', 'test', true, $id]);
+        /** @var Category|Mockery\MockInterface */
+        $mockEntity = Mockery::spy(Category::class, ['test', 'test', true, $id]);
         $mockEntity->shouldReceive('id')->andReturn($id)
             ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
 
