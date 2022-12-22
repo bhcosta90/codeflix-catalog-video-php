@@ -34,7 +34,7 @@ class CreateUseCase
 
             if ($this->repository->insert($this->entity)) {
 
-                $this->storageAllFiles($input);
+                $filesUploads = $this->storageAllFiles($input);
                 $this->repository->updateMedia($this->entity);
                 $this->eventManager->dispatch($this->entity);
                 $this->transaction->commit();
@@ -43,13 +43,10 @@ class CreateUseCase
             }
         } catch (Throwable $e) {
             $this->transaction->rollback();
-
-            if(isset($pathVideoFile)){
-                $this->storage->delete($pathVideoFile);
-            }
-
-            if(isset($pathTrailerFile)){
-                $this->storage->delete($pathTrailerFile);
+            if (isset($filesUploads)) {
+                foreach ($filesUploads as $file) {
+                    $this->storage->delete($file);
+                }
             }
 
             throw $e;
@@ -79,12 +76,15 @@ class CreateUseCase
         return $entity;
     }
 
-    protected function storageAllFiles(DTO\Create\Input $input): void
+    protected function storageAllFiles(DTO\Create\Input $input): array
     {
+        $result = [];
+
         if ($path = $this->storeMedia($this->entity->id(), $input->videoFile)) {
             $media = new Media(
                 path: $path
             );
+            array_push($result);
             $this->entity->setVideoFile($media);
         }
 
@@ -92,6 +92,7 @@ class CreateUseCase
             $media = new Media(
                 path: $path
             );
+            array_push($result);
             $this->entity->setTrailerFile($media);
         }
 
@@ -99,6 +100,7 @@ class CreateUseCase
             $media = new Image(
                 path: $path
             );
+            array_push($result);
             $this->entity->setBannerFile($media);
         }
 
@@ -106,6 +108,7 @@ class CreateUseCase
             $media = new Image(
                 path: $path
             );
+            array_push($result);
             $this->entity->setThumbFile($media);
         }
 
@@ -113,8 +116,11 @@ class CreateUseCase
             $media = new Image(
                 path: $path
             );
+            array_push($result);
             $this->entity->setThumbHalf($media);
         }
+
+        return $result;
     }
 
     protected function storeMedia(string $path, ?array $media = null): ?string
@@ -157,7 +163,6 @@ class CreateUseCase
                     throw new Exceptions\CategoryGenreNotFound('Categories not found', $categoriesDiff);
                 }
             }
-
         }
     }
 
@@ -172,7 +177,8 @@ class CreateUseCase
         }
     }
 
-    protected function output(Video $entity){
+    protected function output(Video $entity)
+    {
         return new DTO\Create\Output(
             id: $entity->id(),
             title: $entity->title,
