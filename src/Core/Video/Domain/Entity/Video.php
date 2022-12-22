@@ -21,31 +21,21 @@ class Video extends Entity
         protected int $duration,
         protected bool $opened,
         protected Rating $rating,
-        protected array $categories = [],
-        protected array $genres = [],
+        protected ?array $categories = [],
+        protected ?array $genres = [],
+        protected ?array $castMembers = [],
         protected ?Image $thumbFile = null,
         protected ?Image $thumbHalf = null,
         protected ?Image $bannerFile = null,
         protected ?Media $trailerFile = null,
         protected ?Media $videoFile = null,
-        protected bool $publish = false,
-        protected bool $isActive = true,
         protected ?Uuid $id = null,
         protected ?DateTime $createdAt = null,
+        protected bool $publish = false,
     ) {
         $this->id = $this->id ?? Uuid::random();
         $this->createdAt = $this->createdAt ?? new DateTime();
         $this->validate();
-    }
-
-    public function enabled(): void
-    {
-        $this->isActive = true;
-    }
-
-    public function disabled(): void
-    {
-        $this->isActive = false;
     }
 
     public function update(
@@ -83,6 +73,41 @@ class Video extends Entity
     public function subGenre(string $genre)
     {
         $this->genres = array_diff($this->genres, [$genre]);
+    }
+
+    public function addCastMember(string $castMember)
+    {
+        array_push($this->castMembers, $castMember);
+    }
+
+    public function subCastMember(string $castMember)
+    {
+        $this->castMembers = array_diff($this->castMembers, [$castMember]);
+    }
+
+    public function setThumbFile(Image $media)
+    {
+        $this->thumbFile = $media;
+    }
+
+    public function setThumbHalf(Image $media)
+    {
+        $this->thumbHalf = $media;
+    }
+
+    public function setBannerFile(Image $media)
+    {
+        $this->bannerFile = $media;
+    }
+
+    public function setTrailerFile(Media $media)
+    {
+        $this->trailerFile = $media;
+    }
+
+    public function setVideoFile(Media $media)
+    {
+        $this->videoFile = $media;
     }
 
     private function validate()
