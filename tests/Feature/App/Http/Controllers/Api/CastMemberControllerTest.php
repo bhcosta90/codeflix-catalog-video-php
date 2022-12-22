@@ -65,7 +65,7 @@ class CastMemberControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'test',
-            'type' => 1,
+            'type' => 2,
             'is_active' => false,
         ]));
 
@@ -76,7 +76,7 @@ class CastMemberControllerTest extends TestCase
         $this->assertDatabaseHas('cast_members', [
             'id' => $model->id,
             'name' => 'test',
-            'type' => 1,
+            'type' => 2,
             'is_active' => false,
         ]);
     }
