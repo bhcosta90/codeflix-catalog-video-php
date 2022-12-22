@@ -19,7 +19,7 @@ class NotificationTest extends TestCase
     public function testAddErrors()
     {
         $notification = new Notification();
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video',
             message: 'test'
         ));
@@ -31,7 +31,7 @@ class NotificationTest extends TestCase
     {
         $notification = new Notification();
         $this->assertFalse($notification->hasErrors());
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video',
             message: 'test'
         ));
@@ -41,15 +41,15 @@ class NotificationTest extends TestCase
     public function testMessage()
     {
         $notification = new Notification();
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video',
             message: 'test'
         ));
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video',
             message: 'test 2'
         ));
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video 2',
             message: 'test 2'
         ));
@@ -62,15 +62,15 @@ class NotificationTest extends TestCase
     public function testMessageFilterContext()
     {
         $notification = new Notification();
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video',
             message: 'test'
         ));
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video',
             message: 'test 2'
         ));
-        $notification->addErrors(new Input(
+        $notification->addError(new Input(
             context: 'video 2',
             message: 'test 2'
         ));

@@ -11,7 +11,7 @@ class Notification
         return $this->errors;
     }
 
-    public function addErrors(DTO\Input $input)
+    public function addError(DTO\Input $input)
     {
         array_push($this->errors, [
             'context' => $input->context,

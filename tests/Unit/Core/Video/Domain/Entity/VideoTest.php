@@ -275,7 +275,7 @@ class VideoTest extends TestCase
                 rating: Rating::L,
             );
         } catch (NotificationException $e) {
-            $this->assertEquals('video: Title is required, The title must be at least 3 characters', $e->getMessage());
+            $this->assertEquals('video: The Title is required, The Description minimum is 3', $e->getMessage());
         }
 
         try {
@@ -288,20 +288,20 @@ class VideoTest extends TestCase
                 rating: Rating::L,
             );
         } catch (NotificationException $e) {
-            $this->assertEquals('video: The title must be at least 3 characters', $e->getMessage());
+            $this->assertEquals('video: The Title minimum is 3, The Description minimum is 3', $e->getMessage());
         }
 
         try {
             new Video(
                 title: str_repeat('a', 256),
-                description: 'd',
+                description: 'desc',
                 yearLaunched: 2019,
                 duration: 20,
                 opened: false,
                 rating: Rating::L,
             );
         } catch (NotificationException $e) {
-            $this->assertEquals('video: The value must not be greater than 255 characters', $e->getMessage());
+            $this->assertEquals('video: The Title maximum is 255', $e->getMessage());
         }
 
         try {
@@ -314,7 +314,7 @@ class VideoTest extends TestCase
                 rating: Rating::L,
             );
         } catch (NotificationException $e) {
-            $this->assertEquals('Description of video must be less than 255 characters', $e->getMessage());
+            $this->assertEquals('video: The Description maximum is 255', $e->getMessage());
         }
     }
 }

@@ -5,16 +5,15 @@ namespace Core\Video\Domain\Entity;
 use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\ValueObject\Image;
 use Core\Video\Domain\ValueObject\Media;
-use Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait, NotificationTrait};
+use Core\Video\Domain\Factory\VideoValidator;
 use Shared\ValueObject\Uuid;
 use DateTime;
+use Shared\Domain\Entity\Entity;
 use Shared\Domain\Notification\{DTO\Input};
 use Shared\Domain\Notification\Exception\NotificationException;
 
-class Video
+class Video extends Entity
 {
-    use MethodsMagicsTrait, EntityTrait, NotificationTrait;
-
     public function __construct(
         protected string $title,
         protected string $description,
@@ -88,31 +87,12 @@ class Video
 
     private function validate()
     {
-        if (empty(trim($this->title))) {
-            $this->getNotificationTrait()->addErrors(new Input(
-                context: 'video',
-                message: 'Title is required'
-            ));
-        }
+        VideoValidator::create()->validate($this);
 
-        if (strlen(trim($this->title)) < 3) {
-            $this->getNotificationTrait()->addErrors(new Input(
-                context: 'video',
-                message: 'The title must be at least 3 characters'
-            ));
-        }
-
-        if (strlen(trim($this->title)) > 255) {
-            $this->getNotificationTrait()->addErrors(new Input(
-                context: 'video',
-                message: 'The value must not be greater than 255 characters'
-            ));
-        }
-
-        if ($this->getNotificationTrait()->hasErrors()) {
+        if ($this->getNotification()->hasErrors()) {
             throw new NotificationException(
-                $this->getNotificationTrait()->message('video'),
-                $this->getNotificationTrait()->getErrors()
+                $this->getNotification()->message('video'),
+                $this->getNotification()->getErrors()
             );
         }
     }
