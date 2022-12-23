@@ -22,7 +22,7 @@ class VideoBuilder implements VideoBuilderInterface
             yearLaunched: $input->yearLaunched,
             duration: $input->duration,
             opened: $input->opened,
-            rating: $input->rating->value,
+            rating: $input->rating,
             categories: $input->categories,
             genres: $input->genres,
             castMembers: $input->castMembers,

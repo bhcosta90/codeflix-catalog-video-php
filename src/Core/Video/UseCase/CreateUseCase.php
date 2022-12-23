@@ -2,6 +2,7 @@
 
 namespace Core\Video\UseCase;
 
+use Core\Video\Builder\VideoBuilder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Domain\ValueObject\Image;
@@ -13,7 +14,7 @@ use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 
 class CreateUseCase
 {
-    protected Video $entity;
+    protected VideoBuilder $builder;
 
     public function __construct(
         protected VideoRepositoryInterface $repository,
@@ -24,22 +25,22 @@ class CreateUseCase
         protected GenreFactoryInterface $genreFactory,
         protected CastMemberFactoryInterface $castMemberFactory,
     ) {
-        //
+        $this->builder = new VideoBuilder();
     }
 
     public function execute(DTO\Create\Input $input): DTO\Create\Output
     {
         try {
-            $this->entity = $this->createEntity($input);
+            $this->builder->createEntity($input);
+            $this->createEntity($input);
 
-            if ($this->repository->insert($this->entity)) {
-
+            if ($this->repository->insert($this->builder->getEntity())) {
                 $filesUploads = $this->storageAllFiles($input);
-                $this->repository->updateMedia($this->entity);
-                $this->eventManager->dispatch($this->entity);
+                $this->repository->updateMedia($this->builder->getEntity());
+                $this->eventManager->dispatch($this->builder->getEntity());
                 $this->transaction->commit();
 
-                return $this->output($this->entity);
+                return $this->output($this->builder->getEntity());
             }
         } catch (Throwable $e) {
             $this->transaction->rollback();
@@ -80,44 +81,29 @@ class CreateUseCase
     {
         $result = [];
 
-        if ($path = $this->storeMedia($this->entity->id(), $input->videoFile)) {
-            $media = new Media(
-                path: $path
-            );
-            array_push($result);
-            $this->entity->setVideoFile($media);
+        if ($path = $this->storeMedia($this->builder->getEntity()->id(), $input->videoFile)) {
+            array_push($result, $path);
+            $this->builder->addVideo($path);
         }
 
-        if ($path = $this->storeMedia($this->entity->id(), $input->trailerFile)) {
-            $media = new Media(
-                path: $path
-            );
-            array_push($result);
-            $this->entity->setTrailerFile($media);
+        if ($path = $this->storeMedia($this->builder->getEntity()->id(), $input->trailerFile)) {
+            array_push($result, $path);
+            $this->builder->addTrailer($path);
         }
 
-        if ($path = $this->storeMedia($this->entity->id(), $input->bannerFile)) {
-            $media = new Image(
-                path: $path
-            );
-            array_push($result);
-            $this->entity->setBannerFile($media);
+        if ($path = $this->storeMedia($this->builder->getEntity()->id(), $input->bannerFile)) {
+            array_push($result, $path);
+            $this->builder->addBanner($path);
         }
 
-        if ($path = $this->storeMedia($this->entity->id(), $input->thumbFile)) {
-            $media = new Image(
-                path: $path
-            );
-            array_push($result);
-            $this->entity->setThumbFile($media);
+        if ($path = $this->storeMedia($this->builder->getEntity()->id(), $input->thumbFile)) {
+            array_push($result, $path);
+            $this->builder->addThumb($path);
         }
 
-        if ($path = $this->storeMedia($this->entity->id(), $input->thumbHalf)) {
-            $media = new Image(
-                path: $path
-            );
-            array_push($result);
-            $this->entity->setThumbHalf($media);
+        if ($path = $this->storeMedia($this->builder->getEntity()->id(), $input->thumbHalf)) {
+            array_push($result, $path);
+            $this->builder->addThumbHalf($path);
         }
 
         return $result;
