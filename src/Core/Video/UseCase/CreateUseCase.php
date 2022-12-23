@@ -33,6 +33,7 @@ class CreateUseCase
             $this->entity = $this->createEntity($input);
 
             if ($this->repository->insert($this->entity)) {
+
                 $filesUploads = $this->storageAllFiles($input);
                 $this->repository->updateMedia($this->entity);
                 $this->eventManager->dispatch($this->entity);
