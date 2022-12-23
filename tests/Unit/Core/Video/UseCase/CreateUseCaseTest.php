@@ -91,7 +91,7 @@ class CreateUseCaseTest extends TestCase
     public function testExecOutput()
     {
         $useCase = new CreateUseCase(
-            repository: $this->createMockRepository(),
+            repository: $mockRepo = $this->createMockRepository(),
             transaction: $this->getDatabaseTransactionInterface(),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
@@ -101,6 +101,9 @@ class CreateUseCaseTest extends TestCase
         );
         $response = $useCase->execute($this->createMockInput());
         $this->assertInstanceOf(DTO\Output::class, $response);
+
+        $mockRepo->shouldHaveReceived('insert')->times(1);
+        $mockRepo->shouldHaveReceived('updateMedia')->times(1);
     }
 
     public function testExecExceptionCategoryWithoutGenre()
