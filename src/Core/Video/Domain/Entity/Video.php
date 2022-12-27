@@ -40,6 +40,9 @@ class Video extends Entity
             'duration',
             'opened',
             'rating',
+            'categories',
+            'genres',
+            'castMembers',
         ];
     }
 

@@ -44,11 +44,18 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
     public function update(Entity $entity): bool
     {
         if ($obj = $this->model->find($entity->id())) {
-            return (bool) $obj->update([
-                'name' => $entity->name,
-                'type' => $entity->type->value,
-                'is_active' => $entity->isActive,
+            $response = (bool) $obj->update([
+                'title' => $entity->title,
+                'description' => $entity->description,
+                'year_launched' => $entity->yearLaunched,
+                'rating' => $entity->rating->value,
+                'duration' => $entity->duration,
+                'opened' => $entity->opened,
             ]);
+
+            $this->syncRelationships($obj, $entity);
+
+            return $response;
         }
 
         throw new DomainNotFoundException("Video {$entity->id()} not found");

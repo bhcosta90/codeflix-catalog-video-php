@@ -56,9 +56,9 @@ class InsertTest extends TestCase
     }
 
     public function testInsertWithRelationships(){
-        $category = Category::factory(2)->create()->pluck('id')->toArray();
-        $genre = Genre::factory(1)->create()->pluck('id')->toArray();
-        $castMember = CastMember::factory(3)->create()->pluck('id')->toArray();
+        $category = array_map(fn($rs) => (string) $rs, Category::factory(2)->create()->pluck('id')->toArray());
+        $genre = array_map(fn($rs) => (string) $rs, Genre::factory(1)->create()->pluck('id')->toArray());
+        $castMember = array_map(fn($rs) => (string) $rs, CastMember::factory(3)->create()->pluck('id')->toArray());
 
         $entity = new Video([
             'title' => 'test',
@@ -67,9 +67,9 @@ class InsertTest extends TestCase
             'duration' => 50,
             'opened' => true,
             'rating' => Rating::L,
-            'categories' => $category = array_map(fn($rs) => (string) $rs, $category),
-            'genres' => $genre = array_map(fn ($rs) => (string) $rs, $genre),
-            'castMembers' => $castMember = array_map(fn ($rs) => (string) $rs, $castMember),
+            'categories' => $category,
+            'genres' => $genre,
+            'castMembers' => $castMember,
         ]);
 
         $this->repository->insert($entity);
