@@ -14,14 +14,14 @@ class VideoCreatedEventTest extends TestCase
 {
     public function testGetName()
     {
-        $entity = new Video(
-            title: 'Test',
-            description: 'Description',
-            yearLaunched: 2019,
-            duration: 20,
-            opened: false,
-            rating: Rating::L,
-        );
+        $entity = new Video([
+            'title' => 'Test',
+            'description' => 'Description',
+            'yearLaunched' => 2019,
+            'duration' => 20,
+            'opened' => false,
+            'rating' => Rating::L,
+        ]);
 
         $event = new VideoCreatedEvent($entity);
         $this->assertEquals('video.created', $event->getName());
@@ -29,15 +29,15 @@ class VideoCreatedEventTest extends TestCase
 
     public function testGetPayloadEmpty()
     {
-        $entity = new Video(
-            id: new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
-            title: 'Test',
-            description: 'Description',
-            yearLaunched: 2019,
-            duration: 20,
-            opened: false,
-            rating: Rating::L,
-        );
+        $entity = new Video([
+            'id' => new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
+            'title' => 'Test',
+            'description' => 'Description',
+            'yearLaunched' => 2019,
+            'duration' => 20,
+            'opened' => false,
+            'rating' => Rating::L,
+        ]);
 
         $event = new VideoCreatedEvent($entity);
         $this->assertEquals([
@@ -49,16 +49,16 @@ class VideoCreatedEventTest extends TestCase
 
     public function testGetPayloadTrailer()
     {
-        $entity = new Video(
-            id: new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
-            title: 'Test',
-            description: 'Description',
-            yearLaunched: 2019,
-            duration: 20,
-            opened: false,
-            rating: Rating::L,
-            trailerFile: new Media('path/test.mp4')
-        );
+        $entity = new Video([
+            'id' => new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
+            'title' => 'Test',
+            'description' => 'Description',
+            'yearLaunched' => 2019,
+            'duration' => 20,
+            'opened' => false,
+            'rating' => Rating::L,
+            'trailerFile' => new Media('path/test.mp4')
+        ]);
 
         $event = new VideoCreatedEvent($entity);
         $this->assertEquals([
@@ -70,16 +70,16 @@ class VideoCreatedEventTest extends TestCase
 
     public function testGetPayloadVideo()
     {
-        $entity = new Video(
-            id: new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
-            title: 'Test',
-            description: 'Description',
-            yearLaunched: 2019,
-            duration: 20,
-            opened: false,
-            rating: Rating::L,
-            videoFile: new Media('path/test.mp4')
-        );
+        $entity = new Video([
+            'id' => new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
+            'title' => 'Test',
+            'description' => 'Description',
+            'yearLaunched' => 2019,
+            'duration' => 20,
+            'opened' => false,
+            'rating' => Rating::L,
+            'videoFile' => new Media('path/test.mp4')
+        ]);
 
         $event = new VideoCreatedEvent($entity);
         $this->assertEquals([
@@ -91,17 +91,17 @@ class VideoCreatedEventTest extends TestCase
 
     public function testGetPayloadTrailerAndVideo()
     {
-        $entity = new Video(
-            id: new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
-            title: 'Test',
-            description: 'Description',
-            yearLaunched: 2019,
-            duration: 20,
-            opened: false,
-            rating: Rating::L,
-            trailerFile: new Media('trailer/test.mp4'),
-            videoFile: new Media('video/test.mp4'),
-        );
+        $entity = new Video([
+            'id' => new Uuid('563bef80-4467-4455-9a02-506f5e52c99f'),
+            'title' => 'Test',
+            'description' => 'Description',
+            'yearLaunched' => 2019,
+            'duration' => 20,
+            'opened' => false,
+            'rating' => Rating::L,
+            'trailerFile' => new Media('trailer/test.mp4'),
+            'videoFile' => new Media('video/test.mp4'),
+        ]);
 
         $event = new VideoCreatedEvent($entity);
         $this->assertEquals([

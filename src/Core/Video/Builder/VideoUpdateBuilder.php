@@ -13,18 +13,18 @@ class VideoUpdateBuilder extends VideoCreateBuilder implements VideoBuilderInter
 
     public function createEntity(Input $input): self
     {
-        $this->entity = new Video(
-            id: new Uuid($input->id),
-            title: $input->title,
-            description: $input->description,
-            yearLaunched: $input->yearLaunched,
-            duration: $input->duration,
-            opened: $input->opened,
-            rating: $input->rating,
-            categories: $input->categories,
-            genres: $input->genres,
-            castMembers: $input->castMembers,
-        );
+        $this->entity = new Video([
+            'id' => new Uuid($input->id),
+            'title' => $input->title,
+            'description' => $input->description,
+            'yearLaunched' => $input->yearLaunched,
+            'duration' => $input->duration,
+            'opened' => $input->opened,
+            'rating' => $input->rating,
+            'categories' => $input->categories,
+            'genres' => $input->genres,
+            'castMembers' => $input->castMembers,
+        ]);
 
         return $this;
     }
