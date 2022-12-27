@@ -3,12 +3,18 @@
 namespace App\Providers;
 
 use App\Factory\{CastMemberFactory, CategoryFactory};
-use App\Repositories\Eloquent\{CastMemberRepositoryEloquent, CategoryRepositoryEloquent, GenreRepositoryEloquent};
+use App\Repositories\Eloquent\{
+    CastMemberRepositoryEloquent,
+    CategoryRepositoryEloquent,
+    GenreRepositoryEloquent,
+    VideoRepositoryEloquent
+};
 use App\Transactions\DatabaseTransaction;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface as GenreCategoryFactoryInterface;
+use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Factory\CastMemberFactoryInterface;
 use Core\Video\Factory\CategoryFactoryInterface as VideoCategoryFactoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +37,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             CastMemberRepositoryInterface::class,
             CastMemberRepositoryEloquent::class
+        );
+
+        $this->app->singleton(
+            VideoRepositoryInterface::class,
+            VideoRepositoryEloquent::class
         );
 
         $this->app->singleton(
