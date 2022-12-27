@@ -7,23 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class ImageVideo extends Model
 {
-    use HasFactory, SoftDeletes, HasUuids;
+    use HasFactory, HasUuids, SoftDeletes;
 
     public $fillable = [
-        'id',
-        'name',
-        'description',
-        'is_active'
+        'path',
+        'type',
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'deleted_at' => 'datetime',
     ];
 
-    public function genres()
+    public function video()
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsTo(Video::class);
     }
 }

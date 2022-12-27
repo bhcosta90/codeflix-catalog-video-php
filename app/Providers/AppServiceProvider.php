@@ -2,15 +2,12 @@
 
 namespace App\Providers;
 
-use App\Factory\{CategoryFactory};
-use App\Repositories\Eloquent\{CastMemberRepositoryEloquent, CategoryRepositoryEloquent, GenreRepositoryEloquent};
 use App\Transactions\DatabaseTransaction;
-use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
-use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Core\Genre\Domain\Repository\GenreRepositoryInterface;
-use Core\Genre\Factory\CategoryFactoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
+use Costa\DomainPackage\UseCase\Interfaces\FileStorageInterface;
+use App\Services\{FileStorage, VideoEventManager};
+use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,29 +18,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(
-            CategoryRepositoryInterface::class,
-            CategoryRepositoryEloquent::class
-        );
-
-        $this->app->singleton(
-            CastMemberRepositoryInterface::class,
-            CastMemberRepositoryEloquent::class
-        );
-
-        $this->app->singleton(
-            GenreRepositoryInterface::class,
-            GenreRepositoryEloquent::class
-        );
-
-        $this->app->singleton(
-            CategoryFactoryInterface::class,
-            CategoryFactory::class
-        );
-
         $this->app->bind(
             DatabaseTransactionInterface::class,
             DatabaseTransaction::class,
+        );
+
+        $this->app->singleton(
+            FileStorageInterface::class,
+            FileStorage::class,
+        );
+
+        $this->app->singleton(
+            VideoEventManagerInterface::class,
+            VideoEventManager::class,
         );
     }
 

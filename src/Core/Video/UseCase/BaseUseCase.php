@@ -102,6 +102,15 @@ abstract class BaseUseCase
             if ($categoriesDiff) {
                 throw new Exceptions\CategoryNotFound('Categories not found', $categoriesDiff);
             }
+
+            if ($input->genres) {
+                $genresDb = $this->categoryFactory->findByIdsWithGenres($input->genres, $input->genres);
+                $genresDiff = array_diff($input->genres, $genresDb);
+
+                if ($genresDiff) {
+                    throw new Exceptions\CategoryGenreNotFound('Categories not found', $genresDiff);
+                }
+            }
         }
     }
 
@@ -112,15 +121,6 @@ abstract class BaseUseCase
             $genresDiff = array_diff($input->genres, $genresDb);
             if ($genresDiff) {
                 throw new Exceptions\GenreNotFound('Genres not found', $genresDiff);
-            }
-
-            if ($input->categories) {
-                $categoriesDb = $this->genreFactory->findByIdsWithCategories($input->genres, $input->categories);
-                $categoriesDiff = array_diff($input->categories, $categoriesDb);
-
-                if ($categoriesDiff) {
-                    throw new Exceptions\CategoryGenreNotFound('Categories not found', $categoriesDiff);
-                }
             }
         }
     }

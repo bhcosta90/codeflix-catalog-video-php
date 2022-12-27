@@ -6,6 +6,7 @@ use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
 use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Throwable;
 
@@ -61,6 +62,13 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'message' => $e->getMessage(),
                 'categories' => $e->categories
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if ($e instanceof NotificationException) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'errors' => $e->errors
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
