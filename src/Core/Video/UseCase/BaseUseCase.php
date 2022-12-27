@@ -6,12 +6,13 @@ use Core\Video\Builder\VideoCreateBuilder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Factory\{CastMemberFactoryInterface, CategoryFactoryInterface, GenreFactoryInterface};
+use Core\Video\Interfaces\VideoBuilderInterface;
 use Costa\DomainPackage\UseCase\Interfaces\{DatabaseTransactionInterface, FileStorageInterface};
 use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 
-class BaseUseCase
+abstract class BaseUseCase
 {
-    protected VideoCreateBuilder $builder;
+    protected VideoBuilderInterface $builder;
 
     public function __construct(
         protected VideoRepositoryInterface $repository,
@@ -22,8 +23,10 @@ class BaseUseCase
         protected GenreFactoryInterface $genreFactory,
         protected CastMemberFactoryInterface $castMemberFactory,
     ) {
-        $this->builder = new VideoCreateBuilder();
+        $this->builder = $this->builder();
     }
+
+    public abstract function builder(): VideoBuilderInterface;
 
     protected function createEntity(DTO\Create\Input $input): Video
     {
