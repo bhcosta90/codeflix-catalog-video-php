@@ -18,17 +18,23 @@ abstract class TestCase extends PHPUnitTestCase
     }
 
     /** @return DatabaseTransactionInterface|Mockery\MockInterface */
-    protected function getDatabaseTransactionInterface($success = true)
+    protected function getDatabaseTransactionInterface(
+        int $timesCallCommit = 0,
+        int $timesCallRollback = 0
+    )
     {
         /** @var DatabaseTransactionInterface|Mockery\MockInterface */
-        $mock = Mockery::spy(stdClass::class, DatabaseTransactionInterface::class);
-        if ($success) {
-            $mock->shouldReceive('commit');
-        } else {
-            $mock->shouldReceive('commit')->andThrowExceptions([new Exception('database error')]);
-        }
-        $mock->shouldReceive('rollback');
-        return $mock;
+        $mockTransaction = Mockery::mock(stdClass::class, DatabaseTransactionInterface::class);
+
+        $timesCallCommit > 0
+            ? $mockTransaction->shouldReceive('commit')->times($timesCallCommit)
+            : $mockTransaction->shouldReceive('commit')->never();
+
+        $timesCallRollback > 0
+            ? $mockTransaction->shouldReceive('rollback')->times($timesCallRollback)
+            : $mockTransaction->shouldReceive('rollback')->never();
+
+        return $mockTransaction;
     }
 
     /** @return PaginationInterface|Mockery\MockInterface */

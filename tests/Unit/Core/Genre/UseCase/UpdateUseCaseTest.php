@@ -82,7 +82,7 @@ class UpdateUseCaseTest extends TestCase
 
             $useCase = new UseCase(
                 repository: $mockRepo,
-                transaction: $this->getDatabaseTransactionInterface(),
+                transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
                 categoryFactory: $this->mockCategoryFactoryInterface(['123', '456']),
             );
 
@@ -91,33 +91,6 @@ class UpdateUseCaseTest extends TestCase
             $this->assertEquals($e->getMessage(), 'Categories not found');
             $this->assertEquals(['123', '456'], $e->categories);
         }
-    }
-
-    public function testDatabaseException()
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('database error');
-
-        $id = Uuid::random();
-        $mockEntity = Mockery::spy(Genre::class, ['test', true, $id, new DateTime(), []]);
-        $mockEntity->shouldReceive('id')->andReturn($id)
-            ->shouldReceive('createdAt')->andReturn((new DateTime())->format('Y-m-d H:i:s'));
-
-        /** @var GenreRepositoryInterface|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
-        $mockRepo->shouldReceive('findById')->andReturn($mockEntity);
-        $mockRepo->shouldReceive('update')->andReturn(true);
-
-        /** @var Input|Mockery\MockInterface */
-        $mockInput = Mockery::mock(Input::class, [$id, 'test', []]);
-
-        $useCase = new UseCase(
-            repository: $mockRepo,
-            transaction: $this->getDatabaseTransactionInterface(false),
-            categoryFactory: $this->mockCategoryFactoryInterface(),
-        );
-
-        $useCase->execute($mockInput);
     }
 
     public function testUpdateCategory()
@@ -137,7 +110,7 @@ class UpdateUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $mockRepo,
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
             categoryFactory: $this->mockCategoryFactoryInterface(['789', '987']),
         );
 

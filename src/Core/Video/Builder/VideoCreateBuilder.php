@@ -10,7 +10,7 @@ use Core\Video\Interfaces\VideoBuilderInterface;
 use Core\Video\UseCase\DTO\Create\Input;
 use Shared\Domain\Entity\Entity;
 
-class VideoBuilder implements VideoBuilderInterface
+class VideoCreateBuilder implements VideoBuilderInterface
 {
     protected Video $entity;
 

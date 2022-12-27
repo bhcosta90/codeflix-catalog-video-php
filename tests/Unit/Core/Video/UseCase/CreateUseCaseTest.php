@@ -52,28 +52,11 @@ class CreateUseCaseTest extends TestCase
         $useCase->execute($this->createMockInput());
     }
 
-    public function testExecInputExceptionTransaction()
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('database error');
-
-        $useCase = new CreateUseCase(
-            repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(false),
-            storage: $this->createMockFileStorage(),
-            eventManager: $this->createMockEventManager(),
-            categoryFactory: $this->createMockCategoryFactory(),
-            genreFactory: $this->createMockGenreFactory(),
-            castMemberFactory: $this->createMockCastMemberFactory(),
-        );
-        $useCase->execute($this->createMockInput());
-    }
-
     public function testExecInput()
     {
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(['123', '456']),
@@ -92,7 +75,7 @@ class CreateUseCaseTest extends TestCase
     {
         $useCase = new CreateUseCase(
             repository: $mockRepo = $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -106,12 +89,31 @@ class CreateUseCaseTest extends TestCase
         $mockRepo->shouldHaveReceived('updateMedia')->times(1);
     }
 
+    public function testExecOutputWithImages()
+    {
+        $useCase = new CreateUseCase(
+            repository: $mockRepo = $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
+            storage: $mockStorage = $this->createMockFileStorage(true),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $response = $useCase->execute($this->createMockInput(files: ['tmp' => '/tmp/test.txt']));
+        $this->assertInstanceOf(DTO\Output::class, $response);
+
+        $mockRepo->shouldHaveReceived('insert')->times(1);
+        $mockRepo->shouldHaveReceived('updateMedia')->times(1);
+        $mockStorage->shouldHaveReceived('store')->times(5);
+    }
+
     public function testExecExceptionCategoryWithoutGenre()
     {
         try {
             $useCase = new CreateUseCase(
                 repository: $this->createMockRepository(),
-                transaction: $this->getDatabaseTransactionInterface(),
+                transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
                 storage: $this->createMockFileStorage(),
                 eventManager: $this->createMockEventManager(),
                 categoryFactory: $this->createMockCategoryFactory(['789', '987', '444']),
@@ -122,7 +124,7 @@ class CreateUseCaseTest extends TestCase
                 categories: ['789', '987', '444'],
                 genres: ['123', '456']
             ));
-        } catch(CategoryGenreNotFound $e) {
+        } catch (CategoryGenreNotFound $e) {
             $this->assertEquals(['444'], array_values($e->categories));
         }
     }
@@ -133,7 +135,7 @@ class CreateUseCaseTest extends TestCase
         $this->expectExceptionMessage('Categories not found');
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -151,7 +153,7 @@ class CreateUseCaseTest extends TestCase
         $this->expectExceptionMessage('Genres not found');
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -169,7 +171,7 @@ class CreateUseCaseTest extends TestCase
         $this->expectExceptionMessage('Cast Members not found');
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -220,8 +222,12 @@ class CreateUseCaseTest extends TestCase
         return $mock;
     }
 
-    protected function createMockInput(array $categories = [], array $genres = [], array $castMembers = [])
-    {
+    protected function createMockInput(
+        array $categories = [],
+        array $genres = [],
+        array $castMembers = [],
+        array $files = []
+    ) {
         return Mockery::spy(DTO\Input::class, [
             'test',
             'test',
@@ -232,6 +238,11 @@ class CreateUseCaseTest extends TestCase
             $categories,
             $genres,
             $castMembers,
+            $files,
+            $files,
+            $files,
+            $files,
+            $files,
         ]);
     }
 }
