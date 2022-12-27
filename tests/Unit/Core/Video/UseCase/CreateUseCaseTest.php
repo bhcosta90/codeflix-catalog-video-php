@@ -59,13 +59,13 @@ class CreateUseCaseTest extends TestCase
             transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
-            categoryFactory: $this->createMockCategoryFactory(['123', '456']),
-            genreFactory: $this->createMockGenreFactory(['789', '987'], ['123', '456']),
+            categoryFactory: $this->createMockCategoryFactory(['123', '456'], ['123', '456']),
+            genreFactory: $this->createMockGenreFactory(['123', '456']),
             castMemberFactory: $this->createMockCastMemberFactory(['654', '321']),
         );
         $useCase->execute($this->createMockInput(
             categories: ['123'],
-            genres: ['789', '987'],
+            genres: ['123', '456'],
             castMembers: ['654', '321'],
         ));
         $this->assertTrue(true);
@@ -131,7 +131,7 @@ class CreateUseCaseTest extends TestCase
                 genres: ['123', '456']
             ));
         } catch (CategoryGenreNotFound $e) {
-            $this->assertEquals(['444'], array_values($e->categories));
+            $this->assertEquals(['123', '456'], array_values($e->categories));
         }
     }
 
@@ -206,18 +206,18 @@ class CreateUseCaseTest extends TestCase
         return Mockery::spy(stdClass::class, VideoEventManagerInterface::class);
     }
 
-    protected function createMockCategoryFactory(array $data = [])
+    protected function createMockCategoryFactory(array $data = [], array $genres = [])
     {
         $mock = Mockery::spy(stdClass::class, CategoryFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
+        $mock->shouldReceive('findByIdsWithGenres')->andReturn($genres);
         return $mock;
     }
 
-    protected function createMockGenreFactory(array $data = [], array $categories = [])
+    protected function createMockGenreFactory(array $data = [])
     {
         $mock = Mockery::spy(stdClass::class, GenreFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
-        $mock->shouldReceive('findByIdsWithCategories')->andReturn($categories);
         return $mock;
     }
 
