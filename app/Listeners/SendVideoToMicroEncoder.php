@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use Core\Video\Domain\Event\VideoCreatedEvent;
 use Costa\DomainPackage\Domain\Event\EventInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class SendVideoToMicroEncoder
+class SendVideoToMicroEncoder implements ShouldQueue
 {
     /**
      * Create the event listener.
