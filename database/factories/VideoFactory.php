@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
+use Core\Video\Domain\Enum\Rating;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class VideoFactory extends Factory
     public function definition()
     {
         return [
-            'id' => (string) Str::uuid(),
+            'id' => (string) str()->uuid(),
             'title' => $this->faker->name(),
             'description' => $this->faker->sentence(10),
             'year_launched' => Carbon::make(now()->addYears(5))->format('Y'),

@@ -4,9 +4,12 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Video as VideoModel;
 use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
+use Core\Video\Builder\VideoCreateBuilder;
+use Core\Video\Builder\VideoUpdateBuilder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Repository\VideoRepositoryFilter;
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
+use Core\Video\Interfaces\VideoBuilderInterface;
 use Costa\DomainPackage\Domain\Entity\Entity;
 use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Costa\DomainPackage\Domain\Repository\ListInterface;
@@ -14,22 +17,28 @@ use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 
 class VideoRepositoryEloquent implements VideoRepositoryInterface
 {
+    private VideoBuilderInterface $builder;
+
     public function __construct(private VideoModel $model)
     {
-        //
+        $this->builder = new VideoUpdateBuilder();
     }
 
     public function insert(Entity $entity): bool
     {
-        $this->model->create([
+        $db = $this->model->create([
             'id' => $entity->id(),
-            'name' => $entity->name,
-            'type' => $entity->type->value,
-            'is_active' => $entity->isActive,
-            'created_at' => $entity->createdAt(),
+            'title' => $entity->title,
+            'description' => $entity->description,
+            'year_launched' => $entity->yearLaunched,
+            'rating' => $entity->rating->value,
+            'duration' => $entity->duration,
+            'opened' => $entity->opened,
         ]);
 
-        return true;
+        $this->syncRelationships($db, $entity);
+
+        return (bool) $db;
     }
 
     public function update(Entity $entity): bool
@@ -62,24 +71,23 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
     public function findById(string $id): ?Video
     {
         if ($obj = $this->model->find($id)) {
-            return new Video([
-                'title' => $obj->title,
-                'description' => $obj->description,
-                'yearLaunched' => $obj->yearLaunched,
-                'duration' => $obj->duration,
-                'opened' => $obj->opened,
-                'rating' => $obj->rating,
-                'categories' => $obj->categories()->pluck('id')->toArray(),
-                'genres' => $obj->genres()->pluck('id')->toArray(),
-                'castMembers' => $obj->castMembers()->pluck('id')->toArray(),
-            ]);
+            $obj->categories = $obj->categories->pluck('id')->toArray();
+            $obj->genres = $obj->genres->pluck('id')->toArray();
+            $obj->castMembers = $obj->castMembers->pluck('id')->toArray();
+            return $this->builder->createEntity($obj)->getEntity();
         }
 
         throw new DomainNotFoundException("Video {$id} not found");
     }
 
+    /**
+     * @param VideoRepositoryFilter|null $filter
+     * @param integer $page
+     * @param integer $total
+     * @return PaginationInterface
+     */
     public function paginate(
-        VideoRepositoryFilter $filter = null,
+        object $filter = null,
         int $page = 1,
         int $total = 15
     ): PaginationInterface {
@@ -100,5 +108,12 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
     public function updateMedia(Video $video): bool
     {
         return true;
+    }
+
+    protected function syncRelationships(VideoModel $model, Entity $entity)
+    {
+        $model->categories()->sync($entity->categories);
+        $model->genres()->sync($entity->genres);
+        $model->castMembers()->sync($entity->castMembers);
     }
 }

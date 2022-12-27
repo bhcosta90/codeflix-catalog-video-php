@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('rating', 3);
             $table->smallInteger('duration');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
