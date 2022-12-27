@@ -40,7 +40,7 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         volumes:
-            - 'sail-mariadb:/var/lib/mysql'
+            - './vendor/__data/mariadb:/var/lib/mysql'
             - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
             - sail
@@ -53,7 +53,7 @@ services:
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
-            - 'sail-redis:/data'
+            - './vendor/__data/redis:/data'
         networks:
             - sail
         healthcheck:
@@ -75,7 +75,7 @@ services:
             MINIO_ROOT_USER: 'sail'
             MINIO_ROOT_PASSWORD: 'password'
         volumes:
-            - 'sail-minio:/data/minio'
+            - './vendor/__data/minio:/data/minio'
         networks:
             - sail
         command: minio server /data/minio --console-address ":8900"
@@ -93,10 +93,3 @@ services:
 networks:
     sail:
         driver: bridge
-volumes:
-    sail-mariadb:
-        driver: local
-    sail-redis:
-        driver: local
-    sail-minio:
-        driver: local
