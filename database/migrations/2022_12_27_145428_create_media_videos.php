@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('video_id')->index();
             $table->foreign('video_id')->references('id')->on('videos');
-            $table->string('file_path');
+            $table->string('path');
             $table->string('encoded_path')->nullable();
             $table->enum('media_status', array_keys(Status::cases()))
                 ->default(Status::COMPLETED->value);

@@ -4,7 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Video as VideoModel;
 use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
-use Core\Video\Builder\VideoCreateBuilder;
 use Core\Video\Builder\VideoUpdateBuilder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Repository\VideoRepositoryFilter;
@@ -18,6 +17,8 @@ use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 class VideoRepositoryEloquent implements VideoRepositoryInterface
 {
     private VideoBuilderInterface $builder;
+    
+    use Trait\VideoTrait;
 
     public function __construct(private VideoModel $model)
     {
@@ -37,6 +38,11 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
         ]);
 
         $this->syncRelationships($db, $entity);
+        $this->updateImageThumb($entity, $db);
+        $this->updateImageThumbHalf($entity, $db);
+        $this->updateImageBanner($entity, $db);
+        $this->updateMediaVideo($entity, $db);
+        $this->updateMediaTrailer($entity, $db);
 
         return (bool) $db;
     }
