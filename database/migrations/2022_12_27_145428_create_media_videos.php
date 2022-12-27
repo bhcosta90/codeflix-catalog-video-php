@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('file_path');
             $table->string('encoded_path')->nullable();
             $table->enum('media_status', array_keys(Status::cases()))
-                ->default(Status::COMPLETE->value);
+                ->default(Status::COMPLETED->value);
             $table->enum('type', array_keys(MediaTypes::cases()));
             $table->timestamps();
         });
