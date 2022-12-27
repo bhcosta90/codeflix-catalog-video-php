@@ -5,7 +5,7 @@ namespace Core\Video\Interfaces;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\ValueObject\Enum\Status;
 use Core\Video\UseCase\DTO\Create\Input;
-use Shared\Domain\Entity\Entity;
+use Costa\DomainPackage\Domain\Entity\Entity;
 
 interface VideoBuilderInterface
 {

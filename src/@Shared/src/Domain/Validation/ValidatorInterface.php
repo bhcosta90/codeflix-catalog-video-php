@@ -2,7 +2,7 @@
 
 namespace Costa\DomainPackage\Domain\Validation;
 
-use Shared\Domain\Entity\Entity;
+use Costa\DomainPackage\Domain\Entity\Entity;
 
 interface ValidatorInterface
 {

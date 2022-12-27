@@ -3,10 +3,10 @@
 namespace Tests\Unit;
 
 use Exception;
-use Shared\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 use Mockery;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
-use Shared\UseCase\Interfaces\DatabaseTransactionInterface;
+use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
 use stdClass;
 
 abstract class TestCase extends PHPUnitTestCase

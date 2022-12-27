@@ -7,10 +7,10 @@ use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
 use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryFilter;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
-use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
-use Shared\Domain\Repository\ListInterface;
-use Shared\Domain\Repository\PaginationInterface;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\ValueObject\Uuid;
 
 class GenreRepositoryEloquent implements GenreRepositoryInterface
 {

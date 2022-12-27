@@ -2,9 +2,9 @@
 
 namespace Core\Genre\Domain\Entity;
 
-use Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
-use Shared\Domain\Validation\DomainValidation;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
+use Costa\DomainPackage\Domain\Validation\DomainValidation;
+use Costa\DomainPackage\ValueObject\Uuid;
 use DateTime;
 
 class Genre

@@ -2,8 +2,8 @@
 
 namespace Costa\DomainPackage\Domain\Repository;
 
-use Shared\Domain\Entity\Entity;
-use Shared\Domain\Repository\{ListInterface, PaginationInterface};
+use Costa\DomainPackage\Domain\Entity\Entity;
+use Costa\DomainPackage\Domain\Repository\{ListInterface, PaginationInterface};
 
 interface EntityRepositoryInterface
 {

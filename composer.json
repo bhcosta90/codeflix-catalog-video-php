@@ -25,7 +25,7 @@
         "psr-4": {
             "App\\": "app/",
             "Core\\": "src/Core",
-            "Shared\\": "src/@Shared",
+            "Costa\\DomainPackage\\": "src/@Shared/src",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }

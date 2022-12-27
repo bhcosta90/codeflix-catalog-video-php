@@ -4,8 +4,8 @@ namespace Core\CastMember\UseCase;
 
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
-use Shared\UseCase\Exception\NotFoundException;
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 
 class UpdateUseCase
 {

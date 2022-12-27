@@ -4,7 +4,7 @@ namespace Tests\Unit\Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Mockery;
 use Tests\Unit\TestCase;
 

@@ -3,8 +3,8 @@
 namespace Core\Genre\UseCase;
 
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
-use Shared\UseCase\DTO\List\Input;
-use Shared\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\UseCase\DTO\List\Input;
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
 
 class ListUseCase
 {

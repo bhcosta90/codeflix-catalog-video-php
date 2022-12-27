@@ -2,7 +2,7 @@
 
 namespace Costa\DomainPackage\Domain\Entity;
 
-use Shared\Domain\Notification\Notification;
+use Costa\DomainPackage\Domain\Notification\Notification;
 
 abstract class Entity
 {

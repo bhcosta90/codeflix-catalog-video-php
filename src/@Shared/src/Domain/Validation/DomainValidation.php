@@ -2,7 +2,7 @@
 
 namespace Costa\DomainPackage\Domain\Validation;
 
-use Shared\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
 
 class DomainValidation
 {

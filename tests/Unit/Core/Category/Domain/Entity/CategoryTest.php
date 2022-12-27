@@ -4,7 +4,7 @@ namespace Tests\Unit\Core\Category\Domain\Entity;
 
 use Tests\Unit\TestCase;
 use Core\Category\Domain\Entity\Category;
-use Shared\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
 use Throwable;
 
 class CategoryTest extends TestCase

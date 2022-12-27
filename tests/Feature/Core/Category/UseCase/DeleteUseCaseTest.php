@@ -5,7 +5,7 @@ namespace Tests\Feature\Core\Category\UseCase;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
 use Core\Category\UseCase\DeleteUseCase as UseCase;
-use Shared\UseCase\DTO\Delete\{Input};
+use Costa\DomainPackage\UseCase\DTO\Delete\{Input};
 use Tests\TestCase;
 
 class DeleteUseCaseTest extends TestCase

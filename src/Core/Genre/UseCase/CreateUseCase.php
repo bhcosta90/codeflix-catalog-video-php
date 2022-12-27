@@ -5,8 +5,8 @@ namespace Core\Genre\UseCase;
 use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
-use Shared\UseCase\Exception\UseCaseException;
-use Shared\UseCase\Interfaces\DatabaseTransactionInterface;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
 use Throwable;
 
 class CreateUseCase

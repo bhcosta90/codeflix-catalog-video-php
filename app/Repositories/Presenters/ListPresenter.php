@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Presenters;
 
-use Shared\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
 use Illuminate\Database\Eloquent\Collection;
 use stdClass;
 

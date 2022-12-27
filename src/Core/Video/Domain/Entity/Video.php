@@ -6,11 +6,11 @@ use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\ValueObject\Image;
 use Core\Video\Domain\ValueObject\Media;
 use Core\Video\Domain\Factory\VideoValidator;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\ValueObject\Uuid;
 use DateTime;
-use Shared\Domain\Entity\Entity;
-use Shared\Domain\Notification\{DTO\Input};
-use Shared\Domain\Notification\Exception\NotificationException;
+use Costa\DomainPackage\Domain\Entity\Entity;
+use Costa\DomainPackage\Domain\Notification\{DTO\Input};
+use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
 
 class Video extends Entity
 {

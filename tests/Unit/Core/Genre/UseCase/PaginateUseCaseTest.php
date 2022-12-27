@@ -4,7 +4,7 @@ namespace Tests\Unit\Core\Genre\UseCase;
 
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\UseCase\{PaginateUseCase as UseCase, DTO\Paginate\Input};
-use Shared\UseCase\DTO\Paginate\Output;
+use Costa\DomainPackage\UseCase\DTO\Paginate\Output;
 use Mockery;
 use stdClass;
 use Tests\Unit\TestCase;

@@ -5,8 +5,8 @@ namespace Tests\Unit\Core\Genre\Domain\Entity;
 use Tests\Unit\TestCase;
 use Core\Genre\Domain\Entity\Genre;
 use DateTime;
-use Shared\Domain\Entity\Exception\EntityValidationException;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\ValueObject\Uuid;
 use Throwable;
 
 class GenreTest extends TestCase

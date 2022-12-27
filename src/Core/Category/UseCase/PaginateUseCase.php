@@ -3,7 +3,7 @@
 namespace Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Shared\UseCase\DTO\Paginate\Output;
+use Costa\DomainPackage\UseCase\DTO\Paginate\Output;
 
 class PaginateUseCase
 {

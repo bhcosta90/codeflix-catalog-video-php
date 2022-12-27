@@ -5,10 +5,10 @@ namespace Tests\Unit\Core\Category\UseCase;
 use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{DeleteUseCase as UseCase};
-use Shared\UseCase\DTO\Delete\{Input, Output};
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\UseCase\DTO\Delete\{Input, Output};
+use Costa\DomainPackage\ValueObject\Uuid;
 use Mockery;
-use Shared\UseCase\Exception\{NotFoundException, UseCaseException};
+use Costa\DomainPackage\UseCase\Exception\{NotFoundException, UseCaseException};
 use Tests\Unit\TestCase;
 
 class DeleteUseCaseTest extends TestCase

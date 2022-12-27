@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Genre as Model;
 use App\Repositories\Eloquent\GenreRepositoryEloquent;
 use Core\Genre\Domain\Repository\GenreRepositoryFilter;
-use Shared\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
 use Tests\TestCase;
 
 class FindAllTest extends TestCase

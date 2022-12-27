@@ -6,8 +6,8 @@ use Tests\Unit\TestCase;
 use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use DateTime;
-use Shared\Domain\Entity\Exception\EntityValidationException;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\ValueObject\Uuid;
 use Throwable;
 
 class CastMemberTest extends TestCase

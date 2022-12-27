@@ -3,7 +3,7 @@
 namespace Core\Video\Domain\Repository;
 
 use Core\Video\Domain\Entity\Video;
-use Shared\Domain\Repository\EntityRepositoryInterface;
+use Costa\DomainPackage\Domain\Repository\EntityRepositoryInterface;
 
 interface VideoRepositoryInterface extends EntityRepositoryInterface
 {

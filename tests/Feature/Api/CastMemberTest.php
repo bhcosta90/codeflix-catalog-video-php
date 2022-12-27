@@ -4,7 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Http\Resources\CastMemberResource as Resource;
 use App\Models\CastMember as Model;
-use Shared\Tests\Traits\{TestResource, TestSave, TestValidation};
+use Costa\DomainPackage\Tests\Traits\{TestResource, TestSave, TestValidation};
 use Tests\TestCase;
 
 class CastMemberTest extends TestCase

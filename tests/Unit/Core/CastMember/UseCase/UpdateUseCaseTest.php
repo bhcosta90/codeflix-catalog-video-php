@@ -7,9 +7,9 @@ use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use Core\CastMember\UseCase\{UpdateUseCase as UseCase, DTO\Update\Input, DTO\Update\Output};
 use DateTime;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\ValueObject\Uuid;
 use Mockery;
-use Shared\UseCase\Exception\{NotFoundException, UseCaseException};
+use Costa\DomainPackage\UseCase\Exception\{NotFoundException, UseCaseException};
 use Tests\Unit\TestCase;
 
 class UpdateUseCaseTest extends TestCase

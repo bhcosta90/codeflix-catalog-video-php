@@ -3,7 +3,7 @@
 namespace Core\Video\UseCase;
 
 use Core\Video\Domain\Entity\Video;
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Throwable;
 
 class CreateUseCase extends BaseUseCase

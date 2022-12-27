@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Shared\Domain\Notification;
+namespace Tests\Unit\Costa\DomainPackage\Domain\Notification;
 
-use Shared\Domain\Notification\Notification;
-use Shared\Domain\Notification\DTO\Input;
+use Costa\DomainPackage\Domain\Notification\Notification;
+use Costa\DomainPackage\Domain\Notification\DTO\Input;
 
 use Tests\Unit\TestCase;
 

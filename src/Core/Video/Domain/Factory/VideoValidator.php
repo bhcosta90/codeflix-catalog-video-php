@@ -3,7 +3,7 @@
 namespace Core\Video\Domain\Factory;
 
 use Core\Video\Domain\Validation\VideoRakitValidator;
-use Shared\Domain\Validation\ValidatorInterface;
+use Costa\DomainPackage\Domain\Validation\ValidatorInterface;
 
 class VideoValidator
 {

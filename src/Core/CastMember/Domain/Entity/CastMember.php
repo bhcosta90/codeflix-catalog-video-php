@@ -3,9 +3,9 @@
 namespace Core\CastMember\Domain\Entity;
 
 use Core\CastMember\Domain\Enum\Type;
-use Shared\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
-use Shared\Domain\Validation\DomainValidation;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
+use Costa\DomainPackage\Domain\Validation\DomainValidation;
+use Costa\DomainPackage\ValueObject\Uuid;
 use DateTime;
 
 class CastMember

@@ -3,7 +3,7 @@
 namespace App\Transactions;
 
 use Illuminate\Support\Facades\DB;
-use Shared\UseCase\Interfaces\DatabaseTransactionInterface;
+use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
 
 class DatabaseTransaction implements DatabaseTransactionInterface
 {

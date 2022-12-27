@@ -7,7 +7,7 @@ use Core\Genre\Factory\CategoryFactoryInterface;
 use Core\Genre\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Exception;
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Mockery;
 use stdClass;
 use Tests\Unit\TestCase;

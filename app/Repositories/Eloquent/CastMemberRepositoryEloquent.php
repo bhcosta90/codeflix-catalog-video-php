@@ -9,10 +9,10 @@ use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryFilter;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
 use DateTime;
-use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
-use Shared\Domain\Repository\ListInterface;
-use Shared\Domain\Repository\PaginationInterface;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\ValueObject\Uuid;
 
 class CastMemberRepositoryEloquent implements CastMemberRepositoryInterface
 {

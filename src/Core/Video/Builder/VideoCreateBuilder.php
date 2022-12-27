@@ -8,7 +8,7 @@ use Core\Video\Domain\ValueObject\Image;
 use Core\Video\Domain\ValueObject\Media;
 use Core\Video\Interfaces\VideoBuilderInterface;
 use Core\Video\UseCase\DTO\Create\Input;
-use Shared\Domain\Entity\Entity;
+use Costa\DomainPackage\Domain\Entity\Entity;
 
 class VideoCreateBuilder implements VideoBuilderInterface
 {

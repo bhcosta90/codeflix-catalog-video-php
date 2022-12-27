@@ -11,10 +11,10 @@ use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Core\Genre\UseCase\Exceptions\GenreNotFound;
 use DateTime;
 use Exception;
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Mockery;
-use Shared\UseCase\Exception\NotFoundException;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\ValueObject\Uuid;
 use stdClass;
 use Tests\Unit\TestCase;
 

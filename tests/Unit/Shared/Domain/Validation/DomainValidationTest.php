@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Shared\Domain\Validation;
+namespace Tests\Unit\Costa\DomainPackage\Domain\Validation;
 
-use Shared\Domain\Entity\Exception\EntityValidationException;
-use Shared\Domain\Validation\DomainValidation;
+use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\Domain\Validation\DomainValidation;
 use Tests\Unit\TestCase;
 use Throwable;
 

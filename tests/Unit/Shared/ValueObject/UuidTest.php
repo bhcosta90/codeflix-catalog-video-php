@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Shared\ValueObject;
+namespace Tests\Unit\Costa\DomainPackage\ValueObject;
 
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\ValueObject\Uuid;
 use InvalidArgumentException;
 use Tests\Unit\TestCase;
 
@@ -11,7 +11,7 @@ class UuidTest extends TestCase
     public function testException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('<Shared\ValueObject\Uuid> does not allow the value <test>.');
+        $this->expectExceptionMessage('<Costa\DomainPackage\ValueObject\Uuid> does not allow the value <test>.');
         $obj = new Uuid("test");
         $this->assertNotEmpty($obj);
     }

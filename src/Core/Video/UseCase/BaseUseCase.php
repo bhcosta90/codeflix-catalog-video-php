@@ -6,7 +6,7 @@ use Core\Video\Builder\VideoCreateBuilder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Factory\{CastMemberFactoryInterface, CategoryFactoryInterface, GenreFactoryInterface};
-use Shared\UseCase\Interfaces\{DatabaseTransactionInterface, FileStorageInterface};
+use Costa\DomainPackage\UseCase\Interfaces\{DatabaseTransactionInterface, FileStorageInterface};
 use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 
 class BaseUseCase

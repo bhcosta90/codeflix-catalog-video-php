@@ -3,9 +3,9 @@
 namespace Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Shared\UseCase\Exception\NotFoundException;
-use Shared\UseCase\Exception\UseCaseException;
-use Shared\UseCase\DTO\Delete\{Input, Output};
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\DTO\Delete\{Input, Output};
 
 class DeleteUseCase
 {

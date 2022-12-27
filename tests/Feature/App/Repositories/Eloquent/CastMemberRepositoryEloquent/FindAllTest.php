@@ -6,7 +6,7 @@ use App\Models\CastMember;
 use App\Models\CastMember as Model;
 use App\Repositories\Eloquent\CastMemberRepositoryEloquent;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryFilter;
-use Shared\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
 use Tests\TestCase;
 
 class FindAllTest extends TestCase

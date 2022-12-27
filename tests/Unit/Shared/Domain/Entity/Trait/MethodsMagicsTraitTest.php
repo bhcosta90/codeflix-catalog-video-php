@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit\Shared\Domain\Entity\Trait;
+namespace Tests\Unit\Costa\DomainPackage\Domain\Entity\Trait;
 
-use Shared\Domain\Entity\Trait\MethodsMagicsTrait;
+use Costa\DomainPackage\Domain\Entity\Trait\MethodsMagicsTrait;
 use Exception;
 use Tests\Unit\TestCase;
 
@@ -15,7 +15,7 @@ class MethodsMagicsTraitTest extends TestCase
 {
     public function testException(){
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Property test not found in class Tests\Unit\Shared\Domain\Entity\Trait\StubMethodsMagicsTrait');
+        $this->expectExceptionMessage('Property test not found in class Tests\Unit\Costa\DomainPackage\Domain\Entity\Trait\StubMethodsMagicsTrait');
 
         $obj = new StubMethodsMagicsTrait();
         $obj->test;

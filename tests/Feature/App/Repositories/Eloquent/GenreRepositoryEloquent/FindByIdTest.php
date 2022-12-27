@@ -5,7 +5,7 @@ namespace Tests\Feature\App\Repositories\Eloquent\GenreRepositoryEloquent;
 use App\Models\Genre as Model;
 use App\Repositories\Eloquent\GenreRepositoryEloquent;
 use Core\Genre\Domain\Entity\Genre as Entity;
-use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
+use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Tests\TestCase;
 
 class FindByIdTest extends TestCase

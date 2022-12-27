@@ -5,7 +5,7 @@ namespace Core\Video\Builder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Interfaces\VideoBuilderInterface;
 use Core\Video\UseCase\DTO\Create\Input;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\ValueObject\Uuid;
 
 class VideoUpdateBuilder extends VideoCreateBuilder implements VideoBuilderInterface
 {
