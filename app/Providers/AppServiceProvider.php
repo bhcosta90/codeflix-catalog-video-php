@@ -10,7 +10,7 @@ use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
 use Illuminate\Support\ServiceProvider;
-use Shared\UseCase\Interfaces\DatabaseTransactionInterface;
+use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

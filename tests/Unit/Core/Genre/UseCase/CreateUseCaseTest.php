@@ -7,7 +7,7 @@ use Core\Genre\Factory\CategoryFactoryInterface;
 use Core\Genre\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Exception;
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Mockery;
 use stdClass;
 use Tests\Unit\TestCase;
@@ -45,7 +45,7 @@ class CreateUseCaseTest extends TestCase
 
             $useCase = new UseCase(
                 repository: $mockRepo,
-                transaction: $this->getDatabaseTransactionInterface(),
+                transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
                 categoryFactory: $this->mockCategoryFactoryInterface(['123', '456']),
             );
 
@@ -54,26 +54,6 @@ class CreateUseCaseTest extends TestCase
             $this->assertEquals($e->getMessage(), 'Categories not found');
             $this->assertEquals(['123', '456'], $e->categories);
         }
-    }
-
-    public function testDatabaseException(){
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('database error');
-
-        /** @var GenreRepositoryInterface|Mockery\MockInterface */
-        $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
-        $mockRepo->shouldReceive('insert')->andReturn(true);
-
-        /** @var Input|Mockery\MockInterface */
-        $mockInput = Mockery::mock(Input::class, ['test', ['123', '456']]);
-
-        $useCase = new UseCase(
-            repository: $mockRepo,
-            transaction: $this->getDatabaseTransactionInterface(false),
-            categoryFactory: $this->mockCategoryFactoryInterface(['123', '456']),
-        );
-
-        $useCase->execute($mockInput);
     }
 
     public function testCreateNewGenre()
@@ -87,7 +67,7 @@ class CreateUseCaseTest extends TestCase
 
         $useCase = new UseCase(
             repository: $mockRepo,
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 2),
             categoryFactory: $this->mockCategoryFactoryInterface(['123', '456']),
         );
 

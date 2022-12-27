@@ -4,7 +4,7 @@ namespace Tests\Feature\App\Repositories\Eloquent\CategoryRepositoryEloquent;
 
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
-use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
+use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Tests\TestCase;
 
 class DeleteTest extends TestCase

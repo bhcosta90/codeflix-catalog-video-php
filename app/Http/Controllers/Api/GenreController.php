@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Genre\StoreRequest;
 use App\Http\Requests\Genre\UpdateRequest;
 use Illuminate\Http\Response;
-use Shared\UseCase\DTO\List\Input as ListInput;
-use Shared\UseCase\DTO\Delete\Input as DeleteInput;
+use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
+use Costa\DomainPackage\UseCase\DTO\Delete\Input as DeleteInput;
 
 class GenreController extends Controller
 {

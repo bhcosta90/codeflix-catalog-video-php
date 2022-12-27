@@ -13,8 +13,8 @@ use Core\Video\UseCase\CreateUseCase;
 use Core\Video\UseCase\DTO\Create as DTO;
 use Exception;
 use Mockery;
-use Shared\UseCase\Exception\UseCaseException;
-use Shared\UseCase\Interfaces\FileStorageInterface;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Interfaces\FileStorageInterface;
 use stdClass;
 use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 use Throwable;
@@ -52,28 +52,11 @@ class CreateUseCaseTest extends TestCase
         $useCase->execute($this->createMockInput());
     }
 
-    public function testExecInputExceptionTransaction()
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('database error');
-
-        $useCase = new CreateUseCase(
-            repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(false),
-            storage: $this->createMockFileStorage(),
-            eventManager: $this->createMockEventManager(),
-            categoryFactory: $this->createMockCategoryFactory(),
-            genreFactory: $this->createMockGenreFactory(),
-            castMemberFactory: $this->createMockCastMemberFactory(),
-        );
-        $useCase->execute($this->createMockInput());
-    }
-
     public function testExecInput()
     {
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(['123', '456']),
@@ -91,8 +74,8 @@ class CreateUseCaseTest extends TestCase
     public function testExecOutput()
     {
         $useCase = new CreateUseCase(
-            repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            repository: $mockRepo = $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -101,6 +84,34 @@ class CreateUseCaseTest extends TestCase
         );
         $response = $useCase->execute($this->createMockInput());
         $this->assertInstanceOf(DTO\Output::class, $response);
+
+        $mockRepo->shouldHaveReceived('insert')->times(1);
+        $mockRepo->shouldHaveReceived('updateMedia')->times(1);
+    }
+
+    public function testExecOutputWithImages()
+    {
+        $useCase = new CreateUseCase(
+            repository: $mockRepo = $this->createMockRepository(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallCommit: 1),
+            storage: $mockStorage = $this->createMockFileStorage(true),
+            eventManager: $this->createMockEventManager(),
+            categoryFactory: $this->createMockCategoryFactory(),
+            genreFactory: $this->createMockGenreFactory(),
+            castMemberFactory: $this->createMockCastMemberFactory(),
+        );
+        $response = $useCase->execute($this->createMockInput(
+            thumbFile: ['tmp' => '/tmp/test.txt'],
+            thumbHalf: ['tpm' => '/tmp/test.txt'],
+            bannerFile: ['tpm' => '/tmp/test.txt'],
+            trailerFile: ['tpm' => '/tmp/test.txt'],
+            videoFile: ['tpm' => '/tmp/test.txt'],
+        ));
+        $this->assertInstanceOf(DTO\Output::class, $response);
+
+        $mockRepo->shouldHaveReceived('insert')->times(1);
+        $mockRepo->shouldHaveReceived('updateMedia')->times(1);
+        $mockStorage->shouldHaveReceived('store')->times(5);
     }
 
     public function testExecExceptionCategoryWithoutGenre()
@@ -108,7 +119,7 @@ class CreateUseCaseTest extends TestCase
         try {
             $useCase = new CreateUseCase(
                 repository: $this->createMockRepository(),
-                transaction: $this->getDatabaseTransactionInterface(),
+                transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
                 storage: $this->createMockFileStorage(),
                 eventManager: $this->createMockEventManager(),
                 categoryFactory: $this->createMockCategoryFactory(['789', '987', '444']),
@@ -119,7 +130,7 @@ class CreateUseCaseTest extends TestCase
                 categories: ['789', '987', '444'],
                 genres: ['123', '456']
             ));
-        } catch(CategoryGenreNotFound $e) {
+        } catch (CategoryGenreNotFound $e) {
             $this->assertEquals(['444'], array_values($e->categories));
         }
     }
@@ -130,7 +141,7 @@ class CreateUseCaseTest extends TestCase
         $this->expectExceptionMessage('Categories not found');
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -148,7 +159,7 @@ class CreateUseCaseTest extends TestCase
         $this->expectExceptionMessage('Genres not found');
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -166,7 +177,7 @@ class CreateUseCaseTest extends TestCase
         $this->expectExceptionMessage('Cast Members not found');
         $useCase = new CreateUseCase(
             repository: $this->createMockRepository(),
-            transaction: $this->getDatabaseTransactionInterface(),
+            transaction: $this->getDatabaseTransactionInterface(timesCallRollback: 1),
             storage: $this->createMockFileStorage(),
             eventManager: $this->createMockEventManager(),
             categoryFactory: $this->createMockCategoryFactory(),
@@ -217,8 +228,16 @@ class CreateUseCaseTest extends TestCase
         return $mock;
     }
 
-    protected function createMockInput(array $categories = [], array $genres = [], array $castMembers = [])
-    {
+    protected function createMockInput(
+        array $categories = [],
+        array $genres = [],
+        array $castMembers = [],
+        array $thumbFile = [],
+        array $thumbHalf = [],
+        array $bannerFile = [],
+        array $trailerFile = [],
+        array $videoFile = [],
+    ) {
         return Mockery::spy(DTO\Input::class, [
             'test',
             'test',
@@ -229,6 +248,11 @@ class CreateUseCaseTest extends TestCase
             $categories,
             $genres,
             $castMembers,
+            $thumbFile,
+            $thumbHalf,
+            $bannerFile,
+            $trailerFile,
+            $videoFile,
         ]);
     }
 }

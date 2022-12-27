@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
 use Core\Category\Domain\Repository\CategoryRepositoryFilter;
-use Shared\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
 use Tests\TestCase;
 
 class FindAllTest extends TestCase

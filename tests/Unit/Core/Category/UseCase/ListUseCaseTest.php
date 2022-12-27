@@ -6,9 +6,9 @@ use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Output};
 use DateTime;
-use Shared\UseCase\DTO\List\Input;
-use Shared\UseCase\Exception\NotFoundException;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\UseCase\DTO\List\Input;
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\ValueObject\Uuid;
 use Mockery;
 use Tests\Unit\TestCase;
 

@@ -3,7 +3,7 @@
 namespace Core\Video\Domain\Event;
 
 use Core\Video\Domain\Entity\Video;
-use Shared\Domain\Event\EventInterface;
+use Costa\DomainPackage\Domain\Event\EventInterface;
 
 class VideoCreatedEvent implements EventInterface
 {

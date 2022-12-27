@@ -3,7 +3,7 @@
 namespace Core\Category\Domain\Repository;
 
 use Core\Category\Domain\Entity\Category;
-use Shared\Domain\Repository\{ListInterface, PaginationInterface};
+use Costa\DomainPackage\Domain\Repository\{ListInterface, PaginationInterface};
 
 interface CategoryRepositoryInterface
 {

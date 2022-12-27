@@ -5,7 +5,7 @@ namespace Tests\Feature\Core\Category\UseCase;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
 use Core\Category\UseCase\ListUseCase as UseCase;
-use Shared\UseCase\DTO\List\Input;
+use Costa\DomainPackage\UseCase\DTO\List\Input;
 use Tests\TestCase;
 
 class ListUseCaseTest extends TestCase

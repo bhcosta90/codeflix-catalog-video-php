@@ -7,9 +7,9 @@ use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
 use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryFilter;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
-use Shared\Domain\Repository\ListInterface;
-use Shared\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
+use Costa\DomainPackage\Domain\Repository\ListInterface;
+use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 
 class CategoryRepositoryEloquent implements CategoryRepositoryInterface
 {

@@ -3,7 +3,7 @@
 namespace Core\CastMember\Domain\Repository;
 
 use Core\CastMember\Domain\Entity\CastMember;
-use Shared\Domain\Repository\{ListInterface, PaginationInterface};
+use Costa\DomainPackage\Domain\Repository\{ListInterface, PaginationInterface};
 
 interface CastMemberRepositoryInterface
 {

@@ -3,7 +3,7 @@
 namespace Core\Genre\Domain\Repository;
 
 use Core\Genre\Domain\Entity\Genre;
-use Shared\Domain\Repository\{ListInterface, PaginationInterface};
+use Costa\DomainPackage\Domain\Repository\{ListInterface, PaginationInterface};
 
 interface GenreRepositoryInterface
 {

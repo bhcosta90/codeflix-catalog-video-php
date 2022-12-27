@@ -7,8 +7,8 @@ use Tests\Unit\TestCase;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\ValueObject\{Image, Media, Enum\Status};
 use DateTime;
-use Shared\Domain\Notification\Exception\NotificationException;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
+use Costa\DomainPackage\ValueObject\Uuid;
 
 class VideoTest extends TestCase
 {

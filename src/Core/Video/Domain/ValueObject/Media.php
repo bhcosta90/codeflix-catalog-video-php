@@ -2,7 +2,7 @@
 
 namespace Core\Video\Domain\ValueObject;
 
-use Shared\Domain\Entity\Trait\MethodsMagicsTrait;
+use Costa\DomainPackage\Domain\Entity\Trait\MethodsMagicsTrait;
 
 class Media
 {

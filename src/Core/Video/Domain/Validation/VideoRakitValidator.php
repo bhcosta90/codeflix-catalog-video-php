@@ -3,9 +3,9 @@
 namespace Core\Video\Domain\Validation;
 
 use Rakit\Validation\Validator;
-use Shared\Domain\Entity\Entity;
-use Shared\Domain\Notification\DTO\Input;
-use Shared\Domain\Validation\ValidatorInterface;
+use Costa\DomainPackage\Domain\Entity\Entity;
+use Costa\DomainPackage\Domain\Notification\DTO\Input;
+use Costa\DomainPackage\Domain\Validation\ValidatorInterface;
 
 class VideoRakitValidator implements ValidatorInterface
 {

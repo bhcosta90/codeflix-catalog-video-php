@@ -4,7 +4,7 @@ namespace Core\Category\UseCase;
 
 use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Shared\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 
 class CreateUseCase
 {

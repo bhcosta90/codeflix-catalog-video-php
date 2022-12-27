@@ -6,7 +6,7 @@ use App\Models\CastMember;
 use App\Models\CastMember as Model;
 use App\Repositories\Eloquent\CastMemberRepositoryEloquent;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryFilter;
-use Shared\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 use Tests\TestCase;
 
 class PaginateTest extends TestCase

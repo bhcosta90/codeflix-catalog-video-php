@@ -5,8 +5,8 @@ namespace App\Exceptions;
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
-use Shared\Domain\Entity\Exception\EntityValidationException;
-use Shared\Domain\Repository\Exceptions\DomainNotFoundException;
+use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
+use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Throwable;
 
 class Handler extends ExceptionHandler

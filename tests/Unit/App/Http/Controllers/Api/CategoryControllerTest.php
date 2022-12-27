@@ -4,7 +4,7 @@ namespace Tests\Unit\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\CategoryController as Controller;
 use Core\Category\UseCase;
-use Shared\UseCase\DTO\Paginate\Output as PaginateOutput;
+use Costa\DomainPackage\UseCase\DTO\Paginate\Output as PaginateOutput;
 use Illuminate\Http\Request;
 use Mockery;
 use Tests\Unit\TestCase;

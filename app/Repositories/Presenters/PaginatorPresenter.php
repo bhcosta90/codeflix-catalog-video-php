@@ -3,7 +3,7 @@
 namespace App\Repositories\Presenters;
 
 use Illuminate\Pagination\LengthAwarePaginator;
-use Shared\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 use stdClass;
 
 class PaginatorPresenter implements PaginationInterface

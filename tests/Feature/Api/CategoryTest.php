@@ -4,7 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Http\Resources\CategoryResource as Resource;
 use App\Models\Category as Model;
-use Shared\Tests\Traits\{TestResource, TestSave, TestValidation};
+use Costa\DomainPackage\Tests\Traits\{TestResource, TestSave, TestValidation};
 use Tests\TestCase;
 
 class CategoryTest extends TestCase

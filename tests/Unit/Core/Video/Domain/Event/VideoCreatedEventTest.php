@@ -7,7 +7,7 @@ use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\Event\VideoCreatedEvent;
 use Core\Video\Domain\ValueObject\Media;
 use Mockery;
-use Shared\ValueObject\Uuid;
+use Costa\DomainPackage\ValueObject\Uuid;
 use Tests\Unit\TestCase;
 
 class VideoCreatedEventTest extends TestCase

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "bhcosta90/domain-package": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/octane": "^1.3",
@@ -25,7 +26,7 @@
         "psr-4": {
             "App\\": "app/",
             "Core\\": "src/Core",
-            "Shared\\": "src/@Shared",
+            "Costa\\DomainPackage\\": "src/@Shared/src",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -35,6 +36,12 @@
             "Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bhcosta90/domain-package"
+        }
+    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
