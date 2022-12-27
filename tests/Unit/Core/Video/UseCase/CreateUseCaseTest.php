@@ -100,7 +100,13 @@ class CreateUseCaseTest extends TestCase
             genreFactory: $this->createMockGenreFactory(),
             castMemberFactory: $this->createMockCastMemberFactory(),
         );
-        $response = $useCase->execute($this->createMockInput(files: ['tmp' => '/tmp/test.txt']));
+        $response = $useCase->execute($this->createMockInput(
+            thumbFile: ['tmp' => '/tmp/test.txt'],
+            thumbHalf: ['tpm' => '/tmp/test.txt'],
+            bannerFile: ['tpm' => '/tmp/test.txt'],
+            trailerFile: ['tpm' => '/tmp/test.txt'],
+            videoFile: ['tpm' => '/tmp/test.txt'],
+        ));
         $this->assertInstanceOf(DTO\Output::class, $response);
 
         $mockRepo->shouldHaveReceived('insert')->times(1);
@@ -226,7 +232,11 @@ class CreateUseCaseTest extends TestCase
         array $categories = [],
         array $genres = [],
         array $castMembers = [],
-        array $files = []
+        array $thumbFile = [],
+        array $thumbHalf = [],
+        array $bannerFile = [],
+        array $trailerFile = [],
+        array $videoFile = [],
     ) {
         return Mockery::spy(DTO\Input::class, [
             'test',
@@ -238,11 +248,11 @@ class CreateUseCaseTest extends TestCase
             $categories,
             $genres,
             $castMembers,
-            $files,
-            $files,
-            $files,
-            $files,
-            $files,
+            $thumbFile,
+            $thumbHalf,
+            $bannerFile,
+            $trailerFile,
+            $videoFile,
         ]);
     }
 }
