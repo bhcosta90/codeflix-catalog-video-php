@@ -1,21 +1,21 @@
 <?php
 
-namespace Tests\Feature\App\Repositories\Eloquent\CategoryRepositoryEloquent;
+namespace Tests\Feature\App\Repositories\Eloquent\VideoRepositoryEloquent;
 
-use App\Models\Category as Model;
-use App\Repositories\Eloquent\CategoryRepositoryEloquent;
-use Core\Category\Domain\Repository\CategoryRepositoryFilter;
+use App\Models\Video as Model;
+use App\Repositories\Eloquent\VideoRepositoryEloquent;
+use Core\Video\Domain\Repository\VideoRepositoryFilter;
 use Costa\DomainPackage\Domain\Repository\ListInterface;
 use Tests\TestCase;
 
 class FindAllTest extends TestCase
 {
-    private CategoryRepositoryEloquent $repository;
+    private VideoRepositoryEloquent $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new CategoryRepositoryEloquent(new Model);
+        $this->repository = new VideoRepositoryEloquent(new Model);
     }
 
     public function testFindAllEmpty()
@@ -35,11 +35,11 @@ class FindAllTest extends TestCase
         $this->assertEquals(10, $response->total());
     }
 
-    public function testFindAllWithFilterName()
+    public function testFindAllWithFilterTitle()
     {
         Model::factory(10)->create();
-        Model::factory(5)->create(['name' => 'test']);
-        $response = $this->repository->findAll(new CategoryRepositoryFilter(name: 'test'));
+        Model::factory(5)->create(['title' => 'test']);
+        $response = $this->repository->findAll(new VideoRepositoryFilter(title: 'test'));
         $this->assertInstanceOf(ListInterface::class, $response);
         $this->assertCount(5, $response->items());
         $this->assertEquals(5, $response->total());
