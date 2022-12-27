@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('category_genre', function (Blueprint $table) {
-            $table->foreignUuid('category_id')->on('categories');
-            $table->foreignUuid('genre_id')->on('genres');
-            $table->primary(['category_id', 'genre_id']);
+        Schema::create('cast_member_video', function (Blueprint $table) {
+            $table->foreignUuid('cast_member_id')->on('cast_members');
+            $table->foreignUuid('video_id')->on('videos');
+            $table->primary(['cast_member_id', 'video_id']);
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_genre');
+        Schema::dropIfExists('cast_member_video');
     }
 };

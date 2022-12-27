@@ -9,7 +9,6 @@ class VideoRepositoryFilter
 {
     public function __construct(
         public ?string $name,
-        public ?int $type,
     ) {
         //
     }
