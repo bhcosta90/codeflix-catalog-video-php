@@ -16,17 +16,17 @@ class VideoCreateBuilder implements VideoBuilderInterface
 
     public function createEntity(Input $input): self
     {
-        $this->entity = new Video(
-            title: $input->title,
-            description: $input->description,
-            yearLaunched: $input->yearLaunched,
-            duration: $input->duration,
-            opened: $input->opened,
-            rating: $input->rating,
-            categories: $input->categories,
-            genres: $input->genres,
-            castMembers: $input->castMembers,
-        );
+        $this->entity = new Video([
+            'title' => $input->title,
+            'description' => $input->description,
+            'yearLaunched' => $input->yearLaunched,
+            'duration' => $input->duration,
+            'opened' => $input->opened,
+            'rating' => $input->rating,
+            'categories' => $input->categories,
+            'genres' => $input->genres,
+            'castMembers' => $input->castMembers,
+        ]);
 
         return $this;
     }

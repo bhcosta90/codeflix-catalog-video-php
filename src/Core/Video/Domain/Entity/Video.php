@@ -14,45 +14,33 @@ use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
 
 class Video extends Entity
 {
-    public function __construct(
-        protected string $title,
-        protected string $description,
-        protected int $yearLaunched,
-        protected int $duration,
-        protected bool $opened,
-        protected Rating $rating,
-        protected ?array $categories = [],
-        protected ?array $genres = [],
-        protected ?array $castMembers = [],
-        protected ?Image $thumbFile = null,
-        protected ?Image $thumbHalf = null,
-        protected ?Image $bannerFile = null,
-        protected ?Media $trailerFile = null,
-        protected ?Media $videoFile = null,
-        protected ?Uuid $id = null,
-        protected ?DateTime $createdAt = null,
-        protected bool $publish = false,
-    ) {
-        $this->id = $this->id ?? Uuid::random();
-        $this->createdAt = $this->createdAt ?? new DateTime();
-        $this->validate();
-    }
+    protected string $title;
+    protected string $description;
+    protected int $yearLaunched;
+    protected int $duration;
+    protected bool $opened;
+    protected Rating $rating;
+    protected ?array $categories = [];
+    protected ?array $genres = [];
+    protected ?array $castMembers = [];
+    protected ?Image $thumbFile = null;
+    protected ?Image $thumbHalf = null;
+    protected ?Image $bannerFile = null;
+    protected ?Media $trailerFile = null;
+    protected ?Media $videoFile = null;
+    protected ?Uuid $id = null;
+    protected ?DateTime $createdAt = null;
+    protected bool $publish = false;
 
-    public function update(
-        string $title,
-        string $description,
-        int $yearLaunched,
-        int $duration,
-        bool $opened,
-        Rating $rating,
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->yearLaunched = $yearLaunched;
-        $this->duration = $duration;
-        $this->opened = $opened;
-        $this->rating = $rating;
-        $this->validate();
+    public function fieldsUpdated(): array{
+        return [
+            'title',
+            'description',
+            'yearLaunched',
+            'duration',
+            'opened',
+            'rating',
+        ];
     }
 
     public function addCategory(string $category)
@@ -110,7 +98,7 @@ class Video extends Entity
         $this->videoFile = $media;
     }
 
-    private function validate()
+    public function validated(): bool
     {
         VideoValidator::create()->validate($this);
 
@@ -120,5 +108,7 @@ class Video extends Entity
                 $this->getNotification()->getErrors()
             );
         }
+
+        return true;
     }
 }

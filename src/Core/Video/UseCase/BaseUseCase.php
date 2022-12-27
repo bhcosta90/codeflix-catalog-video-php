@@ -27,17 +27,17 @@ class BaseUseCase
 
     protected function createEntity(DTO\Create\Input $input): Video
     {
-        $entity = new Video(
-            title: $input->title,
-            description: $input->description,
-            yearLaunched: $input->yearLaunched,
-            duration: $input->duration,
-            opened: true,
-            rating: $input->rating,
-            categories: $input->categories,
-            genres: $input->genres,
-            castMembers: $input->castMembers,
-        );
+        $entity = new Video([
+            'title' => $input->title,
+            'description' => $input->description,
+            'yearLaunched' => $input->yearLaunched,
+            'duration' => $input->duration,
+            'opened' => true,
+            'rating' => $input->rating,
+            'categories' => $input->categories,
+            'genres' => $input->genres,
+            'castMembers' => $input->castMembers,
+        ]);
 
         $this->verifyCategories($input);
         $this->verifyGenres($input);
