@@ -109,7 +109,7 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
         int $page = 1,
         int $total = 15
     ): PaginationInterface {
-        return new PaginatorPresenter($this->filter($filter)->paginate());
+        return new PaginatorPresenter($this->filter($filter)->paginate($total, ['*'], 'page', $page));
     }
 
     private function filter(?VideoRepositoryFilter $filter)
