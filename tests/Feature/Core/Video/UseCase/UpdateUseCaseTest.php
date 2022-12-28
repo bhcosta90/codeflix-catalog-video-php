@@ -8,10 +8,11 @@ use App\Factory\GenreFactory;
 use App\Models\CastMember;
 use App\Models\Category;
 use App\Models\Genre;
-use Core\Video\UseCase\CreateUseCase as UseCase;
-use Core\Video\UseCase\DTO\Create as DTO;
+use Core\Video\UseCase\UpdateUseCase as UseCase;
+use Core\Video\UseCase\DTO\Update as DTO;
 use App\Repositories\Eloquent\VideoRepositoryEloquent as Repository;
 use App\Models\Video as Model;
+use App\Models\Video;
 use App\Services\FileStorage;
 use App\Services\VideoEventManager;
 use App\Transactions\DatabaseTransaction;
@@ -25,7 +26,7 @@ use Mockery;
 use Tests\TestCase;
 use Throwable;
 
-class CreateUseCaseTest extends TestCase
+class UpdateUseCaseTest extends TestCase
 {
     protected UseCase $useCase;
 
@@ -43,21 +44,24 @@ class CreateUseCaseTest extends TestCase
             genreFactory: new GenreFactory(new Genre, new Category),
             castMemberFactory: new CastMemberFactory(new CastMember)
         );
+
+        $this->model = Video::factory()->create();
     }
 
-    public function testCreate()
+    public function testUpdate()
     {
         Event::fake([
             VideoCreatedEvent::class
         ]);
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
             duration: 50,
-            opened: true,
-            rating: 'L'
+            opened: false,
+            rating: '18'
         ));
 
         $this->assertNotEmpty($response->id);
@@ -66,8 +70,8 @@ class CreateUseCaseTest extends TestCase
         $this->assertEquals($response->description, "description");
         $this->assertEquals($response->year_launched, 2020);
         $this->assertEquals($response->duration, 50);
-        $this->assertEquals($response->opened, 1);
-        $this->assertEquals($response->rating, "L");
+        $this->assertEquals($response->opened, false);
+        $this->assertEquals($response->rating, "18");
         $this->assertEquals($response->categories, []);
         $this->assertEquals($response->genres, []);
         $this->assertEquals($response->cast_members, []);
@@ -83,14 +87,14 @@ class CreateUseCaseTest extends TestCase
             "description" => "description",
             "year_launched" => 2020,
             "duration" => 50,
-            "opened" => 1,
-            "rating" => "L",
+            "opened" => 0,
+            "rating" => "18",
         ]);
 
         Event::assertDispatched(VideoCreatedEvent::class);
     }
 
-    public function testCreateWithRelation()
+    public function testUpdateWithRelation()
     {
         $categories = array_map(fn ($rs) => (string) $rs, Category::factory(2)->create()->pluck('id')->toArray());
         $genres = array_map(fn ($rs) => (string) $rs, ($genresAll = Genre::factory(2)->create())->pluck('id')->toArray());
@@ -98,6 +102,7 @@ class CreateUseCaseTest extends TestCase
         $genresAll->each(fn ($genre) => $genre->categories()->sync($categories));
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
@@ -128,7 +133,7 @@ class CreateUseCaseTest extends TestCase
         $this->assertDatabaseCount('cast_member_video', 2);
     }
 
-    public function testCreateVideoFile()
+    public function testUpdateVideoFile()
     {
         $fake = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
         $file = [
@@ -139,6 +144,7 @@ class CreateUseCaseTest extends TestCase
         ];
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
@@ -157,7 +163,7 @@ class CreateUseCaseTest extends TestCase
         ]);
     }
 
-    public function testCreateTrailerFile()
+    public function testUpdateTrailerFile()
     {
         $fake = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
         $file = [
@@ -168,6 +174,7 @@ class CreateUseCaseTest extends TestCase
         ];
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
@@ -187,7 +194,7 @@ class CreateUseCaseTest extends TestCase
         ]);
     }
 
-    public function testCreateThumbFile()
+    public function testUpdateThumbFile()
     {
         $fake = UploadedFile::fake()->create('video.jpg', 1, 'image/jpeg');
         $file = [
@@ -198,6 +205,7 @@ class CreateUseCaseTest extends TestCase
         ];
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
@@ -216,7 +224,7 @@ class CreateUseCaseTest extends TestCase
         ]);
     }
 
-    public function testCreateThumbHalf()
+    public function testUpdateThumbHalf()
     {
         $fake = UploadedFile::fake()->create('video.jpg', 1, 'image/jpeg');
         $file = [
@@ -227,6 +235,7 @@ class CreateUseCaseTest extends TestCase
         ];
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
@@ -245,7 +254,7 @@ class CreateUseCaseTest extends TestCase
         ]);
     }
 
-    public function testCreateBannerFile()
+    public function testUpdateBannerFile()
     {
         $fake = UploadedFile::fake()->create('video.jpg', 1, 'image/jpeg');
         $file = [
@@ -256,6 +265,7 @@ class CreateUseCaseTest extends TestCase
         ];
 
         $response = $this->useCase->execute(new DTO\Input(
+            id: $this->model->id,
             title: 'test',
             description: 'description',
             yearLaunched: 2020,
@@ -302,6 +312,7 @@ class CreateUseCaseTest extends TestCase
 
         try {
             $useCase->execute(new DTO\Input(
+                id: $this->model->id,
                 title: 'test',
                 description: 'description',
                 yearLaunched: 2020,

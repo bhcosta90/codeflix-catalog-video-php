@@ -4,6 +4,7 @@ namespace Core\Video\UseCase;
 
 use Core\Video\Builder\VideoUpdateBuilder;
 use Core\Video\Domain\Entity\Video;
+use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\Event\VideoCreatedEvent;
 use Core\Video\Interfaces\VideoBuilderInterface;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
@@ -22,15 +23,28 @@ class UpdateUseCase extends BaseUseCase
         if ($obj = $this->repository->findById($input->id)) {
             try {
                 $this->builder->createEntity($obj);
+                $entity = $this->builder->getEntity();
+                $entity->update([
+                    'title' => $input->title,
+                    'description' => $input->description,
+                    'yearLaunched' => $input->yearLaunched,
+                    'duration' => $input->duration,
+                    'opened' => $input->opened,
+                    'rating' => Rating::from($input->rating),
+                    'categories' => $input->categories,
+                    'genres' => $input->genres,
+                    'castMembers' => $input->castMembers,
+                ]);
+
                 $this->verifyCategories($input);
                 $this->verifyGenres($input);
                 $this->verifyCastMembers($input);
-                if ($this->repository->update($this->builder->getEntity())) {
+                if ($this->repository->update($entity)) {
                     $filesUploads = $this->storageAllFiles($input);
-                    $this->repository->updateMedia($this->builder->getEntity());
-                    $this->eventManager->dispatch(new VideoCreatedEvent($this->builder->getEntity()));
+                    $this->repository->updateMedia($entity);
+                    $this->eventManager->dispatch(new VideoCreatedEvent($entity));
                     $this->transaction->commit();
-                    return $this->output($this->builder->getEntity());
+                    return $this->output($entity);
                 }
 
                 throw new UseCaseException(self::class);
