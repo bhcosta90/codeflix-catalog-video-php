@@ -60,6 +60,11 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
             ]);
 
             $this->syncRelationships($obj, $entity);
+            $this->updateImageThumb($entity, $obj);
+            $this->updateImageThumbHalf($entity, $obj);
+            $this->updateImageBanner($entity, $obj);
+            $this->updateMediaVideo($entity, $obj);
+            $this->updateMediaTrailer($entity, $obj);
 
             return $response;
         }

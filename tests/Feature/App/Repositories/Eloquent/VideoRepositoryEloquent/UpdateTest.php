@@ -8,8 +8,9 @@ use App\Models\Genre;
 use App\Models\Video as Model;
 use App\Repositories\Eloquent\VideoRepositoryEloquent;
 use Core\Video\Domain\Entity\Video as Entity;
-use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Enum\Rating;
+use Core\Video\Domain\ValueObject\Image;
+use Core\Video\Domain\ValueObject\Media;
 use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Tests\TestCase;
 
@@ -25,7 +26,7 @@ class UpdateTest extends TestCase
 
     public function testUpdateNotFound()
     {
-        $objModel = new Video([
+        $objModel = new Entity([
             'title' => 'test',
             'description' => 'description',
             'yearLaunched' => 2020,
@@ -82,5 +83,90 @@ class UpdateTest extends TestCase
         $this->assertDatabaseCount('category_video', 2);
         $this->assertDatabaseCount('genre_video', 1);
         $this->assertDatabaseCount('cast_member_video', 3);
+    }
+
+    public function testUpdateThumFile()
+    {
+        $model = Model::factory()->create();
+        $entity = $this->repository->findById($model->id);
+
+        $entity->update([
+            'thumbFile' => new Image('/tmp/fake')
+        ]);
+        $this->repository->update($entity);
+
+        $this->assertDatabaseHas('image_videos', [
+            'video_id' => $entity->id(),
+            'path' => '/tmp/fake',
+            'type' => 1,
+        ]);
+    }
+
+    public function testUpdateThumHalf()
+    {
+        $model = Model::factory()->create();
+        $entity = $this->repository->findById($model->id);
+
+        $entity->update([
+            'thumbHalf' => new Image('/tmp/fake')
+        ]);
+        $this->repository->update($entity);
+
+        $this->assertDatabaseHas('image_videos', [
+            'video_id' => $entity->id(),
+            'path' => '/tmp/fake',
+            'type' => 2,
+        ]);
+    }
+
+    public function testUpdateBanner()
+    {
+        $model = Model::factory()->create();
+        $entity = $this->repository->findById($model->id);
+
+        $entity->update([
+            'bannerFile' => new Image('/tmp/fake')
+        ]);
+        $this->repository->update($entity);
+
+        $this->assertDatabaseHas('image_videos', [
+            'video_id' => $entity->id(),
+            'path' => '/tmp/fake',
+            'type' => 0,
+        ]);
+    }
+
+    public function testUpdateTrailer()
+    {
+        $model = Model::factory()->create();
+        $entity = $this->repository->findById($model->id);
+
+        $entity->update([
+            'trailerFile' => new Media('/tmp/fake')
+        ]);
+        $this->repository->update($entity);
+
+        $this->assertDatabaseHas('media_videos', [
+            'video_id' => $entity->id(),
+            'path' => '/tmp/fake',
+            'type' => 1,
+        ]);
+    }
+
+    public function testUpdateVideo()
+    {
+        $model = Model::factory()->create();
+        $entity = $this->repository->findById($model->id);
+
+        $entity->update([
+            'videoFile' => new Media('/tmp/fake')
+        ]);
+        $this->repository->update($entity);
+
+        $this->assertDatabaseHas('media_videos', [
+            'video_id' => $entity->id(),
+            'path' => '/tmp/fake',
+            'type' => 0,
+        ]);
     }
 }

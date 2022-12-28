@@ -18,7 +18,6 @@ class MediaVideoTest extends TestCase
         $traitsNeeded = [
             \Illuminate\Database\Eloquent\Factories\HasFactory::class,
             \Illuminate\Database\Eloquent\Concerns\HasUuids::class,
-            \Illuminate\Database\Eloquent\SoftDeletes::class,
         ];
         $model = $this->model();
         $this->assertEquals($traitsNeeded, array_values(class_uses($model)));
@@ -27,7 +26,7 @@ class MediaVideoTest extends TestCase
     public function testFillable()
     {
         $fillableNeed = [
-            'file_path',
+            'path',
             'encoded_path',
             'media_status',
             'type',
