@@ -120,7 +120,16 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
             $result = $result->where('title', 'like', "%{$filterResult}%");
         }
 
-        return $result->orderBy('title', 'asc');
+        return $result->with([
+            'media',
+            'trailer',
+            'banner',
+            'thumb',
+            'thumbHalf',
+            'categories',
+            'castMembers',
+            'genres',
+        ])->orderBy('title', 'asc');
     }
 
     public function updateMedia(Video $video): bool
