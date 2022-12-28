@@ -128,7 +128,7 @@ class CreateUseCaseTest extends TestCase
                 genres: ['123', '456']
             ));
         } catch (CategoryGenreNotFound $e) {
-            $this->assertEquals(['123', '456'], array_values($e->categories));
+            $this->assertEquals(['789', '987', '444'], array_values($e->categories));
         }
     }
 

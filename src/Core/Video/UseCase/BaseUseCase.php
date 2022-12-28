@@ -104,8 +104,8 @@ abstract class BaseUseCase
             }
 
             if ($input->genres) {
-                $genresDb = $this->categoryFactory->findByIdsWithGenres($input->genres, $input->genres);
-                $genresDiff = array_diff($input->genres, $genresDb);
+                $genresDb = $this->categoryFactory->findByIdsWithGenres($input->genres, $input->categories);
+                $genresDiff = array_diff($input->categories, $genresDb);
 
                 if ($genresDiff) {
                     throw new Exceptions\CategoryGenreNotFound('Categories not found', $genresDiff);
