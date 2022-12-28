@@ -166,6 +166,7 @@ class InsertTest extends TestCase
             'video_id' => $entity->id(),
             'path' => '/tmp/fake',
             'type' => 1,
+            'media_status' => 2,
         ]);
     }
 
@@ -187,6 +188,7 @@ class InsertTest extends TestCase
             'video_id' => $entity->id(),
             'path' => '/tmp/fake',
             'type' => 0,
+            'media_status' => 2,
         ]);
     }
 }

@@ -3,24 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\GenreResource as Resource;
-use Core\Genre\Domain\Repository\GenreRepositoryFilter as Filter;
-use Core\Genre\UseCase;
-use Core\Genre\UseCase\DTO;
+use App\Http\Resources\VideoResource as Resource;
+use Core\Video\Domain\Repository\VideoRepositoryFilter as Filter;
+use Core\Video\UseCase;
+use Core\Video\UseCase\DTO;
 use Illuminate\Http\Request;
-use App\Http\Requests\Genre\StoreRequest;
-use App\Http\Requests\Genre\UpdateRequest;
+use App\Http\Requests\Video\{StoreRequest, UpdateRequest};
 use Illuminate\Http\Response;
 use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
 use Costa\DomainPackage\UseCase\DTO\Delete\Input as DeleteInput;
 
-class GenreController extends Controller
+class VideoController extends Controller
 {
     public function index(Request $request, UseCase\PaginateUseCase $useCase)
     {
         $response = $useCase->execute(new DTO\Paginate\Input(
             page: (int) $request->get('page', 1),
-            filter: new Filter(name: $request->get('name'), categories: $request->get('categories')),
+            filter: new Filter(title: $request->get('title')),
         ));
 
         return Resource::collection(collect($response->items))
@@ -40,9 +39,20 @@ class GenreController extends Controller
     public function store(StoreRequest $request, UseCase\CreateUseCase $useCase)
     {
         $response = $useCase->execute(new DTO\Create\Input(
-            name: $request->name,
-            categories: $request->categories ?? [],
-            is_active: $request->is_active ?? true
+            title: $request->title,
+            description: $request->description,
+            yearLaunched: $request->year_launched,
+            duration: $request->duration,
+            opened: $request->opened,
+            rating: $request->rating,
+            categories: $request->categories,
+            genres: $request->genres,
+            castMembers: $request->cast_members,
+            videoFile: getArrayFile($request->video_file),
+            trailerFile: getArrayFile($request->trailler_file),
+            bannerFile: getArrayFile($request->banner_file),
+            thumbFile: getArrayFile($request->thumb_file),
+            thumbHalf: getArrayFile($request->thumb_half),
         ));
 
         return (new Resource($response))
@@ -60,9 +70,20 @@ class GenreController extends Controller
     {
         $response = $useCase->execute(new DTO\Update\Input(
             id: $id,
-            name: $request->name,
-            categories: $request->categories ?? [],
-            is_active: $request->is_active,
+            title: $request->title,
+            description: $request->description,
+            yearLaunched: $request->year_launched,
+            duration: $request->duration,
+            opened: $request->opened,
+            rating: $request->rating,
+            categories: $request->categories,
+            genres: $request->genres,
+            castMembers: $request->cast_members,
+            videoFile: getArrayFile($request->video_file),
+            trailerFile: getArrayFile($request->trailler_file),
+            bannerFile: getArrayFile($request->banner_file),
+            thumbFile: getArrayFile($request->thumb_file),
+            thumbHalf: getArrayFile($request->thumb_half),
         ));
 
         return (new Resource($response))
@@ -70,7 +91,8 @@ class GenreController extends Controller
             ->setStatusCode(Response::HTTP_OK);
     }
 
-    public function destroy(UseCase\DeleteUseCase $useCase, string $id){
+    public function destroy(UseCase\DeleteUseCase $useCase, string $id)
+    {
         $useCase->execute(new DeleteInput(
             id: $id,
         ));
