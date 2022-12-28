@@ -145,6 +145,12 @@ class CreateUseCaseTest extends TestCase
         ));
 
         $this->assertNotEmpty($response->video_file);
+
+        $this->assertDatabaseHas('media_videos', [
+            'video_id' => $response->id,
+            'type' => 0,
+            'media_status' => 2,
+        ]);
     }
 
     public function testCreateTrailerFile()
@@ -168,6 +174,13 @@ class CreateUseCaseTest extends TestCase
         ));
 
         $this->assertNotEmpty($response->trailer_file);
+
+        $this->assertDatabaseHas('media_videos', [
+            'video_id' => $response->id,
+            'path' => $response->trailer_file,
+            'type' => 1,
+            'media_status' => 2,
+        ]);
     }
 
     public function testCreateThumbFile()
@@ -191,6 +204,12 @@ class CreateUseCaseTest extends TestCase
         ));
 
         $this->assertNotEmpty($response->thumb_file);
+
+        $this->assertDatabaseHas('image_videos', [
+            'video_id' => $response->id,
+            'path' => $response->thumb_file,
+            'type' => 1,
+        ]);
     }
 
     public function testCreateThumbHalf()
@@ -214,6 +233,12 @@ class CreateUseCaseTest extends TestCase
         ));
 
         $this->assertNotEmpty($response->thumb_half);
+
+        $this->assertDatabaseHas('image_videos', [
+            'video_id' => $response->id,
+            'path' => $response->thumb_half,
+            'type' => 2,
+        ]);
     }
 
     public function testCreateBannerFile()
@@ -237,5 +262,11 @@ class CreateUseCaseTest extends TestCase
         ));
 
         $this->assertNotEmpty($response->banner_file);
+
+        $this->assertDatabaseHas('image_videos', [
+            'video_id' => $response->id,
+            'path' => $response->banner_file,
+            'type' => 0,
+        ]);
     }
 }
