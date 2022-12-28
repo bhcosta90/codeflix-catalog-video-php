@@ -17,6 +17,8 @@ use Core\Video\UseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Tests\TestCase;
 
@@ -34,6 +36,7 @@ class VideoControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake();
         $this->repository = new Repository(new Model);
         $this->controller = new Controller();
         $this->categoryFactory = new CategoryFactory(new Category());
@@ -56,6 +59,8 @@ class VideoControllerTest extends TestCase
 
     public function testStore()
     {
+        $mediaVideoFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
+        
         $request = new StoreRequest();
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
@@ -68,6 +73,11 @@ class VideoControllerTest extends TestCase
             'cast_members' => $this->castMembers,
             'genres' => $this->genres,
             'categories' => $this->categories,
+            'video_file' => $mediaVideoFile,
+            'trailler_file' => $mediaVideoFile,
+            'banner_file' => $mediaVideoFile,
+            'thumb_file' => $mediaVideoFile,
+            'thumb_half' => $mediaVideoFile,
         ]));
 
         $response = $this->controller->store($request, new UseCase\CreateUseCase(
@@ -84,6 +94,11 @@ class VideoControllerTest extends TestCase
         $this->assertEquals($this->castMembers, $response->original->cast_members);
         $this->assertEquals($this->genres, $response->original->genres);
         $this->assertEquals($this->categories, $response->original->categories);
+        $this->assertNotNull($response->original->video_file);
+        $this->assertNotNull($response->original->trailer_file);
+        $this->assertNotNull($response->original->banner_file);
+        $this->assertNotNull($response->original->thumb_file);
+        $this->assertNotNull($response->original->thumb_half);
 
         $this->assertDatabaseCount('category_video', 2);
         $this->assertDatabaseCount('genre_video', 2);
@@ -100,6 +115,7 @@ class VideoControllerTest extends TestCase
 
     public function testUpdate()
     {
+        $mediaVideoFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
         $model = Model::factory()->create();
         $request = new UpdateRequest();
         $request->headers->set('content-type', 'application/json');
@@ -113,6 +129,11 @@ class VideoControllerTest extends TestCase
             'cast_members' => $this->castMembers,
             'genres' => $this->genres,
             'categories' => $this->categories,
+            'video_file' => $mediaVideoFile,
+            'trailler_file' => $mediaVideoFile,
+            'banner_file' => $mediaVideoFile,
+            'thumb_file' => $mediaVideoFile,
+            'thumb_half' => $mediaVideoFile,
         ]));
 
         $response = $this->controller->update($request, new UseCase\UpdateUseCase(
@@ -129,6 +150,12 @@ class VideoControllerTest extends TestCase
         $this->assertEquals($this->castMembers, $response->original->cast_members);
         $this->assertEquals($this->genres, $response->original->genres);
         $this->assertEquals($this->categories, $response->original->categories);
+
+        $this->assertNotNull($response->original->video_file);
+        $this->assertNotNull($response->original->trailer_file);
+        $this->assertNotNull($response->original->banner_file);
+        $this->assertNotNull($response->original->thumb_file);
+        $this->assertNotNull($response->original->thumb_half);
 
         $this->assertDatabaseHas('videos', [
             'id' => $model->id,

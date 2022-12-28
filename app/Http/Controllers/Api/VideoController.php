@@ -48,6 +48,11 @@ class VideoController extends Controller
             categories: $request->categories,
             genres: $request->genres,
             castMembers: $request->cast_members,
+            videoFile: getArrayFile($request->video_file),
+            trailerFile: getArrayFile($request->trailler_file),
+            bannerFile: getArrayFile($request->banner_file),
+            thumbFile: getArrayFile($request->thumb_file),
+            thumbHalf: getArrayFile($request->thumb_half),
         ));
 
         return (new Resource($response))
@@ -74,6 +79,11 @@ class VideoController extends Controller
             categories: $request->categories,
             genres: $request->genres,
             castMembers: $request->cast_members,
+            videoFile: getArrayFile($request->video_file),
+            trailerFile: getArrayFile($request->trailler_file),
+            bannerFile: getArrayFile($request->banner_file),
+            thumbFile: getArrayFile($request->thumb_file),
+            thumbHalf: getArrayFile($request->thumb_half),
         ));
 
         return (new Resource($response))

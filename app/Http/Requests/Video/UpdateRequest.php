@@ -24,10 +24,16 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:100',
-            'description' => 'nullable|min:3|max:255',
-            'is_active' => ['required', 'boolean'],
-            'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL'
+            'title' => 'required|min:3|max:100',
+            'description' => 'nullable',
+            'opened' => 'required|boolean',
+            'duration' => 'required|number|min:1',
+            'year_launched' => 'required|number|min:1',
+            'video_file' => 'required',
+            'rating' => ['required'],
+            'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL',
+            'cast_members' => 'nullable|array|exists:cast_members,id,deleted_at,NULL',
+            'genres' => 'nullable|array|exists:genres,id,deleted_at,NULL',
         ];
     }
 }

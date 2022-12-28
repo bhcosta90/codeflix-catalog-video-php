@@ -15,11 +15,11 @@ class Input
         public array $categories = [],
         public array $genres = [],
         public array $castMembers = [],
-        public array $thumbFile = [],
-        public array $thumbHalf = [],
-        public array $bannerFile = [],
-        public array $trailerFile = [],
-        public array $videoFile = [],
+        public ?array $thumbFile = [],
+        public ?array $thumbHalf = [],
+        public ?array $bannerFile = [],
+        public ?array $trailerFile = [],
+        public ?array $videoFile = [],
     ) {
         //
     }
