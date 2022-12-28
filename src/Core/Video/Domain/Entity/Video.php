@@ -9,7 +9,6 @@ use Core\Video\Domain\Factory\VideoValidator;
 use Costa\DomainPackage\ValueObject\Uuid;
 use DateTime;
 use Costa\DomainPackage\Domain\Entity\Entity;
-use Costa\DomainPackage\Domain\Notification\{DTO\Input};
 use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
 
 class Video extends Entity
@@ -40,6 +39,14 @@ class Video extends Entity
             'duration',
             'opened',
             'rating',
+            'categories',
+            'genres',
+            'castMembers',
+            'thumbFile',
+            'thumbHalf',
+            'bannerFile',
+            'trailerFile',
+            'videoFile',
         ];
     }
 

@@ -8,7 +8,7 @@ namespace Core\Video\Domain\Repository;
 class VideoRepositoryFilter
 {
     public function __construct(
-        public ?string $name,
+        public ?string $title,
     ) {
         //
     }

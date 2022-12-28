@@ -2,14 +2,12 @@
 
 namespace Core\Video\Interfaces;
 
-use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\ValueObject\Enum\Status;
-use Core\Video\UseCase\DTO\Create\Input;
 use Costa\DomainPackage\Domain\Entity\Entity;
 
 interface VideoBuilderInterface
 {
-    public function createEntity(Input $input): self;
+    public function createEntity(object $input): self;
 
     public function addVideo(string $path, Status $status = Status::PENDING): self;
 

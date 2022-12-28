@@ -81,7 +81,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
         int $page = 1,
         int $total = 15
     ): PaginationInterface {
-        return new PaginatorPresenter($this->filter($filter)->paginate());
+        return new PaginatorPresenter($this->filter($filter)->paginate($total, ['*'], 'page', $page));
     }
 
     private function filter(?CategoryRepositoryFilter $filter)

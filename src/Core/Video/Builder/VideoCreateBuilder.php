@@ -14,7 +14,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
 {
     protected Video $entity;
 
-    public function createEntity(Input $input): self
+    public function createEntity(object $input): self
     {
         $this->entity = new Video([
             'title' => $input->title,
