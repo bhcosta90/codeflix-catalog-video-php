@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\App\Repositories\Eloquent\VideoRepository;
+namespace Tests\Feature\App\Repositories\Eloquent\VideoRepositoryEloquent;
 
 use App\Models\CastMember;
 use App\Models\Category;
