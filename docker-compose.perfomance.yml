@@ -11,7 +11,7 @@ services:
             - ./.docker/perfomance/:/usr/app
         entrypoint: "k6 run /usr/app/index.js"
         networks:
-            - app-network
+            - sail
 
     performance_prod:
         image: grafana/k6
@@ -23,7 +23,7 @@ services:
             - ./.docker/perfomance/:/usr/app
         entrypoint: "k6 run /usr/app/index.js"
         networks:
-            - app-network
+            - sail
 
     performance_laravel:
         image: grafana/k6
@@ -35,8 +35,4 @@ services:
             - ./.docker/perfomance/:/usr/app
         entrypoint: "k6 run /usr/app/index.js"
         networks:
-            - app-network
-
-networks:
-    app-network:
-        driver: bridge
+            - sail
