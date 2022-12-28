@@ -28,7 +28,7 @@ abstract class BaseUseCase
 
     public abstract function builder(): VideoBuilderInterface;
 
-    protected function createEntity(DTO\Create\Input $input): Video
+    protected function createEntity(object $input): Video
     {
         $entity = new Video([
             'title' => $input->title,
@@ -49,7 +49,7 @@ abstract class BaseUseCase
         return $entity;
     }
 
-    protected function storageAllFiles(DTO\Create\Input $input): array
+    protected function storageAllFiles(object $input): array
     {
         $result = [];
         $pathVideo = $this->builder->getEntity()->id();
@@ -94,7 +94,7 @@ abstract class BaseUseCase
         return null;
     }
 
-    protected function verifyCategories(DTO\Create\Input $input)
+    protected function verifyCategories(object $input)
     {
         if ($input->categories) {
             $categoriesDb = $this->categoryFactory->findByIds($input->categories);
@@ -114,7 +114,7 @@ abstract class BaseUseCase
         }
     }
 
-    protected function verifyGenres(DTO\Create\Input $input)
+    protected function verifyGenres(object $input)
     {
         if ($input->genres) {
             $genresDb = $this->genreFactory->findByIds($input->genres);
@@ -125,13 +125,13 @@ abstract class BaseUseCase
         }
     }
 
-    protected function verifyCastMembers(DTO\Create\Input $input)
+    protected function verifyCastMembers(object $input)
     {
         if ($input->castMembers) {
             $castMembersDb = $this->castMemberFactory->findByIds($input->castMembers);
             $castMembersDiff = array_diff($input->castMembers, $castMembersDb);
             if ($castMembersDiff) {
-                throw new Exceptions\GenreNotFound('Cast Members not found', $castMembersDiff);
+                throw new Exceptions\CastMemberNotFound('Cast Members not found', $castMembersDiff);
             }
         }
     }

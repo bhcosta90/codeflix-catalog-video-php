@@ -20,7 +20,7 @@ class VideoUpdateBuilder extends VideoCreateBuilder implements VideoBuilderInter
             'yearLaunched' => $input->yearLaunched || $input->year_launched,
             'duration' => $input->duration,
             'opened' => $input->opened,
-            'rating' => Rating::from($input->rating),
+            'rating' => $input->rating,
             'categories' => $input->categories,
             'genres' => $input->genres,
             'castMembers' => $input->castMembers,

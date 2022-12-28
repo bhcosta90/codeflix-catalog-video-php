@@ -3,11 +3,11 @@
 namespace Core\Video\Builder;
 
 use Core\Video\Domain\Entity\Video;
+use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\ValueObject\Enum\Status;
 use Core\Video\Domain\ValueObject\Image;
 use Core\Video\Domain\ValueObject\Media;
 use Core\Video\Interfaces\VideoBuilderInterface;
-use Core\Video\UseCase\DTO\Create\Input;
 use Costa\DomainPackage\Domain\Entity\Entity;
 
 class VideoCreateBuilder implements VideoBuilderInterface
@@ -22,7 +22,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
             'yearLaunched' => $input->yearLaunched,
             'duration' => $input->duration,
             'opened' => $input->opened,
-            'rating' => $input->rating,
+            'rating' => Rating::from($input->rating),
             'categories' => $input->categories,
             'genres' => $input->genres,
             'castMembers' => $input->castMembers,
