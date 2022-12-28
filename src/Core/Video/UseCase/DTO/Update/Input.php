@@ -2,8 +2,6 @@
 
 namespace Core\Video\UseCase\DTO\Update;
 
-use Core\Video\Domain\Enum\Rating;
-
 class Input
 {
     public function __construct(
@@ -13,7 +11,7 @@ class Input
         public int $yearLaunched,
         public int $duration,
         public int $opened,
-        public Rating $rating,
+        public int|string $rating,
         public array $categories = [],
         public array $genres = [],
         public array $castMembers = [],

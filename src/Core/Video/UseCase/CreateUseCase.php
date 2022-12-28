@@ -19,7 +19,9 @@ class CreateUseCase extends BaseUseCase
     {
         try {
             $this->builder->createEntity($input);
-            $this->createEntity($input);
+            $this->verifyCategories($input);
+            $this->verifyGenres($input);
+            $this->verifyCastMembers($input);
 
             if ($this->repository->insert($this->builder->getEntity())) {
                 $filesUploads = $this->storageAllFiles($input);

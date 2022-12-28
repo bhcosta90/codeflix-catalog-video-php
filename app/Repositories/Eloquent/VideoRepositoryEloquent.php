@@ -6,6 +6,7 @@ use App\Models\Video as VideoModel;
 use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
 use Core\Video\Builder\VideoUpdateBuilder;
 use Core\Video\Domain\Entity\Video;
+use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\Repository\VideoRepositoryFilter;
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Interfaces\VideoBuilderInterface;
@@ -92,6 +93,7 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
             $obj->categories = $obj->categories->pluck('id')->toArray();
             $obj->genres = $obj->genres->pluck('id')->toArray();
             $obj->castMembers = $obj->castMembers->pluck('id')->toArray();
+            $obj->rating = Rating::from($obj->rating);
             return $this->builder->createEntity($obj)->getEntity();
         }
 
