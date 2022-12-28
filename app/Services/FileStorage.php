@@ -14,7 +14,7 @@ class FileStorage implements FileStorageInterface
         return Storage::put($path, $contents);
     }
 
-    public function remove(string $path): bool
+    public function delete(string $path): bool
     {
         return (bool) Storage::delete($path);
     }
