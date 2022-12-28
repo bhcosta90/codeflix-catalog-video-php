@@ -12,10 +12,13 @@ use Core\Video\UseCase\CreateUseCase as UseCase;
 use Core\Video\UseCase\DTO\Create as DTO;
 use App\Repositories\Eloquent\VideoRepositoryEloquent as Repository;
 use App\Models\Video as Model;
-use App\Models\Video;
 use App\Services\FileStorage;
 use App\Services\VideoEventManager;
 use App\Transactions\DatabaseTransaction;
+use Core\Video\Domain\Event\VideoCreatedEvent;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CreateUseCaseTest extends TestCase
@@ -25,11 +28,12 @@ class CreateUseCaseTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake();
 
         $this->useCase = new UseCase(
-            repository: new Repository(new Video),
+            repository: new Repository(new Model),
             transaction: new DatabaseTransaction,
-            storage: new FileStorage,
+            storage: new FileStorage(),
             eventManager: new VideoEventManager,
             categoryFactory: new CategoryFactory(new Category),
             genreFactory: new GenreFactory(new Genre, new Category),
@@ -39,6 +43,10 @@ class CreateUseCaseTest extends TestCase
 
     public function testCreate()
     {
+        Event::fake([
+            VideoCreatedEvent::class
+        ]);
+
         $response = $this->useCase->execute(new DTO\Input(
             title: 'test',
             description: 'description',
@@ -64,6 +72,18 @@ class CreateUseCaseTest extends TestCase
         $this->assertEquals($response->banner_file, null);
         $this->assertEquals($response->trailer_file, null);
         $this->assertEquals($response->video_file, null);
+
+        $this->assertDatabaseHas('videos', [
+            'id' => $response->id,
+            "title" => "test",
+            "description" => "description",
+            "year_launched" => 2020,
+            "duration" => 50,
+            "opened" => 1,
+            "rating" => "L",
+        ]);
+
+        Event::assertDispatched(VideoCreatedEvent::class);
     }
 
     public function testCreateWithRelation()
@@ -71,7 +91,7 @@ class CreateUseCaseTest extends TestCase
         $categories = array_map(fn ($rs) => (string) $rs, Category::factory(2)->create()->pluck('id')->toArray());
         $genres = array_map(fn ($rs) => (string) $rs, ($genresAll = Genre::factory(2)->create())->pluck('id')->toArray());
         $castMembers = array_map(fn ($rs) => (string) $rs, CastMember::factory(2)->create()->pluck('id')->toArray());
-        $genresAll->each(fn($genre) => $genre->categories()->sync($categories));
+        $genresAll->each(fn ($genre) => $genre->categories()->sync($categories));
 
         $response = $this->useCase->execute(new DTO\Input(
             title: 'test',
@@ -88,5 +108,134 @@ class CreateUseCaseTest extends TestCase
         $this->assertEquals($response->categories, $categories);
         $this->assertEquals($response->genres, $genres);
         $this->assertEquals($response->cast_members, $castMembers);
+
+        $this->assertDatabaseHas('videos', [
+            'id' => $response->id,
+            "title" => "test",
+            "description" => "description",
+            "year_launched" => 2020,
+            "duration" => 50,
+            "opened" => 1,
+            "rating" => "L",
+        ]);
+
+        $this->assertDatabaseCount('category_video', 2);
+        $this->assertDatabaseCount('genre_video', 2);
+        $this->assertDatabaseCount('cast_member_video', 2);
+    }
+
+    public function testCreateVideoFile()
+    {
+        $fake = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
+        $file = [
+            'tmp_name' => $fake->getPathname(),
+            'name' => $fake->getFilename(),
+            'type' => $fake->getMimeType(),
+            'error' => $fake->getError(),
+        ];
+
+        $response = $this->useCase->execute(new DTO\Input(
+            title: 'test',
+            description: 'description',
+            yearLaunched: 2020,
+            duration: 50,
+            opened: true,
+            rating: 'L',
+            videoFile: $file,
+        ));
+
+        $this->assertNotEmpty($response->video_file);
+    }
+
+    public function testCreateTrailerFile()
+    {
+        $fake = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
+        $file = [
+            'tmp_name' => $fake->getPathname(),
+            'name' => $fake->getFilename(),
+            'type' => $fake->getMimeType(),
+            'error' => $fake->getError(),
+        ];
+
+        $response = $this->useCase->execute(new DTO\Input(
+            title: 'test',
+            description: 'description',
+            yearLaunched: 2020,
+            duration: 50,
+            opened: true,
+            rating: 'L',
+            trailerFile: $file,
+        ));
+
+        $this->assertNotEmpty($response->trailer_file);
+    }
+
+    public function testCreateThumbFile()
+    {
+        $fake = UploadedFile::fake()->create('video.jpg', 1, 'image/jpeg');
+        $file = [
+            'tmp_name' => $fake->getPathname(),
+            'name' => $fake->getFilename(),
+            'type' => $fake->getMimeType(),
+            'error' => $fake->getError(),
+        ];
+
+        $response = $this->useCase->execute(new DTO\Input(
+            title: 'test',
+            description: 'description',
+            yearLaunched: 2020,
+            duration: 50,
+            opened: true,
+            rating: 'L',
+            thumbFile: $file,
+        ));
+
+        $this->assertNotEmpty($response->thumb_file);
+    }
+
+    public function testCreateThumbHalf()
+    {
+        $fake = UploadedFile::fake()->create('video.jpg', 1, 'image/jpeg');
+        $file = [
+            'tmp_name' => $fake->getPathname(),
+            'name' => $fake->getFilename(),
+            'type' => $fake->getMimeType(),
+            'error' => $fake->getError(),
+        ];
+
+        $response = $this->useCase->execute(new DTO\Input(
+            title: 'test',
+            description: 'description',
+            yearLaunched: 2020,
+            duration: 50,
+            opened: true,
+            rating: 'L',
+            thumbHalf: $file,
+        ));
+
+        $this->assertNotEmpty($response->thumb_half);
+    }
+
+    public function testCreateBannerFile()
+    {
+        $fake = UploadedFile::fake()->create('video.jpg', 1, 'image/jpeg');
+        $file = [
+            'tmp_name' => $fake->getPathname(),
+            'name' => $fake->getFilename(),
+            'type' => $fake->getMimeType(),
+            'error' => $fake->getError(),
+        ];
+
+        $response = $this->useCase->execute(new DTO\Input(
+            title: 'test',
+            description: 'description',
+            yearLaunched: 2020,
+            duration: 50,
+            opened: true,
+            rating: 'L',
+            bannerFile: $file,
+        ));
+
+        $this->assertNotEmpty($response->banner_file);
     }
 }

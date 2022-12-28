@@ -4,6 +4,7 @@ namespace Core\Video\UseCase;
 
 use Core\Video\Builder\VideoCreateBuilder;
 use Core\Video\Domain\Entity\Video;
+use Core\Video\Domain\Event\VideoCreatedEvent;
 use Core\Video\Interfaces\VideoBuilderInterface;
 use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Throwable;
@@ -26,7 +27,7 @@ class CreateUseCase extends BaseUseCase
             if ($this->repository->insert($this->builder->getEntity())) {
                 $filesUploads = $this->storageAllFiles($input);
                 $this->repository->updateMedia($this->builder->getEntity());
-                $this->eventManager->dispatch($this->builder->getEntity());
+                $this->eventManager->dispatch(new VideoCreatedEvent($this->builder->getEntity()));
                 $this->transaction->commit();
 
                 return $this->output($this->builder->getEntity());
