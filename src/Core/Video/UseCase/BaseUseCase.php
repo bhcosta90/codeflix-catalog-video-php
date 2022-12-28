@@ -28,27 +28,6 @@ abstract class BaseUseCase
 
     public abstract function builder(): VideoBuilderInterface;
 
-    protected function createEntity(object $input): Video
-    {
-        $entity = new Video([
-            'title' => $input->title,
-            'description' => $input->description,
-            'yearLaunched' => $input->yearLaunched,
-            'duration' => $input->duration,
-            'opened' => true,
-            'rating' => $input->rating,
-            'categories' => $input->categories,
-            'genres' => $input->genres,
-            'castMembers' => $input->castMembers,
-        ]);
-
-        $this->verifyCategories($input);
-        $this->verifyGenres($input);
-        $this->verifyCastMembers($input);
-
-        return $entity;
-    }
-
     protected function storageAllFiles(object $input): array
     {
         $result = [];
@@ -104,8 +83,8 @@ abstract class BaseUseCase
             }
 
             if ($input->genres) {
-                $genresDb = $this->categoryFactory->findByIdsWithGenres($input->genres, $input->genres);
-                $genresDiff = array_diff($input->genres, $genresDb);
+                $genresDb = $this->categoryFactory->findByIdsWithGenres($input->genres, $input->categories);
+                $genresDiff = array_diff($input->categories, $genresDb);
 
                 if ($genresDiff) {
                     throw new Exceptions\CategoryGenreNotFound('Categories not found', $genresDiff);

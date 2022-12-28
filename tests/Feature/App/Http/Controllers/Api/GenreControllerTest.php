@@ -158,8 +158,6 @@ class GenreControllerTest extends TestCase
         ), $model->id);
     }
 
-
-
     public function testUpdateWithCategories()
     {
         $categories = Category::factory(5)->create();

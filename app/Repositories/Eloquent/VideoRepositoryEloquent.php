@@ -136,6 +136,17 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
 
     public function updateMedia(Video $video): bool
     {
+        if (!$objectModel = $this->model->find($video->id())) {
+            throw new NotFoundException('Video not found');
+        }
+
+        $this->updateMediaVideo($video, $objectModel);
+        $this->updateMediaTrailer($video, $objectModel);
+
+        $this->updateImageBanner($video, $objectModel);
+        $this->updateImageThumb($video, $objectModel);
+        $this->updateImageThumbHalf($video, $objectModel);
+
         return true;
     }
 

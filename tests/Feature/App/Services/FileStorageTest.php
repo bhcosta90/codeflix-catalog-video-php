@@ -9,9 +9,14 @@ use Tests\TestCase;
 
 class FileStorageTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Storage::fake();
+    }
     public function testStore()
     {
-        $fakeFile = UploadedFile::fake()->create('video.mp', 1, 'video/mp4');
+        $fakeFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
 
         $file = [
             'tmp_name' => $fakeFile->getPathname(),

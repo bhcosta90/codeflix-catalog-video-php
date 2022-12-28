@@ -2,7 +2,13 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ 
+      "main", 
+      "master", 
+      "feature/*",
+      "release/*",
+      "hotfix/*",
+    ]
 
 jobs:
   ci:
