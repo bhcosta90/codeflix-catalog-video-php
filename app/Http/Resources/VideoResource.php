@@ -20,7 +20,7 @@ class VideoResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'year_launched' => $this->year_launched ?? $this->yearLaunched,
-            'opened' => $this->opened,
+            'opened' => (bool) $this->opened,
             'rating' => $this->rating,
             'duration' => $this->duration,
             'created_at' => $this->created_at ?? $this->createdAt,

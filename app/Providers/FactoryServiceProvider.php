@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Factory\{CastMemberFactory, CategoryFactory};
+use App\Factory\{CastMemberFactory, CategoryFactory, GenreFactory};
 use Core\Genre\Factory\CategoryFactoryInterface as GenreCategoryFactoryInterface;
 use Core\Video\Factory\CastMemberFactoryInterface;
 use Core\Video\Factory\CategoryFactoryInterface as VideoCategoryFactoryInterface;
-
+use Core\Video\Factory\GenreFactoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class FactoryServiceProvider extends ServiceProvider
@@ -21,6 +21,11 @@ class FactoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             GenreCategoryFactoryInterface::class,
             CategoryFactory::class
+        );
+        
+        $this->app->singleton(
+            GenreFactoryInterface::class,
+            GenreFactory::class
         );
 
         $this->app->singleton(
