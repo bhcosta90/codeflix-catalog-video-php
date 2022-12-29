@@ -8,15 +8,15 @@ use App\Factory\GenreFactory;
 use App\Models\CastMember;
 use App\Models\Category;
 use App\Models\Genre;
-use Core\Video\UseCase\UpdateUseCase as UseCase;
-use Core\Video\UseCase\DTO\Update as DTO;
-use App\Repositories\Eloquent\VideoRepositoryEloquent as Repository;
-use App\Models\Video as Model;
 use App\Models\Video;
+use App\Models\Video as Model;
+use App\Repositories\Eloquent\VideoRepositoryEloquent as Repository;
 use App\Services\FileStorage;
 use App\Services\VideoEventManager;
 use App\Transactions\DatabaseTransaction;
 use Core\Video\Domain\Event\VideoCreatedEvent;
+use Core\Video\UseCase\DTO\Update as DTO;
+use Core\Video\UseCase\UpdateUseCase as UseCase;
 use Exception;
 use Illuminate\Database\Events\TransactionCommitted;
 use Illuminate\Http\UploadedFile;
@@ -51,7 +51,7 @@ class UpdateUseCaseTest extends TestCase
     public function testUpdate()
     {
         Event::fake([
-            VideoCreatedEvent::class
+            VideoCreatedEvent::class,
         ]);
 
         $response = $this->useCase->execute(new DTO\Input(
@@ -66,12 +66,12 @@ class UpdateUseCaseTest extends TestCase
 
         $this->assertNotEmpty($response->id);
         $this->assertNotEmpty($response->created_at);
-        $this->assertEquals($response->title, "test");
-        $this->assertEquals($response->description, "description");
+        $this->assertEquals($response->title, 'test');
+        $this->assertEquals($response->description, 'description');
         $this->assertEquals($response->year_launched, 2020);
         $this->assertEquals($response->duration, 50);
         $this->assertEquals($response->opened, false);
-        $this->assertEquals($response->rating, "18");
+        $this->assertEquals($response->rating, '18');
         $this->assertEquals($response->categories, []);
         $this->assertEquals($response->genres, []);
         $this->assertEquals($response->cast_members, []);
@@ -83,12 +83,12 @@ class UpdateUseCaseTest extends TestCase
 
         $this->assertDatabaseHas('videos', [
             'id' => $response->id,
-            "title" => "test",
-            "description" => "description",
-            "year_launched" => 2020,
-            "duration" => 50,
-            "opened" => 0,
-            "rating" => "18",
+            'title' => 'test',
+            'description' => 'description',
+            'year_launched' => 2020,
+            'duration' => 50,
+            'opened' => 0,
+            'rating' => '18',
         ]);
 
         Event::assertDispatched(VideoCreatedEvent::class);
@@ -120,12 +120,12 @@ class UpdateUseCaseTest extends TestCase
 
         $this->assertDatabaseHas('videos', [
             'id' => $response->id,
-            "title" => "test",
-            "description" => "description",
-            "year_launched" => 2020,
-            "duration" => 50,
-            "opened" => 1,
-            "rating" => "L",
+            'title' => 'test',
+            'description' => 'description',
+            'year_launched' => 2020,
+            'duration' => 50,
+            'opened' => 1,
+            'rating' => 'L',
         ]);
 
         $this->assertDatabaseCount('category_video', 2);
@@ -284,7 +284,8 @@ class UpdateUseCaseTest extends TestCase
         ]);
     }
 
-    public function testExceptionCommit(){
+    public function testExceptionCommit()
+    {
         Event::listen(TransactionCommitted::class, function () {
             throw new Exception('commited');
         });
@@ -321,7 +322,7 @@ class UpdateUseCaseTest extends TestCase
                 rating: 'L',
                 bannerFile: $file,
             ));
-        } catch(Throwable $e){
+        } catch(Throwable $e) {
             $this->assertEquals('commited', $e->getMessage());
             $mock->shouldHaveReceived('delete')->times(1);
         }

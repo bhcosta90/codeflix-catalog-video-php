@@ -3,7 +3,8 @@
 namespace Tests\Unit\Core\CastMember\UseCase;
 
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
-use Core\CastMember\UseCase\{PaginateUseCase as UseCase, DTO\Paginate\Input};
+use Core\CastMember\UseCase\DTO\Paginate\Input;
+use Core\CastMember\UseCase\PaginateUseCase as UseCase;
 use Costa\DomainPackage\UseCase\DTO\Paginate\Output;
 use Mockery;
 use stdClass;

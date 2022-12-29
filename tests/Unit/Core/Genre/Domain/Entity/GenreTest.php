@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Core\Genre\Domain\Entity;
 
-use Tests\Unit\TestCase;
 use Core\Genre\Domain\Entity\Genre;
-use DateTime;
 use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
+use Tests\Unit\TestCase;
 use Throwable;
 
 class GenreTest extends TestCase
@@ -130,6 +130,6 @@ class GenreTest extends TestCase
         $this->assertCount(2, $genre->categories);
         $genre->subCategory('456');
         $this->assertCount(1, $genre->categories);
-        $this->assertEquals("123", $genre->categories[0]);
+        $this->assertEquals('123', $genre->categories[0]);
     }
 }

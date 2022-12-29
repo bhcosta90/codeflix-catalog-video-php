@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Core\Category\Domain\Entity;
 
-use Tests\Unit\TestCase;
 use Core\Category\Domain\Entity\Category;
 use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
+use Tests\Unit\TestCase;
 use Throwable;
 
 class CategoryTest extends TestCase

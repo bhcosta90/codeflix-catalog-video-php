@@ -3,16 +3,17 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\CastMember as CastMemberModel;
-use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
+use App\Repositories\Presenters\ListPresenter;
+use App\Repositories\Presenters\PaginatorPresenter;
 use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryFilter;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
-use DateTime;
 use Costa\DomainPackage\Domain\Repository\Exceptions\DomainNotFoundException;
 use Costa\DomainPackage\Domain\Repository\ListInterface;
 use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
 
 class CastMemberRepositoryEloquent implements CastMemberRepositoryInterface
 {
@@ -91,11 +92,11 @@ class CastMemberRepositoryEloquent implements CastMemberRepositoryInterface
     {
         $result = $this->model;
 
-        if ($filter && ($filterResult = $filter->name) && !empty($filterResult)) {
+        if ($filter && ($filterResult = $filter->name) && ! empty($filterResult)) {
             $result = $result->where('name', 'like', "%{$filterResult}%");
         }
 
-        if ($filter && ($filterResult = $filter->type) && !empty($filterResult)) {
+        if ($filter && ($filterResult = $filter->type) && ! empty($filterResult)) {
             $result = $result->where('type', $filterResult);
         }
 

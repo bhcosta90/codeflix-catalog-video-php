@@ -55,7 +55,7 @@ class CreateUseCaseTest extends TestCase
 
     public function testExecWithCategory()
     {
-        $categories = array_map(fn($rs) => (string) $rs, Category::factory(3)->create()->pluck('id')->toArray());
+        $categories = array_map(fn ($rs) => (string) $rs, Category::factory(3)->create()->pluck('id')->toArray());
 
         $response = $this->useCase->execute(new Input(
             name: 'test',

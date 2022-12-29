@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Video\StoreRequest;
+use App\Http\Requests\Video\UpdateRequest;
 use App\Http\Resources\VideoResource as Resource;
 use Core\Video\Domain\Repository\VideoRepositoryFilter as Filter;
 use Core\Video\UseCase;
 use Core\Video\UseCase\DTO;
-use Illuminate\Http\Request;
-use App\Http\Requests\Video\{StoreRequest, UpdateRequest};
-use Illuminate\Http\Response;
-use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
 use Costa\DomainPackage\UseCase\DTO\Delete\Input as DeleteInput;
+use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class VideoController extends Controller
 {
@@ -32,7 +33,7 @@ class VideoController extends Controller
                     'to' => $response->to,
                     'from' => $response->from,
                     'per_page' => $response->per_page,
-                ]
+                ],
             ]);
     }
 
@@ -63,6 +64,7 @@ class VideoController extends Controller
     public function show(UseCase\ListUseCase $useCase, string $id)
     {
         $response = $useCase->execute(new ListInput(id: $id));
+
         return (new Resource($response))->response();
     }
 
@@ -96,6 +98,7 @@ class VideoController extends Controller
         $useCase->execute(new DeleteInput(
             id: $id,
         ));
+
         return response()->noContent();
     }
 }

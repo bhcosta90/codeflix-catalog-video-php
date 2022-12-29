@@ -2,12 +2,13 @@
 
 namespace Core\Video\UseCase;
 
-use Core\Video\Builder\VideoCreateBuilder;
-use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
-use Core\Video\Factory\{CastMemberFactoryInterface, CategoryFactoryInterface, GenreFactoryInterface};
+use Core\Video\Factory\CastMemberFactoryInterface;
+use Core\Video\Factory\CategoryFactoryInterface;
+use Core\Video\Factory\GenreFactoryInterface;
 use Core\Video\Interfaces\VideoBuilderInterface;
-use Costa\DomainPackage\UseCase\Interfaces\{DatabaseTransactionInterface, FileStorageInterface};
+use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
+use Costa\DomainPackage\UseCase\Interfaces\FileStorageInterface;
 use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 
 abstract class BaseUseCase
@@ -26,7 +27,7 @@ abstract class BaseUseCase
         $this->builder = $this->builder();
     }
 
-    public abstract function builder(): VideoBuilderInterface;
+    abstract public function builder(): VideoBuilderInterface;
 
     protected function storageAllFiles(object $input): array
     {

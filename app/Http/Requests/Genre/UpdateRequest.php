@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'name' => 'required|min:3|max:100',
             'description' => 'nullable|min:3|max:255',
             'is_active' => ['required', 'boolean'],
-            'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL'
+            'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL',
         ];
     }
 }

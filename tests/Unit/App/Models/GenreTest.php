@@ -29,7 +29,7 @@ class GenreTest extends TestCase
         $fillableNeed = [
             'id',
             'name',
-            'is_active'
+            'is_active',
         ];
         $model = $this->model();
         $this->assertEquals($fillableNeed, $model->fillable);
@@ -39,7 +39,7 @@ class GenreTest extends TestCase
     {
         $fillableNeed = [
             'is_active' => 'boolean',
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
         $model = $this->model();
         $this->assertEquals($fillableNeed, $model->getCasts());

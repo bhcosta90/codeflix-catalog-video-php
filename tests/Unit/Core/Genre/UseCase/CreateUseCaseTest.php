@@ -4,9 +4,10 @@ namespace Tests\Unit\Core\Genre\UseCase;
 
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
-use Core\Genre\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
+use Core\Genre\UseCase\CreateUseCase as UseCase;
+use Core\Genre\UseCase\DTO\Create\Input;
+use Core\Genre\UseCase\DTO\Create\Output;
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
-use Exception;
 use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Mockery;
 use stdClass;
@@ -92,6 +93,7 @@ class CreateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, CategoryFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($categories);
+
         return $mock;
     }
 }

@@ -36,7 +36,7 @@ class ImageVideoTest extends TestCase
     public function testCasts()
     {
         $fillableNeed = [
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
         $model = $this->model();
         $this->assertEquals($fillableNeed, $model->getCasts());

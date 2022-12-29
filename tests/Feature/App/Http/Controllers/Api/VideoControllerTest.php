@@ -2,17 +2,20 @@
 
 namespace Tests\Feature\App\Http\Controllers\Api;
 
-use App\Models\Video as Model;
-use App\Repositories\Eloquent\VideoRepositoryEloquent as Repository;
-use App\Factory\{CastMemberFactory, CategoryFactory, GenreFactory};
+use App\Factory\CastMemberFactory;
+use App\Factory\CategoryFactory;
+use App\Factory\GenreFactory;
 use App\Http\Controllers\Api\VideoController as Controller;
+use App\Http\Requests\Video\StoreRequest;
+use App\Http\Requests\Video\UpdateRequest;
 use App\Models\CastMember;
 use App\Models\Category;
 use App\Models\Genre;
+use App\Models\Video as Model;
+use App\Repositories\Eloquent\VideoRepositoryEloquent as Repository;
 use App\Services\FileStorage;
 use App\Services\VideoEventManager;
 use App\Transactions\DatabaseTransaction;
-use App\Http\Requests\Video\{StoreRequest, UpdateRequest};
 use Core\Video\UseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,12 +28,19 @@ use Tests\TestCase;
 class VideoControllerTest extends TestCase
 {
     protected Repository $repository;
+
     protected CategoryFactory $categoryFactory;
+
     protected GenreFactory $genreFactory;
+
     protected CastMemberFactory $castMemberFactory;
+
     protected Controller $controller;
+
     protected array $categories;
+
     protected array $genres;
+
     protected array $castMembers;
 
     protected function setUp(): void
@@ -55,7 +65,7 @@ class VideoControllerTest extends TestCase
             fn ($rs) => (string) $rs,
             CastMember::factory(2)->create()->pluck('id')->toArray()
         );
-        $genre->each(fn($genre) => $genre->categories()->sync($this->categories));
+        $genre->each(fn ($genre) => $genre->categories()->sync($this->categories));
     }
 
     public function testIndex()
@@ -173,7 +183,7 @@ class VideoControllerTest extends TestCase
             'year_launched' => 2020,
             'duration' => 50,
             'opened' => true,
-            'rating' => 'L'
+            'rating' => 'L',
         ]);
 
         $this->assertDatabaseCount('category_video', 2);

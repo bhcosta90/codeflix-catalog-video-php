@@ -15,7 +15,7 @@ class CastMember extends Model
         'id',
         'name',
         'type',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [

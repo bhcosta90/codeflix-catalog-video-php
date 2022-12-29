@@ -39,10 +39,10 @@ class UpdateTest extends TestCase
         ]);
 
         $this->expectException(DomainNotFoundException::class);
-        $this->expectExceptionMessage('Video ' . $objModel->id() . ' not found');
+        $this->expectExceptionMessage('Video '.$objModel->id().' not found');
 
         $objModel->update([
-            'title' => 'test 2'
+            'title' => 'test 2',
         ]);
         $this->repository->update($objModel);
     }
@@ -52,7 +52,7 @@ class UpdateTest extends TestCase
         $entity = Model::factory()->create();
         $objModel = $this->repository->findById($entity->id);
         $objModel->update([
-            'title' => 'test 2'
+            'title' => 'test 2',
         ]);
         $this->repository->update($objModel);
         $this->assertDatabaseHas('videos', [
@@ -61,7 +61,8 @@ class UpdateTest extends TestCase
         ]);
     }
 
-    public function testUpdateWithRelation(){
+    public function testUpdateWithRelation()
+    {
         $category = array_map(fn ($rs) => (string) $rs, Category::factory(2)->create()->pluck('id')->toArray());
         $genre = array_map(fn ($rs) => (string) $rs, Genre::factory(1)->create()->pluck('id')->toArray());
         $castMember = array_map(fn ($rs) => (string) $rs, CastMember::factory(3)->create()->pluck('id')->toArray());
@@ -91,7 +92,7 @@ class UpdateTest extends TestCase
         $entity = $this->repository->findById($model->id);
 
         $entity->update([
-            'thumbFile' => new Image('/tmp/fake')
+            'thumbFile' => new Image('/tmp/fake'),
         ]);
         $this->repository->update($entity);
 
@@ -108,7 +109,7 @@ class UpdateTest extends TestCase
         $entity = $this->repository->findById($model->id);
 
         $entity->update([
-            'thumbHalf' => new Image('/tmp/fake')
+            'thumbHalf' => new Image('/tmp/fake'),
         ]);
         $this->repository->update($entity);
 
@@ -125,7 +126,7 @@ class UpdateTest extends TestCase
         $entity = $this->repository->findById($model->id);
 
         $entity->update([
-            'bannerFile' => new Image('/tmp/fake')
+            'bannerFile' => new Image('/tmp/fake'),
         ]);
         $this->repository->update($entity);
 
@@ -142,7 +143,7 @@ class UpdateTest extends TestCase
         $entity = $this->repository->findById($model->id);
 
         $entity->update([
-            'trailerFile' => new Media('/tmp/fake')
+            'trailerFile' => new Media('/tmp/fake'),
         ]);
         $this->repository->update($entity);
 
@@ -159,7 +160,7 @@ class UpdateTest extends TestCase
         $entity = $this->repository->findById($model->id);
 
         $entity->update([
-            'videoFile' => new Media('/tmp/fake')
+            'videoFile' => new Media('/tmp/fake'),
         ]);
         $this->repository->update($entity);
 

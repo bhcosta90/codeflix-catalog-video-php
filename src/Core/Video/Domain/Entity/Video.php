@@ -3,35 +3,52 @@
 namespace Core\Video\Domain\Entity;
 
 use Core\Video\Domain\Enum\Rating;
+use Core\Video\Domain\Factory\VideoValidator;
 use Core\Video\Domain\ValueObject\Image;
 use Core\Video\Domain\ValueObject\Media;
-use Core\Video\Domain\Factory\VideoValidator;
-use Costa\DomainPackage\ValueObject\Uuid;
-use DateTime;
 use Costa\DomainPackage\Domain\Entity\Entity;
 use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
+use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
 
 class Video extends Entity
 {
     protected string $title;
+
     protected string $description;
+
     protected int $yearLaunched;
+
     protected int $duration;
+
     protected bool $opened;
+
     protected Rating $rating;
+
     protected ?array $categories = [];
+
     protected ?array $genres = [];
+
     protected ?array $castMembers = [];
+
     protected ?Image $thumbFile = null;
+
     protected ?Image $thumbHalf = null;
+
     protected ?Image $bannerFile = null;
+
     protected ?Media $trailerFile = null;
+
     protected ?Media $videoFile = null;
+
     protected ?Uuid $id = null;
+
     protected ?DateTime $createdAt = null;
+
     protected bool $publish = false;
 
-    public function fieldsUpdated(): array{
+    public function fieldsUpdated(): array
+    {
         return [
             'title',
             'description',

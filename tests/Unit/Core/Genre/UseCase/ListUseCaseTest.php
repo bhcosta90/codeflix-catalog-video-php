@@ -4,11 +4,12 @@ namespace Tests\Unit\Core\Genre\UseCase;
 
 use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
-use Core\Genre\UseCase\{ListUseCase as UseCase, DTO\List\Output};
-use DateTime;
+use Core\Genre\UseCase\DTO\List\Output;
+use Core\Genre\UseCase\ListUseCase as UseCase;
 use Costa\DomainPackage\UseCase\DTO\List\Input;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
 use Mockery;
 use Tests\Unit\TestCase;
 

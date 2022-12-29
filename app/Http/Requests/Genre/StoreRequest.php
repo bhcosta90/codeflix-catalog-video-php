@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'name' => 'required|min:3|max:100',
             'description' => 'nullable',
             'is_active' => 'nullable|boolean',
-            'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL'
+            'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL',
         ];
     }
 }

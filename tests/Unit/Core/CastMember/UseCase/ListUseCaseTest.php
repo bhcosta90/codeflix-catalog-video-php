@@ -5,11 +5,12 @@ namespace Tests\Unit\Core\CastMember\UseCase;
 use Core\CastMember\Domain\Entity\CastMember;
 use Core\CastMember\Domain\Enum\Type;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
-use Core\CastMember\UseCase\{ListUseCase as UseCase, DTO\List\Output};
-use DateTime;
+use Core\CastMember\UseCase\DTO\List\Output;
+use Core\CastMember\UseCase\ListUseCase as UseCase;
 use Costa\DomainPackage\UseCase\DTO\List\Input;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
 use Mockery;
 use Tests\Unit\TestCase;
 

@@ -21,7 +21,7 @@ class CreateUseCase
             type: Type::from($input->type),
         );
 
-        if (!$input->is_active) {
+        if (! $input->is_active) {
             $entity->disabled();
         }
 
@@ -38,5 +38,3 @@ class CreateUseCase
         throw new UseCaseException(self::class);
     }
 }
-
-

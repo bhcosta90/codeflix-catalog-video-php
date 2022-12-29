@@ -7,9 +7,9 @@ use App\Models\Category;
 use App\Models\Genre as Model;
 use App\Repositories\Eloquent\GenreRepositoryEloquent as Repository;
 use App\Transactions\DatabaseTransaction;
-use Core\Genre\UseCase\UpdateUseCase as UseCase;
 use Core\Genre\UseCase\DTO\Update\Input;
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
+use Core\Genre\UseCase\UpdateUseCase as UseCase;
 use Tests\TestCase;
 
 class UpdateUseCaseTest extends TestCase

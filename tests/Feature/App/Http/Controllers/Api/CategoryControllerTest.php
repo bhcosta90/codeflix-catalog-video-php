@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\CategoryController as Controller;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CategoryController as Controller;
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
 use Core\Category\UseCase;
-use Illuminate\Http\Request;
-use App\Http\Requests\Category\StoreRequest;
-use App\Http\Requests\Category\UpdateRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Tests\TestCase;
@@ -18,6 +18,7 @@ use Tests\TestCase;
 class CategoryControllerTest extends TestCase
 {
     private Repository $repository;
+
     private Controller $controller;
 
     protected function setUp(): void
@@ -42,7 +43,7 @@ class CategoryControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'test',
-            'description' => 'description'
+            'description' => 'description',
         ]));
 
         $response = $this->controller->store($request, new UseCase\CreateUseCase($this->repository));

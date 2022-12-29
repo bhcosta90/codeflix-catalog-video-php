@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Core\Category\UseCase;
 
-use Tests\TestCase;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
 use Core\Category\Domain\Repository\CategoryRepositoryFilter;
-use Core\Category\UseCase\PaginateUseCase as UseCase;
 use Core\Category\UseCase\DTO\Paginate\Input;
+use Core\Category\UseCase\PaginateUseCase as UseCase;
+use Tests\TestCase;
 
 class PaginateUseCaseTest extends TestCase
 {
@@ -54,7 +54,8 @@ class PaginateUseCaseTest extends TestCase
         $this->assertEquals(5, $response->from);
     }
 
-    public function testExecEmpty(){
+    public function testExecEmpty()
+    {
         $response = $this->useCase->execute(new Input(
             page: 1,
         ));

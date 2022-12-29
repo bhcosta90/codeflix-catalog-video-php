@@ -3,7 +3,6 @@
 namespace Core\Video\Builder;
 
 use Core\Video\Domain\Entity\Video;
-use Core\Video\Domain\Enum\Rating;
 use Core\Video\Interfaces\VideoBuilderInterface;
 use Costa\DomainPackage\ValueObject\Uuid;
 
