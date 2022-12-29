@@ -2,19 +2,22 @@
 
 namespace Tests\Unit\Core\Video\UseCase;
 
-use Core\Video\UseCase\Exceptions\{CastMemberNotFound, CategoryGenreNotFound, CategoryNotFound, GenreNotFound};
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Factory\CastMemberFactoryInterface;
 use Core\Video\Factory\CategoryFactoryInterface;
 use Core\Video\Factory\GenreFactoryInterface;
-use Tests\Unit\TestCase;
 use Core\Video\UseCase\CreateUseCase;
 use Core\Video\UseCase\DTO\Create as DTO;
-use Mockery;
+use Core\Video\UseCase\Exceptions\CastMemberNotFound;
+use Core\Video\UseCase\Exceptions\CategoryGenreNotFound;
+use Core\Video\UseCase\Exceptions\CategoryNotFound;
+use Core\Video\UseCase\Exceptions\GenreNotFound;
 use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Costa\DomainPackage\UseCase\Interfaces\FileStorageInterface;
+use Mockery;
 use stdClass;
 use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
+use Tests\Unit\TestCase;
 
 class CreateUseCaseTest extends TestCase
 {
@@ -190,6 +193,7 @@ class CreateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, VideoRepositoryInterface::class);
         $mock->shouldReceive('insert')->andReturn($success);
+
         return $mock;
     }
 
@@ -208,6 +212,7 @@ class CreateUseCaseTest extends TestCase
         $mock = Mockery::spy(stdClass::class, CategoryFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
         $mock->shouldReceive('findByIdsWithGenres')->andReturn($genres);
+
         return $mock;
     }
 
@@ -215,6 +220,7 @@ class CreateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, GenreFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
+
         return $mock;
     }
 
@@ -222,6 +228,7 @@ class CreateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, CastMemberFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
+
         return $mock;
     }
 

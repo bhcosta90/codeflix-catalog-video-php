@@ -5,20 +5,26 @@ namespace Tests\Feature\Api;
 use App\Models\CastMember;
 use App\Models\Category;
 use App\Models\Genre;
-use Tests\TestCase;
 use App\Models\Video as Model;
-use Costa\DomainPackage\Tests\Traits\{TestResource, TestSave, TestValidation, TestUpload};
+use Costa\DomainPackage\Tests\Traits\TestResource;
+use Costa\DomainPackage\Tests\Traits\TestSave;
+use Costa\DomainPackage\Tests\Traits\TestUpload;
+use Costa\DomainPackage\Tests\Traits\TestValidation;
 use Illuminate\Http\UploadedFile;
-use App\Http\Resources\VideoResource as Resource;
+use Tests\TestCase;
 
 class VideoControllerTest extends TestCase
 {
     use TestValidation, TestResource, TestSave, TestUpload;
 
     protected Model $model;
+
     protected array $categories;
+
     protected array $genres;
+
     protected array $castMembers;
+
     protected string $endpoint = '/api/videos/';
 
     protected $serializedFields = [
@@ -38,21 +44,21 @@ class VideoControllerTest extends TestCase
         'categories' => [
             '*' => [
                 'id',
-                'name'
-            ]
+                'name',
+            ],
         ],
         'genres' => [
             '*' => [
                 'id',
-                'name'
-            ]
+                'name',
+            ],
         ],
         'cast_members' => [
             '*' => [
                 'id',
                 'name',
-                'type'
-            ]
+                'type',
+            ],
         ],
         'created_at',
     ];
@@ -69,7 +75,7 @@ class VideoControllerTest extends TestCase
 
     protected function routeUpdate()
     {
-        return $this->endpoint . $this->model->id;
+        return $this->endpoint.$this->model->id;
     }
 
     protected function setUp(): void
@@ -99,27 +105,26 @@ class VideoControllerTest extends TestCase
         $this->model->castMembers()->sync($this->castMembers);
     }
 
-
     public function testIndex()
     {
         $response = $this->getJson($this->endpoint);
         $response
             ->assertStatus(200)
             ->assertJson([
-                'meta' => ['per_page' => 15]
+                'meta' => ['per_page' => 15],
             ])
             ->assertJsonStructure([
                 'data' => [
-                    '*' => $this->serializedFields
+                    '*' => $this->serializedFields,
                 ],
                 'meta' => [],
             ]);
 
-        $response = $this->getJson($this->endpoint . '?title=test');
+        $response = $this->getJson($this->endpoint.'?title=test');
         $response
             ->assertStatus(200)
             ->assertJson([
-                'meta' => ['total' => 1]
+                'meta' => ['total' => 1],
             ]);
     }
 
@@ -290,10 +295,9 @@ class VideoControllerTest extends TestCase
             'year_launched' => 2020,
         ];
 
-
         $this->categories[] = (string) Category::factory()->create()->id;
         $this->genres[] = (string) ($genre = Genre::factory()->create())->id;
-        $this->castMembers[] = (string)CastMember::factory()->create()->id;
+        $this->castMembers[] = (string) CastMember::factory()->create()->id;
         $genre->categories()->attach($this->categories);
 
         $this->assertUpdate(
@@ -356,26 +360,26 @@ class VideoControllerTest extends TestCase
         $this->assertDatabaseHas('media_videos', [
             'video_id' => $this->model->id,
             'type' => 0,
-            'media_status' => 2
+            'media_status' => 2,
         ]);
 
         $this->assertDatabaseHas('media_videos', [
             'video_id' => $this->model->id,
             'type' => 1,
-            'media_status' => 2
+            'media_status' => 2,
         ]);
     }
 
     public function testShowNotFund()
     {
-        $response = $this->getJson($this->endpoint . 'fake-id');
+        $response = $this->getJson($this->endpoint.'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Video fake-id not found', $response->json('message'));
     }
 
     public function testShow()
     {
-        $response = $this->get($this->endpoint . $this->model->id);
+        $response = $this->get($this->endpoint.$this->model->id);
 
         $this->serializedFields['categories'] = [];
         $this->serializedFields['genres'] = [];
@@ -384,7 +388,7 @@ class VideoControllerTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => $this->serializedFields
+                'data' => $this->serializedFields,
             ]);
     }
 }

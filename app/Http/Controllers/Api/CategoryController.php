@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Http\Resources\CategoryResource;
 use Core\Category\Domain\Repository\CategoryRepositoryFilter;
 use Core\Category\UseCase;
 use Core\Category\UseCase\DTO;
-use Illuminate\Http\Request;
-use App\Http\Requests\Category\StoreRequest;
-use App\Http\Requests\Category\UpdateRequest;
-use Illuminate\Http\Response;
-use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
 use Costa\DomainPackage\UseCase\DTO\Delete\Input as DeleteInput;
+use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
@@ -33,7 +33,7 @@ class CategoryController extends Controller
                     'to' => $response->to,
                     'from' => $response->from,
                     'per_page' => $response->per_page,
-                ]
+                ],
             ]);
     }
 
@@ -53,6 +53,7 @@ class CategoryController extends Controller
     public function show(UseCase\ListUseCase $useCase, string $id)
     {
         $response = $useCase->execute(new ListInput(id: $id));
+
         return (new CategoryResource($response))->response();
     }
 
@@ -70,10 +71,12 @@ class CategoryController extends Controller
             ->setStatusCode(Response::HTTP_OK);
     }
 
-    public function destroy(UseCase\DeleteUseCase $useCase, string $id){
+    public function destroy(UseCase\DeleteUseCase $useCase, string $id)
+    {
         $useCase->execute(new DeleteInput(
             id: $id,
         ));
+
         return response()->noContent();
     }
 }

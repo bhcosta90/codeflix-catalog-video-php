@@ -11,6 +11,7 @@ class FileStorage implements FileStorageInterface
     public function store(string $path, array $file): string
     {
         $contents = $this->convertFileToLaravelFile($file);
+
         return Storage::put($path, $contents);
     }
 

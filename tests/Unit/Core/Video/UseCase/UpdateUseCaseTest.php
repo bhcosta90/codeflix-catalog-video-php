@@ -8,16 +8,17 @@ use Core\Video\Domain\Repository\VideoRepositoryInterface;
 use Core\Video\Factory\CastMemberFactoryInterface;
 use Core\Video\Factory\CategoryFactoryInterface;
 use Core\Video\Factory\GenreFactoryInterface;
-use Core\Video\UseCase\UpdateUseCase as UseCase;
 use Core\Video\UseCase\DTO\Update as DTO;
 use Core\Video\UseCase\Exceptions\CastMemberNotFound;
 use Core\Video\UseCase\Exceptions\CategoryGenreNotFound;
 use Core\Video\UseCase\Exceptions\CategoryNotFound;
 use Core\Video\UseCase\Exceptions\GenreNotFound;
+use Core\Video\UseCase\UpdateUseCase as UseCase;
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
+use Costa\DomainPackage\UseCase\Interfaces\FileStorageInterface;
 use Costa\DomainPackage\ValueObject\Uuid;
 use Mockery;
-use Costa\DomainPackage\UseCase\Exception\{NotFoundException, UseCaseException};
-use Costa\DomainPackage\UseCase\Interfaces\FileStorageInterface;
 use Tests\Unit\Core\Video\Event\VideoEventManagerInterface;
 use Tests\Unit\TestCase;
 
@@ -28,7 +29,7 @@ class UpdateUseCaseTest extends TestCase
         $id = Uuid::random();
 
         $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage('ID ' . $id . ' not found.');
+        $this->expectExceptionMessage('ID '.$id.' not found.');
 
         /** @var VideoRepositoryInterface|Mockery\MockInterface */
         $mockRepo = Mockery::spy(stdClass::class, VideoRepositoryInterface::class);
@@ -211,6 +212,7 @@ class UpdateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, VideoRepositoryInterface::class);
         $mock->shouldReceive('update')->andReturn($success);
+
         return $mock;
     }
 
@@ -229,6 +231,7 @@ class UpdateUseCaseTest extends TestCase
         $mock = Mockery::spy(stdClass::class, CategoryFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
         $mock->shouldReceive('findByIdsWithGenres')->andReturn($genres);
+
         return $mock;
     }
 
@@ -236,6 +239,7 @@ class UpdateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, GenreFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
+
         return $mock;
     }
 
@@ -243,6 +247,7 @@ class UpdateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, CastMemberFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($data);
+
         return $mock;
     }
 

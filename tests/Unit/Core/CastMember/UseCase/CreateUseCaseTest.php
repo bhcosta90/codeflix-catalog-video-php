@@ -3,7 +3,9 @@
 namespace Tests\Unit\Core\CastMember\UseCase;
 
 use Core\CastMember\Domain\Repository\CastMemberRepositoryInterface;
-use Core\CastMember\UseCase\{CreateUseCase as UseCase, DTO\Create\Input, DTO\Create\Output};
+use Core\CastMember\UseCase\CreateUseCase as UseCase;
+use Core\CastMember\UseCase\DTO\Create\Input;
+use Core\CastMember\UseCase\DTO\Create\Output;
 use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Mockery;
 use Tests\Unit\TestCase;

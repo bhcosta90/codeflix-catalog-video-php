@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\CastMemberController as Controller;
 use App\Http\Controllers\Api\CastMemberController;
+use App\Http\Controllers\Api\CastMemberController as Controller;
+use App\Http\Requests\CastMember\StoreRequest;
+use App\Http\Requests\CastMember\UpdateRequest;
 use App\Models\CastMember as Model;
 use App\Repositories\Eloquent\CastMemberRepositoryEloquent as Repository;
 use Core\CastMember\UseCase;
-use Illuminate\Http\Request;
-use App\Http\Requests\CastMember\StoreRequest;
-use App\Http\Requests\CastMember\UpdateRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Tests\TestCase;
@@ -18,6 +18,7 @@ use Tests\TestCase;
 class CastMemberControllerTest extends TestCase
 {
     private Repository $repository;
+
     private Controller $controller;
 
     protected function setUp(): void
@@ -42,7 +43,7 @@ class CastMemberControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'test',
-            'type' => 1
+            'type' => 1,
         ]));
 
         $response = $this->controller->store($request, new UseCase\CreateUseCase($this->repository));

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\App\Repositories\Eloquent\CategoryRepositoryEloquent;
 
-use App\Models\Category;
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent;
 use Core\Category\Domain\Entity\Category as Entity;

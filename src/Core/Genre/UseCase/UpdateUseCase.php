@@ -2,7 +2,6 @@
 
 namespace Core\Genre\UseCase;
 
-use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
@@ -36,6 +35,7 @@ class UpdateUseCase
             try {
                 if ($this->repository->update($entity)) {
                     $this->transaction->commit();
+
                     return new DTO\Update\Output(
                         id: $entity->id(),
                         name: $entity->name,

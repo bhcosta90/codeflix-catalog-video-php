@@ -5,13 +5,15 @@ namespace Tests\Unit\Core\Genre\UseCase;
 use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
 use Core\Genre\Factory\CategoryFactoryInterface;
-use Core\Genre\UseCase\{UpdateUseCase as UseCase, DTO\Update\Input, DTO\Update\Output};
+use Core\Genre\UseCase\DTO\Update\Input;
+use Core\Genre\UseCase\DTO\Update\Output;
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
-use DateTime;
-use Costa\DomainPackage\UseCase\Exception\UseCaseException;
-use Mockery;
+use Core\Genre\UseCase\UpdateUseCase as UseCase;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
+use Mockery;
 use stdClass;
 use Tests\Unit\TestCase;
 
@@ -22,7 +24,7 @@ class UpdateUseCaseTest extends TestCase
         $id = Uuid::random();
 
         $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage('ID ' . $id . ' not found.');
+        $this->expectExceptionMessage('ID '.$id.' not found.');
 
         /** @var GenreRepositoryInterface|Mockery\MockInterface */
         $mockRepo = Mockery::spy(stdClass::class, GenreRepositoryInterface::class);
@@ -127,6 +129,7 @@ class UpdateUseCaseTest extends TestCase
     {
         $mock = Mockery::spy(stdClass::class, CategoryFactoryInterface::class);
         $mock->shouldReceive('findByIds')->andReturn($categories);
+
         return $mock;
     }
 }

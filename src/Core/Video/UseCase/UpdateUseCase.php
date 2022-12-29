@@ -44,11 +44,11 @@ class UpdateUseCase extends BaseUseCase
                     $this->repository->updateMedia($entity);
                     $this->eventManager->dispatch(new VideoCreatedEvent($entity));
                     $this->transaction->commit();
+
                     return $this->output($entity);
                 }
 
                 throw new UseCaseException(self::class);
-                
             } catch (Throwable $e) {
                 $this->transaction->rollback();
                 if (isset($filesUploads)) {

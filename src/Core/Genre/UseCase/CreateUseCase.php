@@ -26,7 +26,7 @@ class CreateUseCase
             categories: $input->categories,
         );
 
-        if (!$input->is_active) {
+        if (! $input->is_active) {
             $entity->disabled();
         }
 
@@ -35,6 +35,7 @@ class CreateUseCase
         try {
             if ($this->repository->insert($entity)) {
                 $this->transaction->commit();
+
                 return new DTO\Create\Output(
                     id: $entity->id(),
                     name: $entity->name,

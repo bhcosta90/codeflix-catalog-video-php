@@ -3,7 +3,8 @@
 namespace Tests\Unit\Core\Category\UseCase;
 
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Core\Category\UseCase\{PaginateUseCase as UseCase, DTO\Paginate\Input};
+use Core\Category\UseCase\DTO\Paginate\Input;
+use Core\Category\UseCase\PaginateUseCase as UseCase;
 use Costa\DomainPackage\UseCase\DTO\Paginate\Output;
 use Mockery;
 use stdClass;

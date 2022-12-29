@@ -3,7 +3,8 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Video as VideoModel;
-use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
+use App\Repositories\Presenters\ListPresenter;
+use App\Repositories\Presenters\PaginatorPresenter;
 use Core\Video\Builder\VideoUpdateBuilder;
 use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Enum\Rating;
@@ -18,7 +19,7 @@ use Costa\DomainPackage\Domain\Repository\PaginationInterface;
 class VideoRepositoryEloquent implements VideoRepositoryInterface
 {
     private VideoBuilderInterface $builder;
-    
+
     use Trait\VideoTrait;
 
     public function __construct(private VideoModel $model)
@@ -94,6 +95,7 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
             $obj->genres = $obj->genres->pluck('id')->toArray();
             $obj->castMembers = $obj->castMembers->pluck('id')->toArray();
             $obj->rating = Rating::from($obj->rating);
+
             return $this->builder->createEntity($obj)->getEntity();
         }
 
@@ -101,9 +103,9 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
     }
 
     /**
-     * @param VideoRepositoryFilter|null $filter
-     * @param integer $page
-     * @param integer $total
+     * @param  VideoRepositoryFilter|null  $filter
+     * @param  int  $page
+     * @param  int  $total
      * @return PaginationInterface
      */
     public function paginate(
@@ -118,7 +120,7 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
     {
         $result = $this->model;
 
-        if ($filter && ($filterResult = $filter->title) && !empty($filterResult)) {
+        if ($filter && ($filterResult = $filter->title) && ! empty($filterResult)) {
             $result = $result->where('title', 'like', "%{$filterResult}%");
         }
 
@@ -136,7 +138,7 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
 
     public function updateMedia(Video $video): bool
     {
-        if (!$objectModel = $this->model->find($video->id())) {
+        if (! $objectModel = $this->model->find($video->id())) {
             throw new NotFoundException('Video not found');
         }
 

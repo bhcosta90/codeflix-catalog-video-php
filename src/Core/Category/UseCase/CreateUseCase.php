@@ -20,7 +20,7 @@ class CreateUseCase
             description: $input->description,
         );
 
-        if (!$input->is_active) {
+        if (! $input->is_active) {
             $entity->disabled();
         }
 
@@ -37,5 +37,3 @@ class CreateUseCase
         throw new UseCaseException(self::class);
     }
 }
-
-

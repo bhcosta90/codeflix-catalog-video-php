@@ -2,8 +2,6 @@
 
 namespace Core\Video\UseCase\DTO\Create;
 
-use Core\Video\Domain\Enum\Rating;
-
 class Input
 {
     public function __construct(

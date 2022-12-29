@@ -14,6 +14,7 @@ class FileStorageTest extends TestCase
         parent::setUp();
         Storage::fake();
     }
+
     public function testStore()
     {
         $fakeFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');

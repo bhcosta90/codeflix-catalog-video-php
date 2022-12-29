@@ -36,15 +36,16 @@ class FindByIdTest extends TestCase
         $this->assertEquals($entity->id, $objModel->id());
     }
 
-    public function testFindByIdWithRelation(){
+    public function testFindByIdWithRelation()
+    {
         $entity = Model::factory()->create();
         $category = Category::factory(2)->create()->pluck('id')->toArray();
         $genre = Genre::factory(1)->create()->pluck('id')->toArray();
         $castMember = CastMember::factory(3)->create()->pluck('id')->toArray();
 
-        $entity->categories()->sync(array_map(fn($rs) => (string) $rs, $category));
-        $entity->genres()->sync(array_map(fn($rs) => (string) $rs, $genre));
-        $entity->castMembers()->sync(array_map(fn($rs) => (string) $rs, $castMember));
+        $entity->categories()->sync(array_map(fn ($rs) => (string) $rs, $category));
+        $entity->genres()->sync(array_map(fn ($rs) => (string) $rs, $genre));
+        $entity->castMembers()->sync(array_map(fn ($rs) => (string) $rs, $castMember));
 
         $objModel = $this->repository->findById($entity->id);
 

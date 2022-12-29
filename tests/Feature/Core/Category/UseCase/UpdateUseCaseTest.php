@@ -4,8 +4,8 @@ namespace Tests\Feature\Core\Category\UseCase;
 
 use App\Models\Category as Model;
 use App\Repositories\Eloquent\CategoryRepositoryEloquent as Repository;
-use Core\Category\UseCase\UpdateUseCase as UseCase;
 use Core\Category\UseCase\DTO\Update\Input;
+use Core\Category\UseCase\UpdateUseCase as UseCase;
 use Tests\TestCase;
 
 class UpdateUseCaseTest extends TestCase

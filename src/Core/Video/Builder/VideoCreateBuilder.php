@@ -38,6 +38,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
             status: $status,
         );
         $this->entity->setVideoFile($media);
+
         return $this;
     }
 
@@ -48,6 +49,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
             status: $status,
         );
         $this->entity->setTrailerFile($media);
+
         return $this;
     }
 
@@ -57,6 +59,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
             path: $path,
         );
         $this->entity->setThumbFile($media);
+
         return $this;
     }
 
@@ -66,6 +69,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
             path: $path,
         );
         $this->entity->setThumbHalf($media);
+
         return $this;
     }
 
@@ -75,6 +79,7 @@ class VideoCreateBuilder implements VideoBuilderInterface
             path: $path,
         );
         $this->entity->setBannerFile($media);
+
         return $this;
     }
 

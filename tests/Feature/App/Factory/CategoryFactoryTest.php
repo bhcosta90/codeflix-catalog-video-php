@@ -3,13 +3,16 @@
 namespace Tests\Feature\App\Factory;
 
 use App\Factory\CategoryFactory;
-use App\Models\{Category, Genre};
+use App\Models\Category;
+use App\Models\Genre;
 use Tests\TestCase;
 
 class CategoryFactoryTest extends TestCase
 {
     private CategoryFactory $factory;
+
     private $categories;
+
     private $genres;
 
     protected function setUp(): void
@@ -43,7 +46,7 @@ class CategoryFactoryTest extends TestCase
             $this->genres[0]->id,
         ], [
             $this->categories[0]->id,
-            $this->categories[3]->id
+            $this->categories[3]->id,
         ]);
         $this->assertCount(2, $ids);
     }

@@ -4,7 +4,9 @@ namespace Tests\Feature\Api;
 
 use App\Http\Resources\CategoryResource as Resource;
 use App\Models\Category as Model;
-use Costa\DomainPackage\Tests\Traits\{TestResource, TestSave, TestValidation};
+use Costa\DomainPackage\Tests\Traits\TestResource;
+use Costa\DomainPackage\Tests\Traits\TestSave;
+use Costa\DomainPackage\Tests\Traits\TestValidation;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
@@ -12,6 +14,7 @@ class CategoryTest extends TestCase
     use TestValidation, TestResource, TestSave;
 
     protected Model $model;
+
     protected string $endpoint = '/api/categories/';
 
     protected $serializedFields = [
@@ -44,13 +47,13 @@ class CategoryTest extends TestCase
 
     protected function routeUpdate()
     {
-        return $this->endpoint . $this->model->id;
+        return $this->endpoint.$this->model->id;
     }
 
     public function testInvalidationData()
     {
         $data = [
-            'name' => ''
+            'name' => '',
         ];
         $this->assertInvalidationInStoreAction($data, 'required');
         $this->assertInvalidationInUpdateAction($data, 'required');
@@ -62,7 +65,7 @@ class CategoryTest extends TestCase
         $this->assertInvalidationInUpdateAction($data, 'max.string', ['max' => 100]);
 
         $data = [
-            'is_active' => 'a'
+            'is_active' => 'a',
         ];
         $this->assertInvalidationInStoreAction($data, 'boolean');
         $this->assertInvalidationInUpdateAction($data, 'boolean');
@@ -75,11 +78,11 @@ class CategoryTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                'meta' => ['per_page' => 15]
+                'meta' => ['per_page' => 15],
             ])
             ->assertJsonStructure([
                 'data' => [
-                    '*' => $this->serializedFields
+                    '*' => $this->serializedFields,
                 ],
                 'meta' => [],
             ]);
@@ -91,39 +94,39 @@ class CategoryTest extends TestCase
     public function testIndexPagination()
     {
         Model::factory(20)->create();
-        $response = $this->get($this->endpoint . '?page=2');
+        $response = $this->get($this->endpoint.'?page=2');
         $response->assertJson([
             'meta' => [
                 'current_page' => 2,
                 'total' => 21,
-            ]
+            ],
         ]);
     }
 
     public function testIndexFilter()
     {
         Model::factory(5)->create(['name' => 'testing']);
-        $response = $this->get($this->endpoint . '?name=test');
+        $response = $this->get($this->endpoint.'?name=test');
         $response->assertJson([
-            'meta' => ['total' => 6]
+            'meta' => ['total' => 6],
         ]);
     }
 
     public function testShowNotFund()
     {
-        $response = $this->getJson($this->endpoint . 'fake-id');
+        $response = $this->getJson($this->endpoint.'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Category fake-id not found', $response->json('message'));
     }
 
     public function testShow()
     {
-        $response = $this->get($this->endpoint . $this->model->id);
+        $response = $this->get($this->endpoint.$this->model->id);
 
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => $this->serializedFields
+                'data' => $this->serializedFields,
             ]);
 
         $id = $response->json('data.id');
@@ -134,20 +137,20 @@ class CategoryTest extends TestCase
     public function testStore()
     {
         $data = [
-            'name' => 'test'
+            'name' => 'test',
         ];
         $response = $this->assertStore(
             $data,
             $data + ['description' => null, 'is_active' => true]
         );
         $response->assertJsonStructure([
-            'data' => $this->serializedFields
+            'data' => $this->serializedFields,
         ]);
 
         $data = [
             'name' => 'test',
             'description' => 'description',
-            'is_active' => false
+            'is_active' => false,
         ];
         $this->assertStore($data, $data + ['description' => 'description', 'is_active' => false]);
 
@@ -158,7 +161,7 @@ class CategoryTest extends TestCase
 
     public function testUpdateNotFound()
     {
-        $response = $this->putJson($this->endpoint . 'fake-id', [
+        $response = $this->putJson($this->endpoint.'fake-id', [
             'name' => 'test',
             'is_active' => true,
         ]);
@@ -171,11 +174,11 @@ class CategoryTest extends TestCase
         $data = [
             'name' => 'test',
             'description' => 'test',
-            'is_active' => true
+            'is_active' => true,
         ];
         $response = $this->assertUpdate($data, $data);
         $response->assertJsonStructure([
-            'data' => $this->serializedFields
+            'data' => $this->serializedFields,
         ]);
 
         $id = $response->json('data.id');
@@ -198,7 +201,7 @@ class CategoryTest extends TestCase
 
     public function testDestroyNotFound()
     {
-        $response = $this->deleteJson($this->endpoint . 'fake-id');
+        $response = $this->deleteJson($this->endpoint.'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Category fake-id not found', $response->json('message'));
     }
@@ -206,7 +209,7 @@ class CategoryTest extends TestCase
     public function testDestroy()
     {
         $category = Model::factory()->create();
-        $response = $this->deleteJson($this->endpoint . $category->id);
+        $response = $this->deleteJson($this->endpoint.$category->id);
         $response->assertStatus(204);
         $this->assertEmpty($response->content());
         $this->assertSoftDeleted($category);

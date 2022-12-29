@@ -3,7 +3,8 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Genre as GenreModel;
-use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
+use App\Repositories\Presenters\ListPresenter;
+use App\Repositories\Presenters\PaginatorPresenter;
 use Core\Genre\Domain\Entity\Genre;
 use Core\Genre\Domain\Repository\GenreRepositoryFilter;
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
@@ -96,12 +97,12 @@ class GenreRepositoryEloquent implements GenreRepositoryInterface
     {
         $result = $this->model;
 
-        if ($filter && ($filterResult = $filter->name) && !empty($filterResult)) {
+        if ($filter && ($filterResult = $filter->name) && ! empty($filterResult)) {
             $result = $result->where('name', 'like', "%{$filterResult}%");
         }
 
-        if ($filter && ($filterResult = $filter->categories) && !empty($filterResult)) {
-            $result = $result->whereHas('categories', fn($q) => $q->whereIn('id', $filterResult));
+        if ($filter && ($filterResult = $filter->categories) && ! empty($filterResult)) {
+            $result = $result->whereHas('categories', fn ($q) => $q->whereIn('id', $filterResult));
         }
 
         return $result->orderBy('name', 'asc');

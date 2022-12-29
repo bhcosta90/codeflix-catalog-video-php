@@ -50,7 +50,7 @@ class FindAllTest extends TestCase
         $data = $this->createEntityWithCategories();
 
         $response = $this->repository->findAll(new GenreRepositoryFilter(name: null, categories: [
-            (string) $data['filter']
+            (string) $data['filter'],
         ]));
         $this->assertInstanceOf(ListInterface::class, $response);
         $this->assertCount(2, $response->items());
@@ -61,7 +61,7 @@ class FindAllTest extends TestCase
     {
         $data = $this->createEntityWithCategories();
         $response = $this->repository->findAll(new GenreRepositoryFilter(name: 'test', categories: [
-            (string) $data['filter']
+            (string) $data['filter'],
         ]));
         $this->assertInstanceOf(ListInterface::class, $response);
         $this->assertCount(1, $response->items());
@@ -93,7 +93,7 @@ class FindAllTest extends TestCase
             'entity' => [
                 $entity->toArray(),
                 $entity2->toArray(),
-            ]
+            ],
         ];
     }
 }
