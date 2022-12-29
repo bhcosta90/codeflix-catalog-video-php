@@ -17,7 +17,7 @@ class CategoryControllerTest extends TestCase
         $mockRequest->shouldReceive('get')->andReturn('test');
 
         $mockOutput = Mockery::spy(PaginateOutput::class, [
-            [], 1, 1, 1, 1, 1, 1, 1
+            [], 1, 1, 1, 1, 1, 1, 1,
         ]);
 
         $mockUse = Mockery::spy(UseCase\PaginateUseCase::class);

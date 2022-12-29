@@ -35,7 +35,7 @@ class StoreRequest extends FormRequest
             'banner_file' => 'nullable|image',
             'thumb_file' => 'nullable|image',
             'thumb_half' => 'nullable|image',
-            'rating' => 'required|in:' . implode(',', array_column(Rating::cases(), 'value')),
+            'rating' => 'required|in:'.implode(',', array_column(Rating::cases(), 'value')),
             'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL',
             'cast_members' => 'nullable|array|exists:cast_members,id,deleted_at,NULL',
             'genres' => 'nullable|array|exists:genres,id,deleted_at,NULL',

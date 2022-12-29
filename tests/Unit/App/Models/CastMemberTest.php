@@ -30,7 +30,7 @@ class CastMemberTest extends TestCase
             'id',
             'name',
             'type',
-            'is_active'
+            'is_active',
         ];
         $model = $this->model();
         $this->assertEquals($fillableNeed, $model->fillable);
@@ -41,7 +41,7 @@ class CastMemberTest extends TestCase
         $fillableNeed = [
             'is_active' => 'boolean',
             'type' => 'int',
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
         ];
         $model = $this->model();
         $this->assertEquals($fillableNeed, $model->getCasts());

@@ -4,11 +4,12 @@ namespace Tests\Unit\Core\Category\UseCase;
 
 use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
-use Core\Category\UseCase\{ListUseCase as UseCase, DTO\List\Output};
-use DateTime;
+use Core\Category\UseCase\DTO\List\Output;
+use Core\Category\UseCase\ListUseCase as UseCase;
 use Costa\DomainPackage\UseCase\DTO\List\Input;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
 use Mockery;
 use Tests\Unit\TestCase;
 

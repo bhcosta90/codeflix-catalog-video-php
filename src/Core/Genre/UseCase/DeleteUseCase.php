@@ -3,9 +3,10 @@
 namespace Core\Genre\UseCase;
 
 use Core\Genre\Domain\Repository\GenreRepositoryInterface;
+use Costa\DomainPackage\UseCase\DTO\Delete\Input;
+use Costa\DomainPackage\UseCase\DTO\Delete\Output;
 use Costa\DomainPackage\UseCase\Exception\NotFoundException;
 use Costa\DomainPackage\UseCase\Exception\UseCaseException;
-use Costa\DomainPackage\UseCase\DTO\Delete\{Input, Output};
 
 class DeleteUseCase
 {

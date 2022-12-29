@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Api;
 
+use App\Http\Resources\GenreResource as Resource;
 use App\Models\Category;
 use App\Models\Genre as Model;
-use App\Http\Resources\GenreResource as Resource;
+use Costa\DomainPackage\Tests\Traits\TestResource;
+use Costa\DomainPackage\Tests\Traits\TestSave;
+use Costa\DomainPackage\Tests\Traits\TestValidation;
 use Illuminate\Database\Eloquent\Collection;
-use Costa\DomainPackage\Tests\Traits\{TestResource, TestSave, TestValidation};
 use Tests\TestCase;
 
 class GenreTest extends TestCase
@@ -14,7 +16,9 @@ class GenreTest extends TestCase
     use TestValidation, TestResource, TestSave;
 
     protected Model $model;
+
     protected Collection $categories;
+
     protected string $endpoint = '/api/genres/';
 
     protected $serializedFields = [
@@ -36,7 +40,7 @@ class GenreTest extends TestCase
 
     protected function routeUpdate()
     {
-        return $this->endpoint . $this->model->id;
+        return $this->endpoint.$this->model->id;
     }
 
     protected function setUp(): void
@@ -67,36 +71,37 @@ class GenreTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                'meta' => ['per_page' => 15]
+                'meta' => ['per_page' => 15],
             ])
             ->assertJsonStructure([
                 'data' => [
-                    '*' => $this->serializedFields
+                    '*' => $this->serializedFields,
                 ],
                 'meta' => [],
             ]);
 
-        $response = $this->getJson($this->endpoint . '?name=test');
+        $response = $this->getJson($this->endpoint.'?name=test');
         $response->assertJson(['meta' => ['total' => 1]]);
 
         $url = http_build_query([
-            'categories' => [(string) $this->categories[0]->id, (string) $this->categories[4]->id]
+            'categories' => [(string) $this->categories[0]->id, (string) $this->categories[4]->id],
         ]);
 
-        $response = $this->getJson($this->endpoint . "?{$url}");
+        $response = $this->getJson($this->endpoint."?{$url}");
         $response->assertJson(['meta' => ['total' => 3]]);
 
         $url = http_build_query([
             'name' => 'test',
-            'categories' => [(string) $this->categories[0]->id, (string) $this->categories[4]->id]
+            'categories' => [(string) $this->categories[0]->id, (string) $this->categories[4]->id],
         ]);
-        $response = $this->getJson($this->endpoint . "?{$url}");
+        $response = $this->getJson($this->endpoint."?{$url}");
         $response->assertJson(['meta' => ['total' => 1]]);
     }
 
-    public function testInvalidation(){
+    public function testInvalidation()
+    {
         $data = [
-            'name' => ''
+            'name' => '',
         ];
         $this->assertInvalidationInStoreAction($data, 'required');
         $this->assertInvalidationInUpdateAction($data, 'required');
@@ -108,13 +113,13 @@ class GenreTest extends TestCase
         $this->assertInvalidationInUpdateAction($data, 'max.string', ['max' => 100]);
 
         $data = [
-            'is_active' => 'a'
+            'is_active' => 'a',
         ];
         $this->assertInvalidationInStoreAction($data, 'boolean');
         $this->assertInvalidationInUpdateAction($data, 'boolean');
 
         $data = [
-            'categories' => 'a'
+            'categories' => 'a',
         ];
         $this->assertInvalidationInStoreAction($data, 'array');
         $this->assertInvalidationInUpdateAction($data, 'array');
@@ -129,7 +134,7 @@ class GenreTest extends TestCase
     public function testStore()
     {
         $data = [
-            'name' => 'test'
+            'name' => 'test',
         ];
         $this->assertStore(
             $data,
@@ -142,17 +147,18 @@ class GenreTest extends TestCase
                 'categories' => [
                     (string) $this->categories[0]->id,
                     (string) $this->categories[4]->id,
-                ]
+                ],
             ],
             $data + ['is_active' => true]
         );
         $this->assertDatabaseCount('category_genre', 3);
     }
 
-    public function testUpdate(){
+    public function testUpdate()
+    {
         $data = [
             'name' => 'test',
-            'is_active' => false
+            'is_active' => false,
         ];
         $this->assertUpdate(
             $data,
@@ -165,7 +171,7 @@ class GenreTest extends TestCase
                 'categories' => [
                     (string) $this->categories[2]->id,
                     (string) $this->categories[3]->id,
-                ]
+                ],
             ],
             $data + ['is_active' => false]
         );
@@ -174,19 +180,19 @@ class GenreTest extends TestCase
 
     public function testShowNotFund()
     {
-        $response = $this->getJson($this->endpoint . 'fake-id');
+        $response = $this->getJson($this->endpoint.'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Genre fake-id not found', $response->json('message'));
     }
 
     public function testShow()
     {
-        $response = $this->get($this->endpoint . $this->model->id);
+        $response = $this->get($this->endpoint.$this->model->id);
 
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => $this->serializedFields
+                'data' => $this->serializedFields,
             ]);
 
         $id = $response->json('data.id');
@@ -196,7 +202,7 @@ class GenreTest extends TestCase
 
     public function testDestroyNotFound()
     {
-        $response = $this->deleteJson($this->endpoint . 'fake-id');
+        $response = $this->deleteJson($this->endpoint.'fake-id');
         $response->assertStatus(404);
         $this->assertEquals('Genre fake-id not found', $response->json('message'));
     }
@@ -204,7 +210,7 @@ class GenreTest extends TestCase
     public function testDestroy()
     {
         $category = Model::factory()->create();
-        $response = $this->deleteJson($this->endpoint . $category->id);
+        $response = $this->deleteJson($this->endpoint.$category->id);
         $response->assertStatus(204);
         $this->assertEmpty($response->content());
         $this->assertSoftDeleted($category);

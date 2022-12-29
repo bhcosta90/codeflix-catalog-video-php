@@ -3,7 +3,8 @@
 namespace Tests\Unit\Core\Video\UseCase;
 
 use Core\Video\Domain\Repository\VideoRepositoryInterface;
-use Core\Video\UseCase\{PaginateUseCase as UseCase, DTO\Paginate\Input};
+use Core\Video\UseCase\DTO\Paginate\Input;
+use Core\Video\UseCase\PaginateUseCase as UseCase;
 use Costa\DomainPackage\UseCase\DTO\Paginate\Output;
 use Mockery;
 use stdClass;

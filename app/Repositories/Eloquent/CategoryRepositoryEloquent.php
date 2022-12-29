@@ -3,7 +3,8 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Category as CategoryModel;
-use App\Repositories\Presenters\{ListPresenter, PaginatorPresenter};
+use App\Repositories\Presenters\ListPresenter;
+use App\Repositories\Presenters\PaginatorPresenter;
 use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryFilter;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
@@ -88,7 +89,7 @@ class CategoryRepositoryEloquent implements CategoryRepositoryInterface
     {
         $result = $this->model;
 
-        if ($filter && ($filterResult = $filter->name) && !empty($filterResult)) {
+        if ($filter && ($filterResult = $filter->name) && ! empty($filterResult)) {
             $result = $result->where('name', 'like', "%{$filterResult}%");
         }
 

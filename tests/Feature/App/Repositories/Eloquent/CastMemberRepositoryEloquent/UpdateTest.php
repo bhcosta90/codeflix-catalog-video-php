@@ -24,7 +24,7 @@ class UpdateTest extends TestCase
         $objModel = new Entity(name: 'test', type: Type::ACTOR);
 
         $this->expectException(DomainNotFoundException::class);
-        $this->expectExceptionMessage('CastMember ' . $objModel->id() . ' not found');
+        $this->expectExceptionMessage('CastMember '.$objModel->id().' not found');
 
         $objModel->update(name: 'test', type: Type::DIRECTOR);
         $this->repository->update($objModel);

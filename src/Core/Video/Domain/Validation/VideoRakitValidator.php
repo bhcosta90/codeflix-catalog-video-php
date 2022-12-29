@@ -2,10 +2,10 @@
 
 namespace Core\Video\Domain\Validation;
 
-use Rakit\Validation\Validator;
 use Costa\DomainPackage\Domain\Entity\Entity;
 use Costa\DomainPackage\Domain\Notification\DTO\Input;
 use Costa\DomainPackage\Domain\Validation\ValidatorInterface;
+use Rakit\Validation\Validator;
 
 class VideoRakitValidator implements ValidatorInterface
 {
@@ -16,7 +16,7 @@ class VideoRakitValidator implements ValidatorInterface
         $validation = (new Validator())->validate($data, [
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:255',
-            'yearLaunched' => 'required|integer|max:' . date('Y'),
+            'yearLaunched' => 'required|integer|max:'.date('Y'),
             'duration' => 'required|integer',
         ]);
 

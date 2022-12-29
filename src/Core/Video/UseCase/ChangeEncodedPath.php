@@ -39,7 +39,6 @@ class ChangeEncodedPath
                 $quantity++;
             }
 
-
             if ($quantity) {
                 $success = $this->repository->updateMedia($entity);
             }

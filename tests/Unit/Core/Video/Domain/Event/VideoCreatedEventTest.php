@@ -6,7 +6,6 @@ use Core\Video\Domain\Entity\Video;
 use Core\Video\Domain\Enum\Rating;
 use Core\Video\Domain\Event\VideoCreatedEvent;
 use Core\Video\Domain\ValueObject\Media;
-use Mockery;
 use Costa\DomainPackage\ValueObject\Uuid;
 use Tests\Unit\TestCase;
 
@@ -57,7 +56,7 @@ class VideoCreatedEventTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'trailerFile' => new Media('path/test.mp4')
+            'trailerFile' => new Media('path/test.mp4'),
         ]);
 
         $event = new VideoCreatedEvent($entity);
@@ -78,7 +77,7 @@ class VideoCreatedEventTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'videoFile' => new Media('path/test.mp4')
+            'videoFile' => new Media('path/test.mp4'),
         ]);
 
         $event = new VideoCreatedEvent($entity);

@@ -23,7 +23,7 @@ class UpdateTest extends TestCase
         $objModel = new Entity(name: 'test');
 
         $this->expectException(DomainNotFoundException::class);
-        $this->expectExceptionMessage('Genre ' . $objModel->id() . ' not found');
+        $this->expectExceptionMessage('Genre '.$objModel->id().' not found');
 
         $objModel->update(name: 'test');
         $this->repository->update($objModel);

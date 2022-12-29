@@ -3,7 +3,8 @@
 namespace Core\CastMember\Domain\Entity;
 
 use Core\CastMember\Domain\Enum\Type;
-use Costa\DomainPackage\Domain\Entity\Trait\{EntityTrait, MethodsMagicsTrait};
+use Costa\DomainPackage\Domain\Entity\Trait\EntityTrait;
+use Costa\DomainPackage\Domain\Entity\Trait\MethodsMagicsTrait;
 use Costa\DomainPackage\Domain\Validation\DomainValidation;
 use Costa\DomainPackage\ValueObject\Uuid;
 use DateTime;

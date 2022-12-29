@@ -3,18 +3,18 @@
 namespace Tests\Feature\App\Http\Controllers\Api;
 
 use App\Factory\CategoryFactory;
-use App\Http\Controllers\Api\GenreController as Controller;
 use App\Http\Controllers\Api\GenreController;
-use App\Models\Genre as Model;
-use App\Repositories\Eloquent\GenreRepositoryEloquent as Repository;
-use Core\Genre\UseCase;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\GenreController as Controller;
 use App\Http\Requests\Genre\StoreRequest;
 use App\Http\Requests\Genre\UpdateRequest;
 use App\Models\Category;
+use App\Models\Genre as Model;
+use App\Repositories\Eloquent\GenreRepositoryEloquent as Repository;
 use App\Transactions\DatabaseTransaction;
+use Core\Genre\UseCase;
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Tests\TestCase;
@@ -22,7 +22,9 @@ use Tests\TestCase;
 class GenreControllerTest extends TestCase
 {
     private Repository $repository;
+
     private CategoryFactory $categoryFactory;
+
     private Controller $controller;
 
     protected function setUp(): void
@@ -68,7 +70,7 @@ class GenreControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([
             'name' => 'test',
-            'categories' => ['123', '456']
+            'categories' => ['123', '456'],
         ]));
 
         $this->controller->store($request, new UseCase\CreateUseCase(
@@ -88,8 +90,8 @@ class GenreControllerTest extends TestCase
             'name' => 'test',
             'categories' => [
                 (string) $categories[0]->id,
-                (string) $categories[3]->id
-            ]
+                (string) $categories[3]->id,
+            ],
         ]));
 
         $response = $this->controller->store($request, new UseCase\CreateUseCase(
@@ -148,7 +150,7 @@ class GenreControllerTest extends TestCase
         $request->setJson(new ParameterBag([
             'name' => 'test',
             'is_active' => false,
-            'categories' => ['123', '456']
+            'categories' => ['123', '456'],
         ]));
 
         $this->controller->update($request, new UseCase\UpdateUseCase(
@@ -173,8 +175,8 @@ class GenreControllerTest extends TestCase
             'is_active' => false,
             'categories' => [
                 (string) $categories[0]->id,
-                (string) $categories[3]->id
-            ]
+                (string) $categories[3]->id,
+            ],
         ]));
 
         $response = $this->controller->update($request, new UseCase\UpdateUseCase(

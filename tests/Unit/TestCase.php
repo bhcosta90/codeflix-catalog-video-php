@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
-use Exception;
 use Costa\DomainPackage\Domain\Repository\PaginationInterface;
+use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
 use Mockery;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
-use Costa\DomainPackage\UseCase\Interfaces\DatabaseTransactionInterface;
 use stdClass;
 
 abstract class TestCase extends PHPUnitTestCase
@@ -21,8 +20,7 @@ abstract class TestCase extends PHPUnitTestCase
     protected function getDatabaseTransactionInterface(
         int $timesCallCommit = 0,
         int $timesCallRollback = 0
-    )
-    {
+    ) {
         /** @var DatabaseTransactionInterface|Mockery\MockInterface */
         $mockTransaction = Mockery::mock(stdClass::class, DatabaseTransactionInterface::class);
 

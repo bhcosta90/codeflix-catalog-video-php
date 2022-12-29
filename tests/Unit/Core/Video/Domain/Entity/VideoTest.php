@@ -2,13 +2,14 @@
 
 namespace Tests\Unit\Core\Video\Domain\Entity;
 
-use Core\Video\Domain\Enum\Rating;
-use Tests\Unit\TestCase;
 use Core\Video\Domain\Entity\Video;
-use Core\Video\Domain\ValueObject\{Image, Media, Enum\Status};
-use DateTime;
+use Core\Video\Domain\Enum\Rating;
+use Core\Video\Domain\ValueObject\Image;
+use Core\Video\Domain\ValueObject\Media;
 use Costa\DomainPackage\Domain\Notification\Exception\NotificationException;
 use Costa\DomainPackage\ValueObject\Uuid;
+use DateTime;
+use Tests\Unit\TestCase;
 
 class VideoTest extends TestCase
 {
@@ -63,7 +64,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'categories' => ['132', '456']
+            'categories' => ['132', '456'],
         ]);
 
         $this->assertCount(2, $entity->categories);
@@ -71,7 +72,7 @@ class VideoTest extends TestCase
         $this->assertCount(2, $entity->categories);
         $entity->subCategory('456');
         $this->assertCount(1, $entity->categories);
-        $this->assertEquals("132", $entity->categories[0]);
+        $this->assertEquals('132', $entity->categories[0]);
     }
 
     public function testAddGenres()
@@ -99,7 +100,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'genres' => ['132', '456']
+            'genres' => ['132', '456'],
         ]);
 
         $this->assertCount(2, $entity->genres);
@@ -107,7 +108,7 @@ class VideoTest extends TestCase
         $this->assertCount(2, $entity->genres);
         $entity->subGenre('456');
         $this->assertCount(1, $entity->genres);
-        $this->assertEquals("132", $entity->genres[0]);
+        $this->assertEquals('132', $entity->genres[0]);
     }
 
     public function testAddCastMembers()
@@ -135,16 +136,15 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'castMembers' => ['132', '456']
+            'castMembers' => ['132', '456'],
         ]);
-
 
         $this->assertCount(2, $entity->castMembers);
         $entity->subCastMember('999');
         $this->assertCount(2, $entity->castMembers);
         $entity->subCastMember('456');
         $this->assertCount(1, $entity->castMembers);
-        $this->assertEquals("132", $entity->castMembers[0]);
+        $this->assertEquals('132', $entity->castMembers[0]);
     }
 
     public function testUpdate()
@@ -157,7 +157,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'createdAt' => new DateTime($date = '2020-01-01 00:00:00')
+            'createdAt' => new DateTime($date = '2020-01-01 00:00:00'),
         ]);
 
         $entity->update([
@@ -166,7 +166,7 @@ class VideoTest extends TestCase
             'yearLaunched' => 2000,
             'duration' => 50,
             'opened' => true,
-            'rating' => Rating::RATE14
+            'rating' => Rating::RATE14,
         ]);
 
         $this->assertEquals('update', $entity->title);
@@ -187,7 +187,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'thumbFile' => new Image('test/123.jpg')
+            'thumbFile' => new Image('test/123.jpg'),
         ]);
 
         $this->assertEquals('test/123.jpg', $entity->thumbFile->path);
@@ -202,7 +202,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'thumbHalf' => new Image('test/123.jpg')
+            'thumbHalf' => new Image('test/123.jpg'),
         ]);
 
         $this->assertEquals('test/123.jpg', $entity->thumbHalf->path);
@@ -217,7 +217,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'bannerFile' => new Image('test/123.jpg')
+            'bannerFile' => new Image('test/123.jpg'),
         ]);
 
         $this->assertEquals('test/123.jpg', $entity->bannerFile->path);
@@ -236,7 +236,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'trailerFile' => $media
+            'trailerFile' => $media,
         ]);
 
         $this->assertEquals('path/123.mp4', $entity->trailerFile->path);
@@ -257,7 +257,7 @@ class VideoTest extends TestCase
             'duration' => 20,
             'opened' => false,
             'rating' => Rating::L,
-            'videoFile' => $media
+            'videoFile' => $media,
         ]);
 
         $this->assertEquals('path/123.mp4', $entity->videoFile->path);

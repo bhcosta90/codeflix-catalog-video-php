@@ -21,7 +21,8 @@ class PaginateTest extends TestCase
         $this->repository = new VideoRepositoryEloquent(new Model);
     }
 
-    public function testRelations(){
+    public function testRelations()
+    {
         $categories = array_map(fn ($rs) => (string) $rs, Category::factory(1)->create()->pluck('id')->toArray());
         $genres = array_map(fn ($rs) => (string) $rs, Genre::factory(2)->create()->pluck('id')->toArray());
         $castMembers = array_map(fn ($rs) => (string) $rs, CastMember::factory(3)->create()->pluck('id')->toArray());
@@ -79,7 +80,6 @@ class PaginateTest extends TestCase
         $this->assertEquals(1, $response->lastPage());
         $this->assertEquals(1, $response->to());
         $this->assertEquals(10, $response->from());
-
     }
 
     public function testPaginateWithFilterTitle()

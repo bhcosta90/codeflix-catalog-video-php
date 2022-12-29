@@ -5,10 +5,12 @@ namespace Tests\Unit\Core\Category\UseCase;
 use Core\Category\Domain\Entity\Category;
 use Core\Category\Domain\Repository\CategoryRepositoryInterface;
 use Core\Category\UseCase\{DeleteUseCase as UseCase};
-use Costa\DomainPackage\UseCase\DTO\Delete\{Input, Output};
+use Costa\DomainPackage\UseCase\DTO\Delete\Input;
+use Costa\DomainPackage\UseCase\DTO\Delete\Output;
+use Costa\DomainPackage\UseCase\Exception\NotFoundException;
+use Costa\DomainPackage\UseCase\Exception\UseCaseException;
 use Costa\DomainPackage\ValueObject\Uuid;
 use Mockery;
-use Costa\DomainPackage\UseCase\Exception\{NotFoundException, UseCaseException};
 use Tests\Unit\TestCase;
 
 class DeleteUseCaseTest extends TestCase
@@ -18,7 +20,7 @@ class DeleteUseCaseTest extends TestCase
         $id = Uuid::random();
 
         $this->expectException(NotFoundException::class);
-        $this->expectExceptionMessage('ID ' . $id . ' not found.');
+        $this->expectExceptionMessage('ID '.$id.' not found.');
 
         /** @var CategoryRepositoryInterface|Mockery\MockInterface */
         $mockRepo = Mockery::spy(stdClass::class, CategoryRepositoryInterface::class);

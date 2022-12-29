@@ -101,7 +101,7 @@ class PaginateTest extends TestCase
             'entity' => [
                 $entity->toArray(),
                 $entity2->toArray(),
-            ]
+            ],
         ];
     }
 }

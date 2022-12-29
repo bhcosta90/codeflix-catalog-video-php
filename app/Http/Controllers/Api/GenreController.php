@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Genre\StoreRequest;
+use App\Http\Requests\Genre\UpdateRequest;
 use App\Http\Resources\GenreResource as Resource;
 use Core\Genre\Domain\Repository\GenreRepositoryFilter as Filter;
 use Core\Genre\UseCase;
 use Core\Genre\UseCase\DTO;
-use Illuminate\Http\Request;
-use App\Http\Requests\Genre\StoreRequest;
-use App\Http\Requests\Genre\UpdateRequest;
-use Illuminate\Http\Response;
-use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
 use Costa\DomainPackage\UseCase\DTO\Delete\Input as DeleteInput;
+use Costa\DomainPackage\UseCase\DTO\List\Input as ListInput;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GenreController extends Controller
 {
@@ -33,7 +33,7 @@ class GenreController extends Controller
                     'to' => $response->to,
                     'from' => $response->from,
                     'per_page' => $response->per_page,
-                ]
+                ],
             ]);
     }
 
@@ -53,6 +53,7 @@ class GenreController extends Controller
     public function show(UseCase\ListUseCase $useCase, string $id)
     {
         $response = $useCase->execute(new ListInput(id: $id));
+
         return (new Resource($response))->response();
     }
 
@@ -70,10 +71,12 @@ class GenreController extends Controller
             ->setStatusCode(Response::HTTP_OK);
     }
 
-    public function destroy(UseCase\DeleteUseCase $useCase, string $id){
+    public function destroy(UseCase\DeleteUseCase $useCase, string $id)
+    {
         $useCase->execute(new DeleteInput(
             id: $id,
         ));
+
         return response()->noContent();
     }
 }

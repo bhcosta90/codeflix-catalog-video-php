@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Presenters;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Costa\DomainPackage\Domain\Repository\PaginationInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 use stdClass;
 
 class PaginatorPresenter implements PaginationInterface

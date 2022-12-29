@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\App\Repositories\Eloquent\CastMemberRepositoryEloquent;
 
-use App\Models\CastMember;
 use App\Models\CastMember as Model;
 use App\Repositories\Eloquent\CastMemberRepositoryEloquent;
 use Core\CastMember\Domain\Repository\CastMemberRepositoryFilter;

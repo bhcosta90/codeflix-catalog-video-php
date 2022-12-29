@@ -78,6 +78,7 @@ class ChangeEncodedPathTest extends TestCase
                 'videoFile' => new Media('/tmp/video-fake.mp4', Status::PENDING),
                 'trailerFile' => new Media('/tmp/trailer-fake.mp4', Status::PENDING),
             ]) : null);
+
         return $mock;
     }
 }
