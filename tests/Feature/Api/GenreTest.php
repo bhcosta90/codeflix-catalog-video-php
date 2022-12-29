@@ -6,9 +6,7 @@ use App\Models\Category;
 use App\Models\Genre as Model;
 use App\Http\Resources\GenreResource as Resource;
 use Illuminate\Database\Eloquent\Collection;
-use Costa\DomainPackage\Tests\Traits\TestResource;
-use Costa\DomainPackage\Tests\Traits\TestSave;
-use Costa\DomainPackage\Tests\Traits\TestValidation;
+use Costa\DomainPackage\Tests\Traits\{TestResource, TestSave, TestValidation};
 use Tests\TestCase;
 
 class GenreTest extends TestCase
