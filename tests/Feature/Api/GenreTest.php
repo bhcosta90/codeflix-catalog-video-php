@@ -42,6 +42,10 @@ class GenreTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware([
+            \App\Http\Middleware\Authenticate::class,
+            \Illuminate\Auth\Middleware\Authorize::class,
+        ]);
         $this->model = Model::factory()->create(['name' => 'test']);
         $this->categories = Category::factory(5)->create();
         $this->model->categories()->attach((string) $this->categories[4]->id);
