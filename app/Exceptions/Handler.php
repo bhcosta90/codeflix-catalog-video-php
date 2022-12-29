@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Core\Genre\UseCase\Exceptions\CategoryNotFound;
+use Core\Video\UseCase\Exceptions\CategoryGenreNotFound;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Costa\DomainPackage\Domain\Entity\Exception\EntityValidationException;
@@ -58,7 +59,7 @@ class Handler extends ExceptionHandler
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        if ($e instanceof CategoryNotFound) {
+        if ($e instanceof CategoryNotFound || $e instanceof CategoryGenreNotFound) {
             return response()->json([
                 'message' => $e->getMessage(),
                 'categories' => $e->categories

@@ -25,6 +25,7 @@ class Video extends Model
     ];
 
     protected $casts = [
+        'opened' => 'boolean',
         'deleted_at' => 'datetime',
     ];
 

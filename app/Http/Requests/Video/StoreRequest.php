@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Video;
 
+use Core\Video\Domain\Enum\Rating;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -25,16 +26,16 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:100',
-            'description' => 'nullable',
+            'description' => 'required',
             'opened' => 'required|boolean',
-            'duration' => 'required|number|min:1',
-            'year_launched' => 'required|number|min:1',
-            'video_file' => 'required',
-            'trailer_file' => 'required',
-            'banner_file' => 'required',
-            'thumb_file' => 'required',
-            'thumb_half' => 'required',
-            'rating' => ['required'],
+            'duration' => 'required|numeric|min:1',
+            'year_launched' => 'required|numeric|min:1',
+            'video_file' => 'nullable|mimetypes:video/mp4',
+            'trailer_file' => 'nullable|mimetypes:video/mp4',
+            'banner_file' => 'nullable|image',
+            'thumb_file' => 'nullable|image',
+            'thumb_half' => 'nullable|image',
+            'rating' => 'required|in:' . implode(',', array_column(Rating::cases(), 'value')),
             'categories' => 'nullable|array|exists:categories,id,deleted_at,NULL',
             'cast_members' => 'nullable|array|exists:cast_members,id,deleted_at,NULL',
             'genres' => 'nullable|array|exists:genres,id,deleted_at,NULL',

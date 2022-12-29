@@ -50,8 +50,8 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
 
     public function update(Entity $entity): bool
     {
-        if ($obj = $this->model->find($entity->id())) {
-            $response = (bool) $obj->update([
+        if ($db = $this->model->find($entity->id())) {
+            $response = (bool) $db->update([
                 'title' => $entity->title,
                 'description' => $entity->description,
                 'year_launched' => $entity->yearLaunched,
@@ -60,12 +60,12 @@ class VideoRepositoryEloquent implements VideoRepositoryInterface
                 'opened' => $entity->opened,
             ]);
 
-            $this->syncRelationships($obj, $entity);
-            $this->updateImageThumb($entity, $obj);
-            $this->updateImageThumbHalf($entity, $obj);
-            $this->updateImageBanner($entity, $obj);
-            $this->updateMediaVideo($entity, $obj);
-            $this->updateMediaTrailer($entity, $obj);
+            $this->syncRelationships($db, $entity);
+            $this->updateImageThumb($entity, $db);
+            $this->updateImageThumbHalf($entity, $db);
+            $this->updateImageBanner($entity, $db);
+            $this->updateMediaVideo($entity, $db);
+            $this->updateMediaTrailer($entity, $db);
 
             return $response;
         }
