@@ -18,6 +18,20 @@ class VideoResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'description' => $this->description,
+            'year_launched' => $this->year_launched ?? $this->yearLaunched,
+            'opened' => (bool) $this->opened,
+            'rating' => $this->rating,
+            'duration' => $this->duration,
+            'created_at' => $this->created_at ?? $this->createdAt,
+            'video' => $this->videoFile ?? '',
+            'trailer' => $this->trailerFile ?? '',
+            'banner' => $this->bannerFile ?? '',
+            'thumb' => $this->thumbFile ?? '',
+            'thumb_half' => $this->thumbHalfFile ?? '',
+            'categories' => $this->categories,
+            'genres' => $this->genres,
+            'cast_members' => $this->cast_members ?? $this->castMembers ?? [],
             'created_at' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }

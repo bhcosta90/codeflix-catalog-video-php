@@ -43,7 +43,8 @@ class VideoTest extends TestCase
     public function testCasts()
     {
         $fillableNeed = [
-            'deleted_at' => 'datetime'
+            'deleted_at' => 'datetime',
+            'opened' => 'boolean',
         ];
         $model = $this->model();
         $this->assertEquals($fillableNeed, $model->getCasts());
