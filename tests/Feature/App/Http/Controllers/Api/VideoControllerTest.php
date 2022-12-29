@@ -43,9 +43,18 @@ class VideoControllerTest extends TestCase
         $this->genreFactory = new GenreFactory(new Genre(), new Category());
         $this->castMemberFactory = new CastMemberFactory(new CastMember());
 
-        $this->categories = array_map(fn ($rs) => (string) $rs, (Category::factory(2)->create())->pluck('id')->toArray());
-        $this->genres = array_map(fn ($rs) => (string) $rs, ($genre = Genre::factory(2)->create())->pluck('id')->toArray());
-        $this->castMembers = array_map(fn ($rs) => (string) $rs, CastMember::factory(2)->create()->pluck('id')->toArray());
+        $this->categories = array_map(
+            fn ($rs) => (string) $rs,
+            (Category::factory(2)->create())->pluck('id')->toArray()
+        );
+        $this->genres = array_map(
+            fn ($rs) => (string) $rs,
+            ($genre = Genre::factory(2)->create())->pluck('id')->toArray()
+        );
+        $this->castMembers = array_map(
+            fn ($rs) => (string) $rs,
+            CastMember::factory(2)->create()->pluck('id')->toArray()
+        );
         $genre->each(fn($genre) => $genre->categories()->sync($this->categories));
     }
 
@@ -60,7 +69,7 @@ class VideoControllerTest extends TestCase
     public function testStore()
     {
         $mediaVideoFile = UploadedFile::fake()->create('video.mp4', 1, 'video/mp4');
-        
+
         $request = new StoreRequest();
         $request->headers->set('content-type', 'application/json');
         $request->setJson(new ParameterBag([

@@ -25,6 +25,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('admin-catalog', function () {
+            if (!empty(auth()->token())) {
+                $token = json_decode(auth()->token(), true);
+                $realmAccess = $token['realm_access'];
+                $roles = $realmAccess['roles'];
+                return (bool) in_array('admin-catalog', $roles);
+            }
+            return false;
+        });
     }
 }

@@ -25,6 +25,10 @@ class CastMemberTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware([
+            \App\Http\Middleware\Authenticate::class,
+            \Illuminate\Auth\Middleware\Authorize::class,
+        ]);
         $this->model = Model::factory()->create(['name' => 'test']);
     }
 
